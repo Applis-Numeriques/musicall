@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Music’All</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#4b2a8f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Music’All">
+<style>
+:root{--bg:#f6f2ff;--card:#fff;--ink:#1e1544;--mut:#6f6896;--pri:#4b2a8f;--sun:#ffc043;--teal:#2bb3a3;--sec:#7c4dff;--pink:#ff5c8a;--ok:#2bb673;--ko:#ef476f;--line:#e5dcff;--sh:0 8px 24px rgba(75,42,143,.16)}
+@media(prefers-color-scheme:dark){:root{--bg:#150f2b;--card:#211a42;--ink:#f1ecff;--mut:#aaa2d4;--pri:#7c4dff;--sec:#9a73ff;--line:#362c66;--sh:0 8px 24px rgba(0,0,0,.4)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:ui-rounded,"Nunito","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
+#back{border:0;background:var(--card);color:var(--ink);width:42px;height:42px;border-radius:50%;font-size:1.5rem;box-shadow:var(--sh);cursor:pointer;visibility:hidden;flex:none}
+#logo{flex:1;margin:0;text-align:center;font-size:clamp(1.3rem,6vw,1.9rem);font-weight:900;white-space:nowrap;cursor:pointer;background:linear-gradient(90deg,var(--pri),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(prefers-color-scheme:dark){#logo{background:linear-gradient(90deg,#b79cff,#ff8fb0);-webkit-background-clip:text;background-clip:text}}
+#score{background:var(--sun);color:#3b2a00;font-weight:900;padding:8px 13px;border-radius:99px;box-shadow:var(--sh);flex:none;cursor:pointer}
+main{max-width:640px;margin:0 auto;padding:6px 16px}
+h2{margin:20px 0 10px;font-size:1.25rem}
+.hero-card{background:linear-gradient(135deg,var(--pri),var(--pink));color:#fff;border-radius:28px;padding:20px;box-shadow:var(--sh);display:flex;gap:16px;align-items:center;margin:8px 0 6px}
+.hero-card h3{margin:0;font-size:1.25rem}.hero-card p{margin:2px 0 0;opacity:.95}
+.btn{border:0;border-radius:18px;padding:15px 20px;font:inherit;font-weight:800;cursor:pointer;background:var(--card);color:var(--ink);box-shadow:var(--sh);transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.main{background:var(--pri);color:#fff;width:100%;margin-top:12px;font-size:1.05rem}
+.alt{background:var(--sec);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lv{color:#fff;text-align:center;padding:22px 16px;border-radius:26px;background:linear-gradient(135deg,var(--c),var(--c2));font-size:1.7rem;font-weight:900}
+.lv small{display:block;font-size:.85rem;font-weight:700;opacity:.92;margin-top:4px}
+.axe{display:flex;align-items:center;gap:14px;width:100%;text-align:left;margin-bottom:12px;padding:12px 16px}
+.axe .t{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.7rem;flex:none}
+.axe b{display:block}.axe small{color:var(--mut);font-weight:700;display:block}
+.card{background:var(--card);border-radius:24px;padding:18px;margin:12px 0;box-shadow:var(--sh)}
+.card h3{margin:0 0 8px}.card p{margin:8px 0}
+.lesson{border-top:6px solid var(--sec)}
+.retain{border-top:6px solid var(--sun);background:color-mix(in srgb,var(--sun) 14%,var(--card))}
+.retain li{list-style:none;margin:8px 0;padding-left:30px;position:relative}
+.retain li::before{content:"♪";position:absolute;left:4px;color:var(--pink);font-weight:900}
+.seg{display:flex;background:var(--line);border-radius:18px;padding:4px;margin:10px 0}
+.seg button{flex:1;border:0;background:none;padding:11px;border-radius:14px;font:inherit;font-weight:800;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+.tr{color:var(--mut);font-size:.92rem;margin:4px 0 8px}
+.q{font-size:1.1rem}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:15px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 20%,var(--card))}
+.opt.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 20%,var(--card))}
+input[type=text],select{font:inherit;padding:14px;border-radius:16px;border:2px solid var(--line);width:100%;margin:8px 0;background:var(--card);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;min-height:44px;padding:6px;border-radius:16px}
+.zone{border:2px dashed var(--line)}
+.chip{background:var(--sec);color:#fff;padding:10px 15px;border-radius:99px;border:0;font:inherit;font-weight:700;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+.chip.sel{outline:3px solid var(--sun)}.chip.off{background:var(--line);color:var(--mut)}
+.msg{font-weight:800;margin-top:10px}.msg.ok{color:var(--ok)}.msg.ko{color:var(--ko)}
+.say{background:none;border:0;font:inherit;color:var(--sec);font-weight:800;cursor:pointer;padding:6px 0}
+.bar{height:12px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--pink));border-radius:9px;transition:width .4s}
+.big{text-align:center}.big .em{font-size:3.6rem}
+.gift{background:color-mix(in srgb,var(--sun) 25%,var(--card));border-radius:16px;padding:10px;margin:10px 0;font-weight:800}
+.ex{max-width:760px;margin-left:auto;margin-right:auto}
+.av{position:relative;width:1.6em;height:1.6em;display:inline-grid;place-items:center;border-radius:50%;flex:none}
+.av .b{font-size:1em;line-height:1}.av img.b{width:100%;height:100%;object-fit:contain}
+.av .hat{position:absolute;top:-.3em;left:50%;transform:translateX(-50%);font-size:.55em;line-height:1}
+.av .fc{position:absolute;top:.52em;left:50%;transform:translateX(-50%);font-size:.42em;line-height:1}
+.av .hd{position:absolute;right:-.25em;bottom:.05em;font-size:.55em;line-height:1}
+.av .pt{position:absolute;left:-.3em;bottom:0;font-size:.55em;line-height:1}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:10px}
+.it{border:2px solid var(--line);background:var(--card);border-radius:16px;padding:10px 4px;font-size:1.8rem;text-align:center;cursor:pointer;color:var(--ink);font-family:inherit}
+.it small{display:block;font-size:.68rem;font-weight:700;color:var(--mut);line-height:1.1;margin-top:4px}
+.it.on{border-color:var(--pink);background:color-mix(in srgb,var(--pink) 14%,var(--card))}
+.it.lock{opacity:.55;filter:grayscale(1)}
+.it i{display:block;width:32px;height:32px;border-radius:50%;margin:0 auto;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.road{display:flex;flex-direction:column-reverse;position:relative;padding:14px 0;margin:10px 0}
+.road::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:18px;margin-left:-9px;border-radius:9px;background:repeating-linear-gradient(180deg,#fff9 0 10px,transparent 10px 24px),#c9bbea}
+.stop{display:grid;grid-template-columns:1fr 84px 1fr;align-items:center;margin:16px 0;position:relative}
+.nw{grid-column:2;grid-row:1;display:flex;justify-content:center;position:relative}
+.node{width:70px;height:70px;border-radius:50%;border:5px solid #fff;font-size:1.9rem;background:#c9bbea;box-shadow:var(--sh);cursor:pointer}
+.node.done{background:var(--sun)}.node.cur{background:var(--pink);animation:pulse 1.4s infinite}.node.lock{filter:grayscale(1);opacity:.55;cursor:not-allowed}
+.lab{padding:0 10px;font-weight:900}.lab small{display:block;color:var(--mut);font-weight:700}
+.stop.r .lab{grid-column:3;grid-row:1}.stop.l .lab{grid-column:1;grid-row:1;text-align:right}
+.hero{position:absolute;top:-56px;left:50%;margin-left:-29px;animation:bob 1s infinite;pointer-events:none;z-index:2}
+.hero.walk{animation:walk 1s ease-out,bob 1s 1s infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes walk{from{transform:translateY(120px);opacity:0}to{transform:none;opacity:1}}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(255,92,138,.28)}}
+/* frise */
+.tl{overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px}
+.tli{display:flex;gap:12px;width:max-content;position:relative;padding:50px 10px 10px}
+.tli::before{content:"";position:absolute;left:0;right:0;top:36px;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--sec),var(--pink))}
+.ti{width:158px;flex:none;position:relative;cursor:pointer;text-align:center;scroll-snap-align:center}
+.ti .dt{position:absolute;top:-40px;left:-6px;right:-6px;font-weight:900;font-size:.74rem;color:var(--pri)}
+.ti i{position:absolute;top:-20px;left:50%;margin-left:-10px;width:20px;height:20px;border-radius:50%;background:var(--c);border:4px solid var(--bg)}
+.ti .tc{background:var(--card);border-radius:18px;padding:12px 8px;box-shadow:var(--sh);border-top:6px solid var(--c);min-height:104px}
+.ti.on .tc{outline:3px solid var(--sun)}
+.ti .tc div{font-size:1.9rem}.ti .tc b{display:block;font-size:.85rem;line-height:1.2}
+.arrows{display:flex;gap:10px;justify-content:flex-end}.arrows button{width:48px;padding:8px}
+/* piano & batterie */
+.piano{position:relative;display:flex;height:190px;margin:10px 0;user-select:none;-webkit-user-select:none;touch-action:none}
+.wk{flex:1;background:#fff;border:1px solid #b9b0d0;border-radius:0 0 8px 8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:.7rem;color:#5a5278;font-weight:800}
+.wk.on{background:#d9c8ff}.wk.tg{box-shadow:inset 0 -16px 0 var(--sun)}
+.bk{position:absolute;top:0;width:4.3%;height:62%;background:#241a4a;border-radius:0 0 6px 6px;z-index:2}
+.bk.on{background:var(--sec)}.bk.tg{box-shadow:0 0 0 4px var(--sun)}
+.pads{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pad{aspect-ratio:1.25;border:0;border-radius:18px;font:inherit;font-weight:800;color:#fff;font-size:.95rem;cursor:pointer;touch-action:manipulation;box-shadow:var(--sh)}
+.pad:active{transform:scale(.94)}
+.sq{display:grid;grid-template-columns:62px repeat(8,1fr);gap:4px;align-items:center}
+.sq b{font-size:.72rem}.sc{aspect-ratio:1;border:0;border-radius:8px;background:var(--line);cursor:pointer;padding:0}
+.sc.on{background:var(--sec)}.sc.cur{outline:3px solid var(--sun)}
+/* mots croisés / mêlés */
+.xw{display:grid;gap:2px;justify-content:center;margin:10px auto}
+.xc{position:relative;width:var(--cs);height:var(--cs)}.xc.b{visibility:hidden}
+.xc input{width:100%;height:100%;text-align:center;text-transform:uppercase;font:inherit;font-weight:800;padding:0;border:2px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font-size:calc(var(--cs)*.55)}
+.xc small{position:absolute;top:1px;left:3px;font-size:.55rem;font-weight:800;color:var(--sec);pointer-events:none}
+.xc.ko input{background:color-mix(in srgb,var(--ko) 25%,var(--card))}.xc.ok input{background:color-mix(in srgb,var(--ok) 25%,var(--card))}
+.cl li{margin:6px 0}
+.ws{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:380px;margin:10px auto;user-select:none}
+.wc{aspect-ratio:1;border:0;border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-weight:800;box-shadow:var(--sh);cursor:pointer;font-size:1rem;padding:0}
+.wc.s{background:var(--sun);color:#3b2a00}.wc.f{background:var(--sec);color:#fff}
+.wl{display:flex;flex-wrap:wrap;gap:6px}.wl span{padding:4px 10px;border-radius:99px;background:var(--line);font-weight:700;font-size:.85rem}.wl span.f{text-decoration:line-through;opacity:.5}
+.kb{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}.kbk{margin:0;padding:10px 0;text-align:center}.kbk:disabled{opacity:.55}
+.dz{display:flex;align-items:center;gap:10px;margin:8px 0}.dz b{flex:1;font-size:.9rem}
+.slot{flex:1;min-height:52px;border:2px dashed var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:4px}
+.slot.ok{border:2px solid var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--card))}.slot.ko{border:2px solid var(--ko);background:color-mix(in srgb,var(--ko) 18%,var(--card))}
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.mc{min-height:82px;border:0;border-radius:18px;background:linear-gradient(135deg,var(--sec),var(--pink));color:#fff;font:inherit;font-weight:800;font-size:1.4rem;cursor:pointer;padding:6px}
+.mc.up{background:var(--card);color:var(--ink);box-shadow:var(--sh);font-size:.78rem}.mc.done{background:color-mix(in srgb,var(--ok) 25%,var(--card));color:var(--ink);font-size:.78rem}
+#toast{position:fixed;left:16px;right:16px;bottom:calc(92px + env(safe-area-inset-bottom));max-width:560px;margin:auto;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:16px;z-index:50;transition:opacity .3s;opacity:0;pointer-events:none;text-align:center;font-weight:700}
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(12px);box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+#tabs button{flex:1;border:0;background:none;color:var(--mut);font:inherit;font-size:1.45rem;display:flex;flex-direction:column;align-items:center;padding:5px 2px;border-radius:16px;cursor:pointer;line-height:1.2}
+#tabs button span{font-size:.66rem;font-weight:800}
+#tabs button.on{color:var(--pink);background:color-mix(in srgb,var(--pink) 13%,transparent)}
+footer{max-width:640px;margin:18px auto 0;padding:0 16px;text-align:center;color:var(--mut);font-size:.8rem}
+footer a{color:var(--sec);font-weight:800;text-decoration:underline;cursor:pointer}
+#vw{margin-top:8px}#vw a{margin:0 4px;text-decoration:none;opacity:.7;cursor:pointer;color:var(--mut)}#vw a.on{opacity:1;color:var(--pri);text-decoration:underline}
+body.desk{padding-left:112px;padding-bottom:30px;font-size:17px}
+body.desk header{padding-left:20px;padding-right:28px}
+body.desk #tabs{top:0;bottom:0;right:auto;width:112px;flex-direction:column;justify-content:flex-start;gap:10px;padding:24px 10px;box-shadow:6px 0 20px rgba(0,0,0,.06)}
+body.desk #tabs button{flex:none;padding:12px 4px}
+body.desk main,body.desk footer{max-width:1000px}
+body.desk main{padding:10px 28px}
+body.desk .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+body.desk .road{max-width:620px;margin:10px auto}
+body.desk .kb{grid-template-columns:repeat(13,1fr)}
+body.desk .mem{grid-template-columns:repeat(4,1fr)}
+body.desk .piano{height:240px}
+body.desk .btn:hover,body.desk .opt:hover,body.desk .it:hover{transform:translateY(-2px)}
+body.desk #toast{left:132px}
+/* ===== Thème violet (v2) */
+:root{--bg:#3b1d86;--card:#fff;--ink:#1e1544;--mut:#6f6896;--pri:#4b2a8f;--sun:#ffc043;--sec:#7c4dff;--pink:#ff5c8a;--ok:#2bb673;--ko:#ef476f;--line:#e5dcff;--sh:0 8px 24px rgba(20,8,60,.35);--rb:#e63f86}
+body{background:linear-gradient(165deg,#6a3fd6 0%,#4b2a9f 45%,#2f1670 100%) fixed;color:#fff}
+header{background:color-mix(in srgb,#4b2a9f 74%,transparent);padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px}
+#ttl{flex:1;text-align:center;line-height:1.05;cursor:pointer}
+#logo{margin:0;font-size:clamp(2.1rem,9.5vw,3rem);letter-spacing:-.5px;background:linear-gradient(90deg,#fff 35%,#ffc2dd);-webkit-background-clip:text;background-clip:text;color:transparent;flex:none}
+#sub{font-size:.76rem;font-weight:700;color:#d9ccff;margin-top:3px;letter-spacing:.3px}
+.card{color:var(--ink)}.gift{color:#3b2a00}.ti .tc{color:var(--ink)}
+.tr{color:#d9ccff}.card .tr,.gift .tr{color:var(--mut)}
+.msg.ok{color:#7dffb8}.msg.ko{color:#ff9db5}.card .msg.ok{color:var(--ok)}.card .msg.ko{color:var(--ko)}
+.wl span{color:var(--ink)}.lab small{color:#e2d8ff}.say{color:#ffd1e6}
+.ti .dt{color:#fff}.ti i{border-color:#4b2a9f}
+footer{color:#d9ccff}footer a{color:#fff}#vw a{color:#d9ccff}#vw a.on{color:#fff}
+#toast{color:#fff}
+.hero-card{background:linear-gradient(135deg,#ff8fc0,#e63f86)}
+.main{background:var(--rb)}
+.alt{background:#fff;color:var(--rb);box-shadow:inset 0 0 0 2px var(--rb),var(--sh)}
+.chip{background:var(--rb)}.chip.off{background:#fff;color:var(--ink)}
+.lesson{border-top-color:var(--rb)}.retain li::before{color:var(--rb)}
+.bar i{background:linear-gradient(90deg,var(--sun),var(--rb))}
+.node.cur{background:var(--rb)}.node.done{background:color-mix(in srgb,var(--rb) 45%,white)}
+.it.on{border-color:var(--rb)}
+.mc{background:linear-gradient(135deg,var(--rb),color-mix(in srgb,var(--rb) 55%,white))}
+.wc.f,.sc.on{background:var(--rb)}
+#tabs button.on{color:var(--rb);background:color-mix(in srgb,var(--rb) 14%,transparent)}
+.cb{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.cb small{color:rgba(255,255,255,.92)}.cb .t{background:rgba(255,255,255,.28)}
+.av .ly{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.idc{background:linear-gradient(135deg,#fff,#f3ecff);border-radius:22px;border:3px solid #c9b6ff;color:var(--ink);box-shadow:var(--sh);overflow:hidden;margin:12px 0}
+.idh{background:var(--rb);color:#fff;padding:10px 14px;font-weight:900;letter-spacing:1px;font-size:.8rem}
+.idb{display:flex;gap:14px;padding:14px 14px 0}
+.idp{font-size:3.6rem;width:96px;height:118px;border-radius:14px;background:var(--line);display:grid;place-items:center;flex:none}
+.idf p,.idw p{margin:4px 0}.idf small,.idw small{display:block;color:var(--mut);font-size:.68rem;text-transform:uppercase;font-weight:800}
+.idf b{font-size:1.05rem}.idw{padding:6px 14px 14px}.idw ul{margin:4px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<header><button id="back" aria-label="Retour">‹</button><div id="ttl"><h1 id="logo">Music’All</h1><div id="sub">tout sur la musique au collège</div></div><div id="score">🎵 0</div></header>
+<main id="app"></main>
+<footer>© 2026 HENRY Clément – Tous droits réservés.<br>Application propriété de HENRY Clément · <a id="lg">Mentions légales</a><div id="vw">Affichage : <a data-v="auto">Auto</a> · <a data-v="desk">🖥️ Ordinateur</a> · <a data-v="mob">📱 Mobile</a></div></footer>
+<nav id="tabs"><button data-t="home">🏠<span>Accueil</span></button><button data-t="journey">🗺️<span>Parcours</span></button><button data-t="history">📜<span>Frise</span></button><button data-t="games">🎮<span>Jeux</span></button><button data-t="instr">🎹<span>Instruments</span></button></nav>
+<script>
+const LV=["6ème","5ème","4ème","3ème"],CO=[["#7c4dff","#4b2a8f"],["#ff5c8a","#d6336c"],["#ff9f43","#f76707"],["#2bb3a3","#0b7285"]];
+// Thème = [emoji, titre, leçon, à retenir (|), définitions "terme=définition;…", QCM [q,"a|b|c",index,explication], Vrai/Faux [énoncé,1|0,explication], Trous [phrase,réponse(s),explication], exercices sonores "h,s,m,i"]
+const D=[[
+["🔊","Le son et ses paramètres","Un <b>son</b> est une vibration qui se propage dans l'air. On le décrit avec quatre paramètres : la <b>hauteur</b> (grave ou aigu, selon la fréquence en hertz), la <b>durée</b> (court ou long), l'<b>intensité</b> (fort ou doux, mesurée en décibels) et le <b>timbre</b>, la « couleur » du son qui permet de reconnaître un instrument ou une voix.<br>Un <b>bruit</b> est un son sans hauteur précise. Le <b>silence</b>, l'absence de son, fait aussi partie de la musique.","4 paramètres : hauteur, durée, intensité, timbre|Hauteur : grave ↔ aigu (fréquence en hertz)|Intensité : se mesure en décibels (dB)|Timbre : reconnaître l'instrument ou la voix|Le silence fait partie de la musique","hauteur=Un son est grave ou aigu;durée=Un son est court ou long;intensité=Un son est fort ou doux;timbre=La couleur d'un son, propre à chaque instrument;décibel=Unité qui mesure l'intensité d'un son;silence=Absence de son, qui fait partie de la musique",[["Quel paramètre permet de reconnaître un violon d'une flûte ?","la hauteur|le timbre|la durée",1,"Le timbre est la « couleur » du son."],["Un son très aigu est…","un son de haute fréquence|un son fort|un son long",0,"Plus la fréquence est élevée, plus le son est aigu."],["L'intensité d'un son se mesure en…","hertz|décibels|mètres",1,"Le hertz mesure la fréquence ; le décibel, l'intensité."]],[["Le silence fait partie de la musique.",1,"Les silences structurent le rythme."],["Un son aigu est un son de faible fréquence.",0,"Un son aigu a une fréquence élevée."]],[["Le ___ est la couleur d'un son, propre à chaque instrument.","timbre","timbre"],["La hauteur d'un son dépend de sa ___ (en hertz).","fréquence","fréquence"]],"h"],
+["🥁","Pulsation, rythme et mesure","La <b>pulsation</b> est le battement régulier de la musique, comme les pas d'une marche. Le <b>rythme</b> est la manière dont les sons longs et courts sont organisés dans le temps. Le <b>tempo</b> est la vitesse de la pulsation, en battements par minute (BPM).<br>La <b>mesure</b> regroupe les pulsations : à 4 temps (4/4) ou à 3 temps (valse, 3/4). Les valeurs de notes : la <b>ronde</b> dure 4 temps, la <b>blanche</b> 2 temps, la <b>noire</b> 1 temps, la <b>croche</b> ½ temps.","Pulsation = battement régulier|Rythme = organisation des durées|Tempo = vitesse (en BPM)|Ronde 4 temps · blanche 2 · noire 1 · croche ½|Une valse est à 3 temps","pulsation=Battement régulier de la musique;rythme=Organisation des sons longs et courts dans le temps;tempo=Vitesse de la pulsation;mesure=Groupe de temps séparé par des barres;ronde=Note qui dure 4 temps;noire=Note qui dure 1 temps",[["Combien de temps dure une blanche ?","1 temps|2 temps|4 temps",1,"Ronde 4 · blanche 2 · noire 1 · croche ½."],["Une valse se compte généralement à…","2 temps|3 temps|5 temps",1,"Mesure à 3 temps (3/4)."],["BPM veut dire…","battements par minute|bruits par morceau|basses par mesure",0,"Le tempo se mesure en battements par minute."]],[["La croche dure plus longtemps que la noire.",0,"La croche dure ½ temps, la noire 1 temps."],["Le tempo est la vitesse de la pulsation.",1,"Plus il est rapide, plus les pulsations sont rapprochées."]],[["La note qui dure 4 temps s'appelle la ___ .","ronde","La ronde dure 4 temps."],["Le ___ est la vitesse de la pulsation.","tempo","Le tempo se mesure en BPM."]],""],
+["🎼","Lire la musique : notes et portée","Les notes s'écrivent sur une <b>portée</b> de 5 lignes. La <b>clé de sol</b>, placée au début, indique où se trouve le sol. Les 7 notes se nomment <b>do, ré, mi, fa, sol, la, si</b> (en anglais C, D, E, F, G, A, B) : plus la note est haute sur la portée, plus elle est aiguë.<br>En clé de sol, la 1re ligne (en bas) est un <b>mi</b>. Un <b>dièse (♯)</b> monte une note d'un demi-ton, un <b>bémol (♭)</b> la descend.","Portée = 5 lignes · clé de sol|do ré mi fa sol la si (C D E F G A B)|1re ligne en clé de sol = mi|Dièse ♯ monte d'un demi-ton · bémol ♭ le descend|Plus la note est haute, plus le son est aigu","portée=Les 5 lignes sur lesquelles s'écrivent les notes;clé de sol=Signe qui indique la place du sol sur la portée;dièse=Signe qui monte une note d'un demi-ton;bémol=Signe qui descend une note d'un demi-ton;demi-ton=Plus petit écart entre deux notes du piano;gamme=Suite de notes rangées de la plus grave à la plus aiguë",[["Combien de lignes compte une portée ?","4|5|7",1,"Une portée a 5 lignes."],["Quelle note se nomme « C » en anglais ?","do|sol|la",0,"C = do, D = ré, E = mi, F = fa, G = sol, A = la, B = si."],["Un bémol…","monte la note d'un demi-ton|descend la note d'un demi-ton|rend la note plus longue",1,"♭ descend, ♯ monte."]],[["La clé de sol est placée au début de la portée.",1,"Elle indique la position de la note sol."],["Il y a 8 notes différentes dans la gamme de do.",0,"Il y en a 7 : do ré mi fa sol la si."]],[["Les notes s'écrivent sur une ___ de cinq lignes.","portée","portée"],["La note qui suit « sol » est le ___ .","la","sol → la"]],"s"],
+["🎤","La voix et le chant","La voix est un instrument : le son naît de la vibration des <b>cordes vocales</b>. Les voix se classent par hauteur : chez les femmes <b>soprano</b> (aiguë), <b>mezzo-soprano</b>, <b>alto</b> (grave) ; chez les hommes <b>ténor</b> (aigu), <b>baryton</b>, <b>basse</b> (grave).<br>On chante en <b>chœur</b> (groupe), en <b>canon</b> (même mélodie décalée), <b>a cappella</b> (sans instrument) ou en <b>solo</b>.","Femmes : soprano · mezzo · alto|Hommes : ténor · baryton · basse|Chœur = groupe de chanteurs|A cappella = sans instrument|Canon = même mélodie qui commence en décalé","soprano=Voix de femme la plus aiguë;alto=Voix de femme la plus grave;ténor=Voix d'homme aiguë;basse=Voix d'homme la plus grave;chœur=Groupe de chanteurs;canon=Même mélodie chantée en décalé",[["Quelle voix d'homme est la plus grave ?","ténor|baryton|basse",2,"Du plus aigu au plus grave : ténor, baryton, basse."],["Chanter « a cappella », c'est chanter…","sans instrument|très fort|en canon",0,"A cappella = sans accompagnement instrumental."],["Qu'est-ce qui produit le son de la voix ?","les cordes vocales|la langue|les dents",0,"Elles vibrent quand l'air passe."]],[["Le soprano est une voix d'homme.",0,"C'est la voix de femme la plus aiguë."],["Dans un canon, la même mélodie est chantée en décalé.",1,"Chaque groupe commence l'un après l'autre."]],[["Un groupe de chanteurs s'appelle un ___ .","chœur","chœur"],["La voix de femme la plus aiguë est la ___ .","soprano","soprano"]],"h"],
+["🎻","Les familles d'instruments","Les instruments se rangent en familles selon la façon dont ils produisent le son : les <b>cordes</b> (frottées : violon ; pincées : guitare, harpe), les <b>vents</b> (<b>bois</b> : flûte, clarinette, hautbois ; <b>cuivres</b> : trompette, trombone, cor), les <b>percussions</b> (tambour, xylophone), les <b>claviers</b> (piano, orgue) et les instruments <b>électroniques</b> (synthétiseur).","Cordes : frottées, pincées ou frappées|Vents : bois (flûte, clarinette) · cuivres (trompette, trombone)|Percussions : on frappe ou on secoue|Claviers : piano, orgue|Électronique : synthétiseur","cordes=Famille du violon, de la guitare et de la harpe;bois=Famille de la flûte et de la clarinette;cuivres=Famille de la trompette et du trombone;percussions=Instruments que l'on frappe ou que l'on secoue;clavier=Instrument à touches comme le piano;synthétiseur=Instrument électronique qui crée des sons",[["La trompette appartient à la famille…","des bois|des cuivres|des cordes",1,"Trompette, trombone et cor sont des cuivres."],["Le violoncelle est un instrument à…","cordes frottées|vent|percussion",0,"On le joue avec un archet."],["Le xylophone appartient aux…","percussions|cuivres|cordes",0,"On le frappe avec des maillets."]],[["La flûte traversière est un cuivre.",0,"C'est un instrument de la famille des bois."],["Le piano a des touches : c'est un clavier.",1,"Ses sons viennent de cordes frappées par des marteaux."]],[["La clarinette fait partie de la famille des ___ .","bois","bois"],["Le tambour est une ___ .","percussion","percussion"]],""]
+],[
+["🎚️","Nuances, tempo et caractère","Pour interpréter une musique, le compositeur indique des <b>nuances</b> : <b>p</b> piano (doux), <b>f</b> forte (fort), <b>pp</b> pianissimo (très doux), <b>ff</b> fortissimo (très fort), <b>crescendo</b> (de plus en plus fort) et <b>decrescendo</b>.<br>Il précise aussi le <b>tempo</b> : <b>adagio</b> (lent), <b>andante</b> (modéré), <b>allegro</b> (rapide), <b>presto</b> (très rapide). Ces mots viennent de l'italien.","p = doux · f = fort · pp / ff = très|Crescendo = de plus en plus fort|Adagio lent · andante modéré · allegro rapide · presto très rapide|Ces termes sont en italien|Le caractère change l'émotion de l'œuvre","piano=Nuance : jouer doucement;forte=Nuance : jouer fort;crescendo=De plus en plus fort;adagio=Tempo lent;allegro=Tempo rapide;presto=Tempo très rapide",[["« ff » signifie…","très doux|fortissimo (très fort)|de plus en plus fort",1,"ff = fortissimo."],["Quel mot indique un tempo lent ?","presto|allegro|adagio",2,"Adagio = lent."],["Un crescendo, c'est…","de plus en plus doux|de plus en plus fort|de plus en plus lent",1,"Le contraire est decrescendo."]],[["Le mot « piano » désigne aussi une nuance douce.",1,"p = piano = doucement."],["Presto indique un tempo lent.",0,"Presto = très rapide."]],[["Pour jouer très doucement, on écrit ___ (pp).","pianissimo","pianissimo"],["Un tempo rapide se dit ___ .","allegro|presto","allegro (presto, plus rapide encore)"]],""],
+["🏛️","L'orchestre et les formations","L'<b>orchestre symphonique</b> réunit une centaine de musiciens en familles (cordes, bois, cuivres, percussions) sous la direction du <b>chef d'orchestre</b>. Il joue des <b>symphonies</b> et des <b>concertos</b> (un soliste avec l'orchestre).<br>Il existe des formations plus petites : le <b>duo</b>, le <b>trio</b>, le <b>quatuor à cordes</b> (2 violons, 1 alto, 1 violoncelle), le <b>big band</b> (jazz). Le <b>diapason</b> donne le « la » pour accorder les instruments.","Orchestre = cordes, bois, cuivres, percussions|Le chef d'orchestre dirige|Quatuor à cordes : 2 violons, alto, violoncelle|Concerto = soliste + orchestre|Le « la » sert à accorder","orchestre=Grand groupe de musiciens dirigé par un chef;chef d'orchestre=Personne qui dirige les musiciens;symphonie=Grande œuvre pour orchestre;concerto=Œuvre pour un soliste et un orchestre;quatuor=Formation de quatre musiciens;diapason=Donne le « la » pour accorder",[["Combien d'instruments compte un quatuor à cordes ?","3|4|5",1,"2 violons, 1 alto, 1 violoncelle."],["Qui dirige l'orchestre ?","le soliste|le chef d'orchestre|le compositeur",1,"Le chef coordonne les musiciens."],["Dans un concerto, il y a…","un soliste et un orchestre|seulement des voix|uniquement des percussions",0,"Le soliste dialogue avec l'orchestre."]],[["Le violoncelle fait partie d'un quatuor à cordes.",1,"Avec deux violons et un alto."],["Les cuivres sont la famille la plus nombreuse de l'orchestre symphonique.",0,"Ce sont les cordes."]],[["Le ___ dirige l'orchestre.","chef|chef d'orchestre","le chef d'orchestre"],["Une œuvre pour un soliste et un orchestre est un ___ .","concerto","concerto"]],""],
+["🎹","Mélodie, accompagnement et harmonie","Une chanson associe souvent une <b>mélodie</b> (la suite de notes qu'on chante) et un <b>accompagnement</b> (accords, basse, rythme). Plusieurs notes jouées en même temps forment un <b>accord</b> ; l'<b>harmonie</b> est l'art d'enchaîner les accords.<br>Un accord <b>majeur</b> sonne souvent joyeux, un accord <b>mineur</b> plus triste ou sombre. La <b>tonalité</b> est la famille de notes qui organise un morceau. La <b>polyphonie</b> superpose plusieurs mélodies.","Mélodie = notes qui se suivent (on la chante)|Accompagnement = accords, basse, rythme|Accord = plusieurs notes en même temps|Majeur ≈ joyeux · mineur ≈ triste|Polyphonie = plusieurs mélodies superposées","mélodie=Suite de notes que l'on peut chanter;accord=Plusieurs notes jouées en même temps;harmonie=Art d'enchaîner les accords;accompagnement=Ce qui soutient la mélodie;tonalité=Famille de notes qui organise un morceau;polyphonie=Plusieurs mélodies superposées",[["Un accord est…","une seule note|plusieurs notes jouées ensemble|un silence",1,"Au moins trois notes pour un accord classique."],["Un accord mineur sonne plutôt…","joyeux|triste ou sombre|très fort",1,"Le majeur est souvent perçu comme joyeux."],["La mélodie, c'est…","la suite de notes qu'on peut chanter|le rythme de la batterie|le volume",0,"C'est « l'air » de la chanson."]],[["L'accompagnement soutient la mélodie.",1,"Il peut être joué à la guitare, au piano…"],["Un accord se joue toujours avec une seule note.",0,"Il faut plusieurs notes simultanées."]],[["Plusieurs notes jouées en même temps forment un ___ .","accord","accord"],["L'air d'une chanson s'appelle la ___ .","mélodie","mélodie"]],"m,i"],
+["🌍","Musiques du monde et traditions","Chaque région du monde a ses musiques, ses instruments et ses danses : le <b>flamenco</b> (Espagne), le <b>fado</b> (Portugal), le <b>gamelan</b> (Indonésie, percussions en métal), le <b>sitar</b> (Inde), la <b>kora</b> (Afrique de l'Ouest), les <b>taiko</b> (Japon), la <b>samba</b> (Brésil), les musiques <b>celtiques</b> (Irlande, Bretagne).<br>Ces musiques se transmettent souvent à l'oreille, de génération en génération : c'est la <b>tradition orale</b>.","Musique traditionnelle = transmise oralement|Flamenco : Espagne · Fado : Portugal|Sitar : Inde · Kora : Afrique de l'Ouest · Gamelan : Indonésie|Samba : Brésil · Taiko : Japon|Les cultures se mélangent : c'est la fusion","flamenco=Musique espagnole avec guitare, chant et danse;fado=Chant mélancolique du Portugal;gamelan=Orchestre de percussions d'Indonésie;sitar=Instrument à cordes de l'Inde;kora=Harpe-luth d'Afrique de l'Ouest;samba=Musique et danse du Brésil",[["Le fado est une musique du…","Portugal|Japon|Brésil",0,"Fado signifie « destin »."],["Le sitar est un instrument…","d'Inde|d'Écosse|du Mexique",0,"Popularisé par Ravi Shankar."],["La tradition orale, c'est…","transmettre à l'oreille|écrire sur partition|enregistrer en studio",0,"On apprend en écoutant et en répétant."]],[["Le gamelan est un orchestre de percussions d'Indonésie.",1,"Gongs et métallophones."],["La kora vient d'Asie.",0,"Elle vient d'Afrique de l'Ouest."]],[["La ___ est une musique et une danse du Brésil.","samba","samba"],["Le ___ est un chant mélancolique du Portugal.","fado","fado"]],""],
+["🏰","Du Moyen Âge au baroque","La musique occidentale s'écrit depuis le <b>Moyen Âge</b> (chant <b>grégorien</b>, chanté à l'église par une seule voix). À la <b>Renaissance</b>, la <b>polyphonie</b> se développe (Josquin des Prés) et l'imprimerie diffuse les partitions. Le <b>baroque</b> (1600-1750) invente l'<b>opéra</b> (Monteverdi) ; Vivaldi, Bach et Haendel en sont les grands noms. Le <b>clavecin</b> et l'<b>orgue</b> sont typiques de l'époque.","Moyen Âge : chant grégorien (une seule voix)|Renaissance : polyphonie, imprimerie|Baroque (1600-1750) : opéra, clavecin, orgue|Compositeurs : Josquin, Monteverdi, Vivaldi, Bach, Haendel|Ordre : Moyen Âge → Renaissance → baroque","grégorien=Chant religieux à une seule voix, sans instrument;polyphonie=Plusieurs voix qui chantent des mélodies différentes;baroque=Époque de Vivaldi et Bach (1600-1750);clavecin=Instrument à clavier aux cordes pincées;opéra=Spectacle chanté avec orchestre et décors;Moyen Âge=Époque du chant grégorien",[["Qui a composé « Les Quatre Saisons » ?","Mozart|Vivaldi|Chopin",1,"Vivaldi, compositeur baroque italien."],["Le chant grégorien est chanté…","à une seule voix|à quatre voix|avec un orchestre",0,"C'est une monodie."],["Quelle époque vient en premier ?","baroque|Moyen Âge|classicisme",1,"Moyen Âge, Renaissance, baroque, classicisme…"]],[["J.-S. Bach est un compositeur baroque.",1,"Il est né en 1685."],["Le clavecin est un instrument du XXe siècle.",0,"Il est typique de la Renaissance et du baroque."]],[["Le chant ___ est le chant religieux du Moyen Âge.","grégorien","grégorien"],["L'époque de Vivaldi et de Bach s'appelle le ___ .","baroque","baroque"]],""]
+],[
+["🎹","Classicisme et romantisme","Le <b>classicisme</b> (vers 1750-1810) recherche l'équilibre, la clarté et des formes précises : Haydn, Mozart, Beethoven. Le piano remplace peu à peu le clavecin. Le <b>romantisme</b> (XIXe siècle) privilégie l'expression des sentiments et la liberté : Schubert, Chopin, Liszt, Berlioz, Wagner, Tchaïkovski.<br>On écrit des <b>lieder</b>, des <b>nocturnes</b>, des <b>poèmes symphoniques</b> et de grands <b>opéras</b>.","Classicisme : équilibre, clarté (Haydn, Mozart)|Romantisme : sentiments, liberté (Chopin, Schubert, Berlioz)|Beethoven fait le lien entre les deux|Le piano devient l'instrument roi|L'orchestre s'agrandit au XIXe siècle","classicisme=Style d'équilibre et de clarté (Mozart);romantisme=Style qui exprime les sentiments (Chopin);Mozart=Compositeur classique autrichien (1756-1791);Beethoven=Compositeur né à Bonn, devenu sourd;lied=Chant avec piano en langue allemande;nocturne=Pièce romantique de piano, calme et rêveuse",[["Quel compositeur est un grand romantique du piano ?","Chopin|Vivaldi|Monteverdi",0,"Frédéric Chopin (1810-1849)."],["Mozart est un compositeur…","baroque|classique|romantique",1,"Né à Salzbourg en 1756."],["Quelle caractéristique est romantique ?","l'expression des sentiments|la recherche d'un équilibre parfait|la musique sans instruments",0,"Le romantisme met l'émotion au premier plan."]],[["Beethoven est devenu sourd.",1,"Il a pourtant continué à composer."],["Chopin a surtout composé pour le piano.",1,"Nocturnes, valses, polonaises, études…"]],[["Mozart est un compositeur du ___ .","classicisme","classicisme"],["Un ___ est un chant avec piano en langue allemande.","lied","lied (pluriel : lieder)"]],""],
+["🔁","Les formes musicales","Une œuvre est <b>construite</b> : on répète, on varie, on oppose. <b>Couplet / refrain</b> : les couplets changent, le refrain revient (chansons). Le <b>rondo</b> fait revenir un refrain entre plusieurs couplets (A B A C A). Le <b>canon</b> imite une mélodie en décalé. <b>Thème et variations</b> : un thème est présenté puis transformé.<br>Un <b>riff</b> est un court motif répété (rock, funk) et un <b>ostinato</b> un motif répété en boucle.","Couplet / refrain : le refrain revient|Rondo : A B A C A|Canon : même mélodie décalée|Thème et variations : on transforme un thème|Ostinato / riff : motif répété en boucle","refrain=Partie qui revient entre les couplets;couplet=Partie qui change, avec de nouvelles paroles;rondo=Forme où le refrain revient entre les couplets;variation=Transformation d'un thème;ostinato=Motif répété en boucle;riff=Court motif répété, très utilisé en rock",[["Dans un rondo, le refrain…","ne revient jamais|revient plusieurs fois|est joué une seule fois",1,"Forme A B A C A."],["Un ostinato est…","un motif répété sans cesse|un silence|une nuance",0,"Il crée une pulsation hypnotique."],["La forme « thème et variations » consiste à…","transformer un thème|couper la musique|supprimer le rythme",0,"Le thème revient sous des formes différentes."]],[["Dans une chanson, le refrain reste identique d'une fois à l'autre.",1,"Les couplets, eux, changent de paroles."],["Un canon superpose la même mélodie en décalé.",1,"Exemple : Frère Jacques."]],[["Dans un rondo, le ___ revient plusieurs fois.","refrain","refrain"],["Un motif répété en boucle s'appelle un ___ .","ostinato","ostinato"]],""],
+["🎭","Musique et texte : chanson, opéra, comédie musicale","La musique s'associe au texte. La <b>chanson</b> (couplets et refrain) est un genre populaire. L'<b>opéra</b> est une œuvre entièrement chantée : <b>airs</b> (solo), <b>récitatifs</b> (chant proche de la parole), chœurs et orchestre ; le texte est le <b>livret</b>. La <b>comédie musicale</b> mêle chant, danse et dialogues parlés (Broadway). Dans la chanson à texte (Brassens, Brel), les paroles ont un rôle essentiel.","Opéra = œuvre entièrement chantée|Air = solo · récitatif = chant proche de la parole|Comédie musicale = chant + danse + dialogues|Chanson à texte : les paroles comptent beaucoup|Livret = texte d'un opéra","opéra=Œuvre théâtrale entièrement chantée;air=Moment où un personnage chante seul dans un opéra;récitatif=Chant proche de la parole;livret=Texte d'un opéra ou d'une comédie musicale;comédie musicale=Spectacle avec chant, danse et dialogues parlés;parolier=Personne qui écrit les paroles",[["Dans un opéra, tout est…","chanté|parlé|dansé",0,"L'opéra est un théâtre chanté."],["Le livret est…","le texte de l'œuvre|le chef d'orchestre|la partition du violon",0,"Il raconte l'histoire."],["Quel spectacle mélange chant, danse et dialogues parlés ?","la comédie musicale|le récital|la symphonie",0,"Broadway en est la capitale."]],[["Un récitatif est proche de la parole.",1,"Il fait avancer l'histoire."],["Un parolier écrit la musique.",0,"Il écrit les paroles ; le compositeur écrit la musique."]],[["Un spectacle entièrement chanté s'appelle un ___ .","opéra","opéra"],["Le texte d'un opéra s'appelle le ___ .","livret","livret"]],""],
+["🎷","Le jazz et le blues","Le <b>blues</b> naît vers 1900 dans le sud des États-Unis, dans les communautés afro-américaines (12 mesures, gamme blues). Le <b>jazz</b> naît à La Nouvelle-Orléans au début du XXe siècle, mêlant blues, ragtime et musiques européennes. Ses marques : l'<b>improvisation</b>, le <b>swing</b> (rythme chaloupé) et le dialogue entre musiciens.<br>Grands noms : Louis Armstrong, Duke Ellington, Ella Fitzgerald, Miles Davis, Django Reinhardt.","Blues : vers 1900, sud des États-Unis, 12 mesures|Jazz : début du XXe siècle, La Nouvelle-Orléans|Improvisation + swing|Instruments : trompette, saxophone, contrebasse, piano, batterie|Armstrong, Ellington, Ella Fitzgerald, Miles Davis","blues=Musique afro-américaine née vers 1900, en 12 mesures;jazz=Musique née à La Nouvelle-Orléans, avec improvisation;improvisation=Inventer la musique en la jouant;swing=Rythme chaloupé caractéristique du jazz;scat=Chant où la voix imite un instrument;big band=Grand orchestre de jazz",[["Dans quelle ville est né le jazz ?","La Nouvelle-Orléans|Paris|Londres",0,"Dans le sud des États-Unis."],["Improviser, c'est…","inventer en jouant|lire une partition|chanter en chœur",0,"Une caractéristique majeure du jazz."],["Qui était un grand trompettiste de jazz ?","Louis Armstrong|Chopin|Brassens",0,"Surnommé « Satchmo »."]],[["Le blues est apparu avant le rock'n'roll.",1,"Blues vers 1900, rock'n'roll dans les années 1950."],["Django Reinhardt est un guitariste de jazz manouche.",1,"Il a fondé le Quintette du Hot Club de France."]],[["Inventer la musique en la jouant, c'est ___ .","improviser|improvisation","improviser"],["Le rythme chaloupé du jazz s'appelle le ___ .","swing","swing"]],""],
+["🎬","Musique à programme et musique de film","La <b>musique à programme</b> raconte une histoire ou décrit un paysage : <i>Les Tableaux d'une exposition</i> (Moussorgski), <i>Le Carnaval des animaux</i> (Saint-Saëns), la <i>Symphonie fantastique</i> (Berlioz). Au cinéma, la <b>musique de film</b> souligne l'émotion et l'action : John Williams, Ennio Morricone, Hans Zimmer, Michel Legrand.<br>Un <b>leitmotiv</b> est un thème lié à un personnage ou une idée. La <b>bande originale</b> (BO) réunit les musiques d'un film.","Musique à programme = raconte une histoire|Leitmotiv = thème lié à un personnage|BO = bande originale d'un film|Williams, Morricone, Zimmer, Legrand|Berlioz, Saint-Saëns, Moussorgski","leitmotiv=Thème musical lié à un personnage;bande originale=Ensemble des musiques d'un film;musique à programme=Musique qui raconte une histoire;compositeur=Personne qui écrit la musique;thème=Court motif musical principal;orchestration=Choix des instruments pour jouer une œuvre",[["« Le Carnaval des animaux » est de…","Saint-Saëns|Mozart|Brel",0,"Camille Saint-Saëns (1886)."],["Un leitmotiv est…","un thème lié à un personnage|un instrument de percussion|un type de voix",0,"Très utilisé par Wagner et au cinéma."],["BO signifie…","bande originale|basse orchestrale|bruit ordinaire",0,"Les musiques composées pour un film."]],[["John Williams a composé la musique de Star Wars.",1,"Il a aussi composé Indiana Jones et Harry Potter."],["Un film n'a jamais de musique composée spécialement pour lui.",0,"La bande originale est souvent composée pour le film."]],[["La ___ originale réunit les musiques d'un film.","bande","bande originale"],["Un thème associé à un personnage s'appelle un ___ .","leitmotiv","leitmotiv"]],""]
+],[
+["🌀","La musique du XXe siècle","Au XXe siècle, les compositeurs cherchent de nouveaux langages. <b>Debussy</b> et <b>Ravel</b> (<b>impressionnisme</b>) jouent sur les timbres et les atmosphères. <b>Stravinsky</b> (<i>Le Sacre du printemps</i>, 1913) bouscule le rythme. <b>Schönberg</b> invente le <b>dodécaphonisme</b> (12 sons).<br>Avec la <b>musique concrète</b> (Pierre Schaeffer, 1948) on compose avec des bruits enregistrés. Le <b>minimalisme</b> (Steve Reich, Philip Glass) répète de petits motifs.","Impressionnisme : Debussy, Ravel (timbres, atmosphères)|Stravinsky : Le Sacre du printemps (1913)|Schönberg : dodécaphonisme (12 sons)|Schaeffer : musique concrète (bruits enregistrés)|Reich, Glass : minimalisme (répétition)","impressionnisme=Style de Debussy basé sur les atmosphères;dodécaphonisme=Méthode qui utilise les 12 sons de façon égale;musique concrète=Musique faite avec des bruits enregistrés;minimalisme=Style fondé sur la répétition de petits motifs;contemporain=Musique écrite de nos jours;timbre=La couleur d'un son",[["Qui a composé « Le Sacre du printemps » ?","Stravinsky|Debussy|Chopin",0,"Création scandaleuse à Paris en 1913."],["L'impressionnisme musical est lié à…","Debussy|Mozart|Bach",0,"Il privilégie les ambiances et les timbres."],["La musique concrète utilise…","des bruits enregistrés|uniquement des violons|des chœurs",0,"Inventée par Pierre Schaeffer."]],[["Le minimalisme repose sur la répétition de petits motifs.",1,"Steve Reich, Philip Glass."],["Ravel est un compositeur baroque.",0,"C'est un compositeur français du XXe siècle (Boléro, 1928)."]],[["Le « Boléro » est une œuvre de ___ .","Ravel","Maurice Ravel (1928)"],["La musique ___ est composée à partir de bruits enregistrés.","concrète","concrète"]],""],
+["🎸","Rock, pop, rap, électro : les musiques actuelles","Les <b>musiques actuelles</b> se diffusent grâce à la radio, aux disques puis au numérique. Le <b>rock'n'roll</b> naît dans les années 1950 (Elvis, Chuck Berry) et devient le <b>rock</b> (Beatles, Rolling Stones). Le <b>reggae</b> vient de Jamaïque (Bob Marley). Le <b>rap</b> et le <b>hip-hop</b> naissent dans le Bronx (New York) dans les années 1970 : texte scandé sur un <b>beat</b>, DJ, samples. L'<b>électro</b> (house, techno) est faite avec des machines (Kraftwerk, Daft Punk).","Rock'n'roll : années 1950 (Elvis, Chuck Berry)|Reggae : Jamaïque (Bob Marley)|Rap / hip-hop : Bronx, années 1970|Électro : machines (Daft Punk, Kraftwerk)|Rock : guitare électrique, basse, batterie","rock=Style à guitares électriques, basse et batterie;rap=Texte scandé sur un rythme (beat);reggae=Musique jamaïcaine au rythme décalé;électro=Musique créée avec des machines;sample=Court extrait sonore réutilisé dans un morceau;DJ=Personne qui mixe des morceaux",[["Le reggae vient de…","Jamaïque|France|Japon",0,"Bob Marley en est la figure majeure."],["Un sample, c'est…","un extrait sonore réutilisé|un type de voix|un instrument à cordes",0,"Très utilisé en rap et en électro."],["Quel groupe est britannique ?","The Beatles|Les Ramones|Nirvana",0,"Les Beatles viennent de Liverpool."]],[["Le rap est né dans le Bronx, à New York.",1,"Dans les années 1970."],["Le rock'n'roll est apparu dans les années 1990.",0,"Il est apparu dans les années 1950."]],[["Le ___ est une musique jamaïcaine popularisée par Bob Marley.","reggae","reggae"],["Dans le rap, le rythme de base s'appelle le ___ .","beat","beat"]],""],
+["💻","Musique et technologie","La technologie a transformé la musique. L'<b>enregistrement</b> (phonographe d'Edison, 1877) conserve le son ; le <b>micro</b> le capte ; l'amplificateur et les enceintes le diffusent. Le <b>synthétiseur</b> crée des sons électroniques. Avec la <b>MAO</b> (musique assistée par ordinateur) on compose, enregistre et <b>mixe</b> sur ordinateur. Le <b>MIDI</b> est un langage qui transmet les notes entre instruments et ordinateur. Le <b>streaming</b> permet d'écouter en ligne.","Edison : phonographe (1877)|Micro capte · enceinte diffuse|MAO = musique assistée par ordinateur|MIDI = langage de communication des instruments|Streaming = écoute en ligne","enregistrement=Conserver un son pour le réécouter;micro=Appareil qui capte le son;MAO=Composer avec un ordinateur;MIDI=Langage qui transmet les notes entre instruments;mixage=Régler et assembler les pistes d'un morceau;streaming=Écouter de la musique en ligne",[["Qui a inventé le phonographe ?","Edison|Mozart|Daft Punk",0,"En 1877."],["MAO signifie…","musique assistée par ordinateur|mélodie à l'orgue|mixage à l'oreille",0,"On crée la musique avec un logiciel."],["Le mixage consiste à…","régler et assembler les pistes|inventer un instrument|écrire une partition",0,"Régler volumes, effets, équilibre."]],[["Le micro diffuse le son dans la salle.",0,"Le micro capte ; l'enceinte diffuse."],["Le MIDI transmet des notes, pas des sons enregistrés.",1,"Il décrit quelles notes jouer."]],[["Un appareil qui capte le son s'appelle un ___ .","micro|microphone","micro (microphone)"],["Le ___ est un langage qui transmet les notes entre instruments et ordinateur.","MIDI","MIDI"]],""],
+["✊","Musique, société et engagement","La musique accompagne les grands moments de la société. Les <b>hymnes</b> (La Marseillaise) rassemblent une nation. Des artistes s'engagent par la chanson : Bob Dylan, Bob Marley, Nina Simone, Renaud… Elle peut dénoncer, revendiquer, unir (concerts caritatifs comme <i>Live Aid</i>).<br>Le <b>droit d'auteur</b> protège les créateurs (la SACEM collecte et reverse des droits). La <b>Fête de la musique</b> a lieu le 21 juin depuis 1982.","Hymne : chant d'un pays (La Marseillaise)|Chanson engagée : défendre des idées|Droit d'auteur : protège les créateurs (SACEM)|Fête de la musique : 21 juin, depuis 1982|La musique crée du lien","hymne=Chant officiel d'un pays;chanson engagée=Chanson qui défend une cause;droit d'auteur=Protège les créateurs de musique;SACEM=Société française qui gère les droits des auteurs;festival=Événement musical de plusieurs concerts;concert=Spectacle où des musiciens jouent devant un public",[["La Fête de la musique a lieu le…","21 juin|14 juillet|1er mai",0,"Depuis 1982."],["La Marseillaise est…","l'hymne national français|une comédie musicale|un opéra de Mozart",0,"Écrite en 1792 par Rouget de Lisle."],["Le droit d'auteur sert à…","protéger les créateurs|interdire d'écouter de la musique|vendre des instruments",0,"Les auteurs sont rémunérés quand leurs œuvres sont diffusées."]],[["La Fête de la musique est née en France.",1,"Créée en 1982."],["Une chanson engagée ne parle jamais de société.",0,"Elle défend justement une cause."]],[["La Marseillaise est l'___ national français.","hymne","hymne"],["La Fête de la musique a lieu le 21 ___ .","juin","21 juin"]],""],
+["🎤","Les métiers de la musique et la scène","Faire de la musique, c'est aussi un monde de métiers. Sur scène : l'<b>interprète</b> (chanteur, instrumentiste), le <b>chef d'orchestre</b>. Derrière la musique : le <b>compositeur</b>, l'<b>arrangeur</b>, le <b>parolier</b>. Dans l'ombre : l'<b>ingénieur du son</b>, le <b>régisseur</b>, le <b>producteur</b>, le <b>luthier</b> (il fabrique et répare les instruments à cordes).<br>On se forme au <b>conservatoire</b>, en école de musique, à l'université ou en école spécialisée.","Interprète joue ou chante · compositeur crée|Arrangeur réécrit une musique pour d'autres instruments|Ingénieur du son : captation et mixage|Luthier : fabrique et répare les instruments|Conservatoire = école de musique","interprète=Musicien ou chanteur qui joue une œuvre;compositeur=Personne qui crée la musique;arrangeur=Réécrit une musique pour d'autres instruments;luthier=Fabrique et répare des instruments;ingénieur du son=Capte et règle le son d'un concert;conservatoire=École publique de musique",[["Qui fabrique et répare les violons ?","un luthier|un parolier|un régisseur",0,"Le luthier travaille le bois."],["Un arrangeur…","réécrit une musique pour d'autres instruments|dirige l'orchestre|écrit les paroles",0,"Il adapte les œuvres."],["L'ingénieur du son s'occupe…","du son (captation, mixage)|des costumes|des affiches",0,"Il règle le rendu sonore."]],[["Un compositeur crée la musique.",1,"Il écrit les notes et les structures."],["Le conservatoire est un lieu de formation musicale.",1,"Il en existe dans toute la France."]],[["Celui qui fabrique des violons est un ___ .","luthier","luthier"],["Le chanteur ou l'instrumentiste qui joue une œuvre est un ___ .","interprète","interprète"]],""]
+]];
+// Frise : [emoji, nom, date affichée, année (tri), famille, description, artistes]
+const HIST=[
+["⛪","Chant grégorien (Moyen Âge)","Ve – XVe siècle",500,"C","Chant religieux à une seule voix, sans instrument. La notation musicale naît (Guido d'Arezzo, XIe s.).","Hildegarde de Bingen;Guillaume de Machaut;Léonin;Pérotin"],
+["🏰","Renaissance","XVe – XVIe siècle",1400,"C","Polyphonie à plusieurs voix, luth, madrigal. L'imprimerie diffuse les partitions.","Josquin des Prés;Palestrina;Clément Janequin;Thomas Tallis"],
+["🎻","Baroque","1600 – 1750",1600,"C","Naissance de l'opéra, basse continue, clavecin, orgue, concerto.","Monteverdi;Vivaldi;J.-S. Bach;Haendel;Lully;Rameau"],
+["🎼","Classicisme","1750 – 1810",1750,"C","Équilibre et clarté. Symphonie, sonate, quatuor. Le piano remplace le clavecin.","Haydn;Mozart;Beethoven;Gluck"],
+["🌹","Romantisme","1810 – 1900",1810,"C","Expression des sentiments, grand orchestre, virtuosité, lied, poème symphonique.","Schubert;Chopin;Liszt;Berlioz;Wagner;Verdi;Tchaïkovski"],
+["🎨","Impressionnisme musical","1890 – 1920",1890,"C","Atmosphères, timbres raffinés, gammes nouvelles.","Debussy;Ravel;Satie"],
+["🎸","Blues","vers 1900",1900,"J","Chant afro-américain du sud des États-Unis : 12 mesures, gamme blues.","Robert Johnson;Bessie Smith;Muddy Waters;B.B. King"],
+["🎷","Jazz","vers 1910",1910,"J","Né à La Nouvelle-Orléans. Improvisation, swing, big bands.","Louis Armstrong;Duke Ellington;Ella Fitzgerald;Miles Davis;Django Reinhardt"],
+["🌀","Musique du XXe siècle","dès 1913",1913,"C","Rupture : rythme (Stravinsky), dodécaphonisme (Schönberg), musique concrète (1948), minimalisme.","Stravinsky;Schönberg;Messiaen;Pierre Schaeffer;Steve Reich"],
+["🎬","Musique de film","dès 1930",1930,"C","Musique composée pour l'image : émotion, action, leitmotiv.","John Williams;Ennio Morricone;Hans Zimmer;Michel Legrand"],
+["🥖","Chanson française","dès les années 1930",1935,"P","La chanson à texte : les paroles ont un rôle essentiel.","Édith Piaf;Charles Trenet;Georges Brassens;Jacques Brel;Barbara;Serge Gainsbourg"],
+["🎙️","Soul","années 1950-60",1955,"P","Voix puissantes, héritage du gospel et du blues.","Ray Charles;Aretha Franklin;Otis Redding;Stevie Wonder"],
+["🕺","Rock'n'roll","années 1950",1954,"R","Guitare électrique, énergie, danse : naissance de la culture jeune.","Elvis Presley;Chuck Berry;Little Richard;Bill Haley"],
+["🎸","Rock","années 1960-70",1962,"R","Guitares électriques, basse, batterie : le son des groupes.","The Beatles;The Rolling Stones;Led Zeppelin;Pink Floyd;Queen;Jimi Hendrix"],
+["🌴","Reggae","fin des années 1960",1968,"P","Né en Jamaïque, rythme décalé, messages de paix et de liberté.","Bob Marley;Peter Tosh;Jimmy Cliff"],
+["🪩","Funk et disco","années 1970",1970,"P","Basse groovy, danse, boules à facettes.","James Brown;Earth, Wind & Fire;Bee Gees;Donna Summer;Chic"],
+["🤘","Metal","années 1970",1970,"R","Guitares saturées, puissance, voix intenses.","Black Sabbath;Iron Maiden;Metallica;AC/DC"],
+["🎤","Hip-hop et rap","années 1970 (Bronx)",1973,"H","Rap, DJing, breakdance et graff : la culture hip-hop.","DJ Kool Herc;Grandmaster Flash;Run-DMC;Tupac;MC Solaar;Kendrick Lamar"],
+["🧷","Punk","années 1970",1976,"R","Musique rapide et directe, attitude « Do it yourself ».","Ramones;Sex Pistols;The Clash"],
+["⭐","Pop","années 1980 →",1980,"P","Mélodies accrocheuses, grande diffusion, clips.","Michael Jackson;Madonna;Prince;Beyoncé;Taylor Swift"],
+["🎛️","Musique électronique","années 1980-90",1985,"H","Machines : synthétiseurs, boîtes à rythmes, samplers (house, techno).","Kraftwerk;Jean-Michel Jarre;Daft Punk;David Guetta;Justice"],
+["🎙️","Slam","1986 (Chicago) · France dès les années 2000",1986,"S","Poésie dite à voix haute, en public, avec peu ou pas de musique. Né à Chicago en 1986 (Marc Kelly Smith), il se développe en France dans les années 2000.","Grand Corps Malade;Abd al Malik;Souleymane Diamanka;Marc Kelly Smith (fondateur)"]
+].sort((a,b)=>a[3]-b[3]);
+const FAM={C:["Classique","#7c4dff"],J:["Jazz & blues","#ff9f43"],R:["Rock","#ef476f"],P:["Chanson, pop & reggae","#ff5c8a"],H:["Rap & électro","#2bb3a3"],S:["Slam & poésie","#38bdf8"]};
+// Mélodies du piano : [id, nom, notes MIDI, prix en 🎵 (0 = gratuite)]
+const MELO=[["ode","Ode à la joie (Beethoven)",[64,64,65,67,67,65,64,62,60,60,62,64,64,62,62],0],["fj","Frère Jacques",[60,62,64,60,60,62,64,60,64,65,67,64,65,67],0],["cl","Au clair de la lune",[60,60,60,62,64,62,60,64,62,62,60],0],
+["ah","Ah ! vous dirai-je, maman",[60,60,67,67,69,69,67,65,65,64,64,62,62,60],60],["jb","Jingle Bells (refrain)",[64,64,64,64,64,64,64,67,60,62,64],60],["dn","Douce nuit",[67,69,67,64,67,69,67,64,74,74,71,72,72,67],80],
+["s5","Symphonie n°5 (Beethoven)",[67,67,67,63,65,65,65,62],80],["mg","Menuet en sol (Bach)",[74,67,69,71,72,74,67,67],100],["fe","Pour Élise (Beethoven)",[76,75,76,75,76,71,74,72,69,60,64,69,71,64,68,71,72],120]];
+// Fiches d'identité : [clé (nom dans la frise), prénom(s), nom, naissance, mort, nationalité, style, œuvres, emoji, note]
+const AP=40;
+const ART=[["J.-S. Bach","Johann Sebastian","Bach",1685,1750,"allemand","Baroque","Le Clavier bien tempéré · Les Concertos brandebourgeois · La Passion selon saint Matthieu · Messe en si mineur","🎻",""],
+["Vivaldi","Antonio","Vivaldi",1678,1741,"italien","Baroque","Les Quatre Saisons · Gloria · L'Estro armonico","🎻",""],
+["Mozart","Wolfgang Amadeus","Mozart",1756,1791,"autrichien","Classicisme","La Flûte enchantée · Les Noces de Figaro · Requiem · Une petite musique de nuit","🎹",""],
+["Beethoven","Ludwig van","Beethoven",1770,1827,"allemand","Classicisme et romantisme","Symphonie n°5 · Symphonie n°9 (Ode à la joie) · Pour Élise · Sonate « Clair de lune »","🎹",""],
+["Chopin","Frédéric","Chopin",1810,1849,"polonais (installé en France)","Romantisme","Nocturnes · Polonaises · Valses · Études · Ballades","🎹",""],
+["Berlioz","Hector","Berlioz",1803,1869,"français","Romantisme","Symphonie fantastique · Harold en Italie · Les Troyens · Requiem","🎼",""],
+["Saint-Saëns","Camille","Saint-Saëns",1835,1921,"français","Romantisme","Le Carnaval des animaux · Danse macabre · Symphonie n°3 « avec orgue » · Samson et Dalila","🐘",""],
+["Debussy","Claude","Debussy",1862,1918,"français","Impressionnisme","Clair de lune · Prélude à l'après-midi d'un faune · La Mer · Pelléas et Mélisande","🎨",""],
+["Ravel","Maurice","Ravel",1875,1937,"français","Impressionnisme et XXe siècle","Boléro · Daphnis et Chloé · Le Tombeau de Couperin · Concerto pour la main gauche","🎨",""],
+["Stravinsky","Igor","Stravinsky",1882,1971,"russe (naturalisé français puis américain)","Musique du XXe siècle","L'Oiseau de feu · Petrouchka · Le Sacre du printemps","🌀",""],
+["Louis Armstrong","Louis","Armstrong",1901,1971,"américain","Jazz","West End Blues · What a Wonderful World · Hello, Dolly!","🎺",""],
+["Ella Fitzgerald","Ella Jane","Fitzgerald",1917,1996,"américaine","Jazz (scat)","A-Tisket, A-Tasket · Mack the Knife · Cheek to Cheek","🎙️",""],
+["Miles Davis","Miles Dewey","Davis",1926,1991,"américain","Jazz","Kind of Blue · Birth of the Cool · So What · Bitches Brew","🎺",""],
+["Django Reinhardt","Jean","Reinhardt",1910,1953,"belge de naissance, vivant en France","Jazz manouche","Minor Swing · Nuages · Djangology","🎸","Surnommé « Django »."],
+["Elvis Presley","Elvis Aaron","Presley",1935,1977,"américain","Rock'n'roll","Heartbreak Hotel · Hound Dog · Jailhouse Rock · Can't Help Falling in Love","🕺",""],
+["John Lennon","John Winston","Lennon",1940,1980,"britannique","Rock et pop (The Beatles)","Imagine · Strawberry Fields Forever · Come Together · Help!","🎸",""],
+["Michael Jackson","Michael Joseph","Jackson",1958,2009,"américain","Pop","Thriller · Billie Jean · Beat It · Bad","⭐",""],
+["Aretha Franklin","Aretha Louise","Franklin",1942,2018,"américaine","Soul","Respect · Chain of Fools · (You Make Me Feel Like) A Natural Woman","🎙️",""],
+["Bob Marley","Robert Nesta","Marley",1945,1981,"jamaïcain","Reggae","No Woman, No Cry · One Love · Redemption Song · Is This Love","🌴","Connu sous le nom de Bob Marley."],
+["Édith Piaf","Édith Giovanna","Gassion",1915,1963,"française","Chanson française","La Vie en rose · Non, je ne regrette rien · Hymne à l'amour · Milord","🥖","Nom de scène : Édith Piaf."],
+["Georges Brassens","Georges","Brassens",1921,1981,"français","Chanson à texte","Les Copains d'abord · La Mauvaise Réputation · Le Gorille · Brave Margot","🎸",""],
+["Jacques Brel","Jacques","Brel",1929,1978,"belge","Chanson française","Ne me quitte pas · Amsterdam · Le Plat Pays · Les Vieux","🎤",""],
+["Serge Gainsbourg","Lucien","Ginsburg",1928,1991,"français","Chanson et pop","Je t'aime… moi non plus · La Javanaise · Le Poinçonneur des Lilas","🎩","Nom de scène : Serge Gainsbourg."],
+["MC Solaar","Claude","M'Barali",1969,"","français (né à Dakar, au Sénégal)","Rap","Bouge de là · Caroline · Nouveau western","🎤","Nom de scène : MC Solaar."],
+["Jean-Michel Jarre","Jean-Michel","Jarre",1948,"","français","Musique électronique","Oxygène · Équinoxe · Zoolook · Magnetic Fields","🎛️",""],
+["Grand Corps Malade","Fabien","Marsaud",1977,"","français","Slam","Midi 20 · Enfant de la ville · Les Voyages en train · Roméo kiffe Juliette","🎙️","Nom de scène : Grand Corps Malade."],
+["Abd al Malik","Régis","Fayette-Mikano",1975,"","français","Rap et slam","Gibraltar · Dante · Château rouge","📖","Nom de scène : Abd al Malik."],
+["John Williams","John Towner","Williams",1932,"","américain","Musique de film","Star Wars · Les Dents de la mer · E.T. · Harry Potter","🎬",""],
+["Ennio Morricone","Ennio","Morricone",1928,2020,"italien","Musique de film","Le Bon, la Brute et le Truand · Il était une fois dans l'Ouest · Mission · Cinema Paradiso","🎬",""]];
+const STOPS=[["🎼","Conservatoire"],["🎹","Salzbourg"],["🎻","Vienne"],["🎷","La Nouvelle-Orléans"],["🎸","Liverpool"],["🎤","Nashville"],["🥁","Rio de Janeiro"],["🎧","Berlin"],["🎬","Hollywood"],["🏟️","Stade de France"],["🌍","Festival mondial"],["🏆","Victoires de la musique"]];
+const TE=["🎶","🎙️","📻","🎚️","🎛️","🎪","🎡","🎭","🎟️","🎠"];
+const GR=["Apprenti","Choriste","Musicien","Soliste","Virtuose","Maestro"];
+// Bonus : [id, emoji ou couleur, catégorie, nom, étape qui le débloque]
+const ITEMS=[["h1","🧢","hat","Casquette",1],["h2","🎧","hat","Casque audio",3],["h3","🎩","hat","Haut-de-forme",5],["h4","🤠","hat","Chapeau de cow-boy",8],["h5","👑","hat","Couronne",12],
+["f1","🕶️","face","Lunettes de soleil",2],["f2","🥸","face","Déguisement",6],["f3","🧔","face","Barbe",9],
+["i1","🎤","hand","Micro",2],["i2","🎸","hand","Guitare",4],["i3","🥁","hand","Batterie",6],["i4","🎷","hand","Saxophone",8],["i5","🎻","hand","Violon",10],["i6","🎹","hand","Clavier",13],["i7","🎺","hand","Trompette",15],
+["p1","🐦","pet","Oiseau chanteur",3],["p2","🐱","pet","Chat",5],["p3","🐶","pet","Chien",7],["p4","🦜","pet","Perroquet",11],["p5","🦄","pet","Licorne",14],
+["a1","#e6dcff","aura","Lavande",1],["a2","#ffd6e7","aura","Rose",4],["a3","#ffe7a3","aura","Soleil",7],["a4","#cdeeed","aura","Menthe",10],["a5","#d5e8ff","aura","Ciel",13]];
+const SLOTS=[["hat","🎩 Chapeaux"],["face","😎 Visage"],["hand","🎸 Instruments"],["pet","🐾 Compagnons"],["aura","🎨 Couleurs de fond"]];
+const JK=[["f","🎯","50/50","Enlève des mauvaises réponses d'un QCM",30],["h","💡","Indice","Donne la première lettre d'une réponse écrite",20],["r","🔄","Seconde chance","Permet de retenter une question ratée",40]];
+const LEGAL_CONTACT="";
+const ALL=D.flatMap((a,l)=>a.map((_,i)=>[l,i]));
+const info=k=>k<12?{e:STOPS[k][0],n:STOPS[k][1],lv:Math.floor(k/3),t:LV[Math.floor(k/3)]}:{e:TE[(k-12)%10],n:"Camp d'entraînement n°"+(k-11),lv:3,t:"Révisions 6ème → 3ème",train:1};
+// ===== Outils
+const $=s=>document.querySelector(s),app=$("#app");
+const R=n=>Math.floor(Math.random()*n),sh=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const plain=s=>String(s).toLowerCase().replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");
+const H=(h,c)=>{const d=document.createElement("div");if(c)d.className=c;d.innerHTML=h;return d};
+const B=(t,c,f)=>{const b=document.createElement("button");b.className=c;b.textContent=t;b.onclick=f;return b};
+const h2=t=>Object.assign(document.createElement("h2"),{textContent:t});
+const cam=(h,i,n,lo,hi)=>{lo=lo||38;hi=hi||64;const l=n>1?hi-(hi-lo)*i/(n-1):(hi+lo)/2;return[`hsl(${h} 88% ${l}%)`,`hsl(${h} 90% ${Math.max(l-9,18)}%)`]};
+const cbtn=(html,h,i,n,f)=>{const b=H(html,"btn axe cb"),[c1,c2]=cam(h,i,n,40,62);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=f;return b};
+const toast=m=>{let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.append(t)}t.textContent=m;t.style.opacity=1;clearTimeout(t._h);t._h=setTimeout(()=>{t.style.opacity=0},5000)};
+let S={pts:0,stage:0,done:{},best:{},eq:{},own:{},jk:{}};
+try{Object.assign(S,JSON.parse(localStorage.getItem("musicall1")||"{}"))}catch(e){}
+S.eq=S.eq||{};S.own=S.own||{};S.jk=S.jk||{};S.art=S.art||{};S.mel=S.mel||{};
+const save=()=>{try{localStorage.setItem("musicall1",JSON.stringify(S))}catch(e){}};
+const upd=()=>{$("#score").textContent="🎵 "+S.pts};
+const addPts=n=>{S.pts+=n;save();upd()};
+var TM=null,CLEAN=null;let backFn=null;
+const RBM={home:"par",journey:"par",history:"his",games:"jeu",instr:"ins",shop:"bou"},RBC={par:"#e63f86",cls:"#2f7be0",his:"#e09b00",jeu:"#f07a0a",ins:"#12a387",bou:"#e0443a"};
+const nav=(b,t,rk)=>{clearInterval(TM);if(CLEAN){CLEAN();CLEAN=null}backFn=b;$("#back").style.visibility=b?"visible":"hidden";app.innerHTML="";window.scrollTo(0,0);upd();document.body.style.setProperty("--rb",RBC[rk||RBM[t]||"par"]);document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x.dataset.t==t))};
+$("#back").onclick=()=>backFn&&backFn();$("#ttl").onclick=()=>home();
+// ===== Son (synthétisé par le navigateur : aucun enregistrement)
+let AC=null;const ac=()=>AC||(AC=new (window.AudioContext||window.webkitAudioContext)());
+function voice(m,timb){
+  const c=ac();if(c.state=="suspended")c.resume();
+  const now=c.currentTime,f=440*Math.pow(2,(m-69)/12),g=c.createGain(),os=[];g.connect(c.destination);
+  const mk=(type,fr,v)=>{const o=c.createOscillator(),gg=c.createGain();o.type=type;o.frequency.value=fr;gg.gain.value=v;o.connect(gg);gg.connect(g);o.start(now);os.push(o)};
+  let sus=true;
+  if(timb=="piano"){mk("triangle",f,1);mk("sine",f*2,.35);mk("sine",f*3,.12);sus=false}
+  else if(timb=="orgue"){mk("sine",f,1);mk("sine",f*2,.5);mk("sine",f*4,.25)}
+  else if(timb=="synthé"){mk("sawtooth",f,.5);mk("square",f*1.005,.25)}
+  else{mk("sine",f,1);mk("sine",f*2,.1)}
+  g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.28,now+.012);
+  if(!sus)g.gain.exponentialRampToValueAtTime(.001,now+1.8);
+  return{stop(){const t=c.currentTime;try{g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(Math.max(g.gain.value,.001),t);g.gain.exponentialRampToValueAtTime(.001,t+(sus?.18:.4))}catch(e){}os.forEach(o=>{try{o.stop(t+.5)}catch(e){}})}};
+}
+const play=ev=>{try{ev.forEach(([m,s,d])=>setTimeout(()=>{const v=voice(m,"piano");setTimeout(()=>v.stop(),d*1000)},s*1000))}catch(e){toast("🔇 Le son n'est pas disponible sur cet appareil.")}};
+let NB=null;
+function drum(k){
+  const c=ac();if(c.state=="suspended")c.resume();const now=c.currentTime;
+  const nz=(hp,dur,v)=>{if(!NB){NB=c.createBuffer(1,c.sampleRate,c.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=NB;f.type="highpass";f.frequency.value=hp;s.connect(f);f.connect(g);g.connect(c.destination);g.gain.setValueAtTime(v,now);g.gain.exponentialRampToValueAtTime(.001,now+dur);s.start(now);s.stop(now+dur)};
+  const os=(f0,f1,dur,v,type)=>{const o=c.createOscillator(),g=c.createGain();o.type=type||"sine";o.frequency.setValueAtTime(f0,now);o.frequency.exponentialRampToValueAtTime(f1,now+dur);g.gain.setValueAtTime(v,now);g.gain.exponentialRampToValueAtTime(.001,now+dur);o.connect(g);g.connect(c.destination);o.start(now);o.stop(now+dur)};
+  if(k=="kick")os(160,45,.35,.9);else if(k=="snare"){nz(1500,.18,.5);os(200,120,.12,.4,"triangle")}else if(k=="hat")nz(7000,.06,.3);else if(k=="open")nz(6000,.3,.25);else if(k=="clap")nz(1200,.15,.5);else os(240,90,.3,.7);
+}
+// ===== Exercices sonores et lecture de notes
+const NN=["do","ré","mi","fa","sol","la","si"];
+function staff(d){
+  const y=80-d*5,led=d<=-2?'<line x1="100" x2="132" y1="90" y2="90"/>':"";
+  const stem=d<4?`<line x1="121.5" x2="121.5" y1="${y}" y2="${y-28}"/>`:`<line x1="108.5" x2="108.5" y1="${y}" y2="${y+28}"/>`;
+  return `<svg viewBox="0 0 220 120" width="260" style="display:block;margin:6px auto" stroke="currentColor" stroke-width="1.5" fill="none">${[40,50,60,70,80].map(v=>`<line x1="10" x2="210" y1="${v}" y2="${v}"/>`).join("")}${led}<text x="16" y="77" font-size="32" font-family="Georgia,serif" font-style="italic" font-weight="bold" fill="currentColor" stroke="none">G</text><ellipse cx="115" cy="${y}" rx="7.5" ry="5.2" fill="currentColor" transform="rotate(-20 115 ${y})"/>${stem}</svg>`;
+}
+const AUD={
+  h:()=>{const m1=55+R(25),same=R(4)==0,m2=same?m1:m1+(R(2)?1:-1)*(3+R(8));return{t:"q",q:"Écoute les deux sons : le second est…",o:["plus aigu","plus grave","identique"],a:same?2:m2>m1?0:1,snd:[[m1,0,.7],[m2,.9,.7]],ex:"Plus un son est aigu, plus sa fréquence est élevée."}},
+  i:()=>{const m1=55+R(20),up=R(2),m2=m1+(up?1:-1)*(2+R(6));return{t:"q",q:"Écoute cette mélodie de deux notes : elle est…",o:["montante","descendante"],a:up?0:1,snd:[[m1,0,.7],[m2,.9,.7]],ex:"Montante : la 2e note est plus haute que la 1re."}},
+  m:()=>{const r=48+R(12),maj=R(2);return{t:"q",q:"Écoute cet accord : il est plutôt…",o:["majeur (joyeux)","mineur (triste)"],a:maj?0:1,snd:[[r,0,1.6],[r+(maj?4:3),0,1.6],[r+7,0,1.6]],ex:"Majeur : souvent joyeux. Mineur : souvent plus triste ou sombre."}},
+  s:()=>{const d=R(12)-2,n=NN[(((d+2)%7)+7)%7],o=sh([n,...sh(NN.filter(x=>x!=n)).slice(0,2)]);return{t:"q",q:"Quelle est cette note ? (clé de sol : le G est sur la ligne du sol)",pre:staff(d),o,a:o.indexOf(n),ex:"1re ligne = mi, puis fa, sol, la, si, do, ré…"}}
+};
+// ===== Génération aléatoire d'exercices pour un thème
+function gen(l,i){
+  const a=D[l][i],out=[],pool=D[l].flatMap(x=>x[4].split(";").map(y=>y.split("=")));
+  a[4].split(";").map(x=>x.split("=")).forEach(([t,d])=>{
+    const o=pool.filter(p=>p[0]!=t&&p[1]!=d);
+    const o1=sh([d,...sh(o).slice(0,2).map(p=>p[1])]);out.push({t:"q",q:"Quelle est la définition de « "+t+" » ?",o:o1,a:o1.indexOf(d)});
+    const o2=sh([t,...sh(o).slice(0,2).map(p=>p[0])]);out.push({t:"q",q:"Quel terme correspond à : « "+d+" » ?",o:o2,a:o2.indexOf(t)});
+    out.push({t:"f",q:"Écris le terme défini : « "+d+" »",a:plain(t),disp:t});
+  });
+  a[5].forEach(([q,o,k,ex])=>{const p=o.split("|"),c=p[k],s=sh(p);out.push({t:"q",q,o:s,a:s.indexOf(c),ex})});
+  a[6].forEach(([s,v,ex])=>out.push({t:"q",q:"Vrai ou faux ? "+s,o:["Vrai","Faux"],a:v?0:1,ex}));
+  a[7].forEach(([q,an,ex])=>out.push({t:"f",q:"Complète : "+q,a:an.split("|").map(plain).join("|"),disp:an.split("|")[0],ex}));
+  (a[8]||"").split(",").filter(Boolean).forEach(k=>{for(let j=0;j<3;j++)out.push(AUD[k]())});
+  return out;
+}
+// ===== Un exercice
+function ask(c,e,cb){
+  let fin=false;const msg=H("","msg"),jb=H("","chips");
+  const end=(ok,ans)=>{if(fin)return;fin=true;msg.className="msg "+(ok?"ok":"ko");msg.textContent=ok?"✅ Bravo !":"❌ Réponse : "+ans;
+    if(e.ex)c.append(H("💡 "+e.ex,"tr"));jb.remove();
+    if(!ok&&S.jk.r>0&&!e.rt){const rb=B("🔄 Seconde chance ("+S.jk.r+")","btn main alt",()=>{S.jk.r--;save();e.rt=1;c.innerHTML="";ask(c,e,cb)}),ct=B("Continuer ➜","btn main",()=>{rb.remove();ct.remove();cb(false)});c.append(rb,ct);return}
+    cb(ok)};
+  c.append(H(e.q,"q"));if(e.pre)c.append(H(e.pre));
+  if(e.snd){const row=H("","chips");row.append(B("🔊 Écouter","chip",()=>play(e.snd)));c.append(row);setTimeout(()=>{if(!fin)play(e.snd)},350)}
+  if(e.t=="q"){
+    e.o.forEach((t,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=()=>{if(fin)return;b.classList.add(i==e.a?"ok":"ko");c.querySelectorAll(".opt")[e.a].classList.add("ok");end(i==e.a,e.o[e.a])};c.append(b)});
+    if(S.jk.f>0&&e.o.length>2)jb.append(B("🎯 50/50 ×"+S.jk.f,"chip",()=>{if(fin||S.jk.f<1)return;S.jk.f--;save();const bs=[...c.querySelectorAll(".opt")],w=sh(bs.map((_,i)=>i).filter(i=>i!=e.a));w.slice(0,Math.min(2,w.length-1)).forEach(i=>{bs[i].style.display="none"});jb.innerHTML=""}));
+  }else{
+    const i=document.createElement("input");i.type="text";i.placeholder="Ta réponse…";i.autocapitalize="off";i.autocomplete="off";i.spellcheck=false;
+    const g=B("Valider","btn main",()=>{if(!fin)end(e.a.split("|").includes(plain(i.value)),e.disp||e.a.split("|")[0])});i.onkeydown=k=>{if(k.key=="Enter")g.click()};c.append(i,g);
+    if(S.jk.h>0)jb.append(B("💡 Indice ×"+S.jk.h,"chip",()=>{if(fin||S.jk.h<1)return;S.jk.h--;save();const a=e.disp||e.a.split("|")[0];jb.innerHTML="";jb.append(H("💡 Commence par « <b>"+a[0]+"</b> » · "+plain(a).length+" lettres","tr"))}));
+  }
+  c.append(msg,jb);
+}
+function series(box,list,fin){
+  let i=0,ok=0;box.classList.add("ex");
+  const next=()=>{
+    if(i>=list.length)return fin(ok,list.length);
+    box.innerHTML="";window.scrollTo(0,0);
+    box.append(H(`<small>Question ${i+1} / ${list.length}</small><div class="bar"><i style="width:${i/list.length*100}%"></i></div>`));
+    const c=H("","card");box.append(c);
+    ask(c,list[i],r=>{if(r)ok++;i++;const b=B(i>=list.length?"Terminer 🏁":"Suivant ➜","btn main",next);c.append(b);b.scrollIntoView({block:"nearest",behavior:"smooth"})});
+  };next();
+}
+// ===== Personnages : dessins facultatifs (hero.png, hero2.png, hero3.png) et accessoires (items/ID.png), sinon emoji
+const HF=["hero.png","hero2.png","hero3.png"],HERO_OK=[1];
+function fb(e){if(e.dataset.alt){const a=e.dataset.alt;e.dataset.alt="";e.src=a}else e.outerHTML=e.dataset.fb}
+const worn=s=>ITEMS.find(i=>i[2]==s&&i[0]==S.eq[s]&&(i[4]<=S.stage||S.own[i[0]]));
+const CL={hat:"hat",face:"fc",hand:"hd",pet:"pt"};
+function avatar(px,only,hi,bare){
+  hi=hi??((S.hero||0)==0||HERO_OK[S.hero]?(S.hero||0):0);
+  const au=only&&only[2]=="aura"?only:(bare||only?null:worn("aura")),sl=bare?[]:only?(only[2]=="aura"?[]:[only]):["pet","hand","face","hat"].map(worn).filter(Boolean);
+  const dir=hi>0?`items/hero${hi+1}/`:"items/";
+  const ly=sl.map(i=>`<img class="ly" src="${dir}${i[0]}.png" data-alt="${hi>0?"items/"+i[0]+".png":""}" data-fb="<span class=${CL[i[2]]}>${i[1]}</span>" alt="" onerror="fb(this)">`).join("");
+  return `<div class="av" style="font-size:${px}px;${au?"background:"+au[1]:""}"><img class="b" src="${HF[hi]}" data-fb="<span class=b>🧑‍🎤</span>" alt="" onerror="fb(this)">${ly}</div>`;
+}
+// ===== Accueil
+function home(){
+  nav(null,"home");
+  app.append(H(`${avatar(40)}<div><h3>Salut ! Prêt(e) à faire de la musique ?</h3><p>Étape ${S.stage+1} du parcours · ${Object.keys(S.done).length} thèmes réussis</p></div>`,"hero-card"));
+  app.append(B("🗺️ Continuer le parcours","btn main",()=>journey()));
+  if((HERO_OK[1]||HERO_OK[2])&&!S.hc){const c=H("<b>🧑‍🎤 Choisis ton personnage !</b>","card");c.append(B("Voir les personnages","btn main alt",heroPage));app.append(c)}
+  app.append(h2("📚 Réviser par classe"));
+  const g=H("","grid");
+  LV.forEach((l,k)=>{const n=Object.keys(S.done).filter(x=>x.startsWith(k+"-")).length,b=H(`${l}<small>${n} / ${D[k].length} thèmes réussis</small>`,"btn lv"),[c1,c2]=cam(215,k,4,38,62);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=()=>level(k);g.append(b)});
+  app.append(g,h2("✨ Découvrir et jouer"));
+  const g2=H("","grid");
+  [["📜","Frise de l'histoire","Styles, dates et artistes",hist,45],["🎹","Instruments","Piano, batterie, rythmes",instr,165],["🎮","Petits jeux","Pendu, mots croisés, memory…",games,28],["🛍️","Boutique","Mélodies, fiches, bonus",shop,5]].forEach(([e,n,d,f,h])=>{const b=H(`${e} ${n}<small>${d}</small>`,"btn lv"),[c1,c2]=cam(h,1,3,40,60);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.style.fontSize="1.2rem";b.onclick=()=>f();g2.append(b)});
+  app.append(g2);
+}
+function level(l){
+  nav(home,"home","cls");app.append(h2(LV[l]+" · Choisis un thème"));
+  D[l].forEach((a,i)=>{const id=l+"-"+i;app.append(cbtn(`<span class="t">${a[0]}</span><span><b>${a[1]}</b><small>Thème ${i+1}${S.best[id]!=null?" · 🎵 "+S.best[id]+"/8":""}${S.done[id]?" · ✔ réussi":""}</small></span>`,215,i,5,()=>theme(l,i)))});
+}
+function theme(l,i){
+  const a=D[l][i],id=l+"-"+i;nav(()=>level(l),"home","cls");
+  app.append(H(`<h3>${a[0]} ${a[1]}</h3><small class="tr">${LV[l]} · Thème ${i+1}</small>`,"card"));
+  const seg=H(`<button>📖 Leçon</button><button>✏️ Exercices</button>`,"seg"),box=H("");app.append(seg,box);
+  const bs=seg.querySelectorAll("button"),tab=n=>{bs.forEach((b,k)=>b.classList.toggle("on",k==n));box.innerHTML=""};
+  const lesson=()=>{tab(0);box.append(H(`<b>📖 Rappel de leçon</b><p>${a[2]}</p>`,"card lesson"),H(`<h3>💡 Ce qu'il faut retenir</h3><ul style="padding:0;margin:0">${a[3].split("|").map(x=>"<li>"+x+"</li>").join("")}</ul>`,"card retain"));box.append(B("✏️ Passer aux exercices","btn main",ex))};
+  const ex=()=>{tab(1);const c=H(`<div class="em">✏️</div><h3>8 exercices au hasard</h3><p>5 bonnes réponses pour réussir le thème. Les questions changent à chaque série !${a[8]?"<br>🔊 Mets le son : il y a des questions à écouter."+(a[8].includes("s")?" Et des notes à lire sur une portée !":""):""}</p>`,"card big");c.append(B("🚀 C'est parti !","btn main",run));box.append(c)};
+  const run=()=>{tab(1);series(box,sh(gen(l,i)).slice(0,8),(ok,n)=>{const first=!S.done[id];if(ok>=5)S.done[id]=1;S.best[id]=Math.max(S.best[id]||0,ok);const p=ok*10+(first&&ok>=5?20:0);addPts(p);
+    box.innerHTML="";const c=H(`<div class="em">${ok==n?"🏆":ok>=5?"🎉":"💪"}</div><h3>${ok} / ${n}</h3><p>+${p} 🎵<br>${ok>=5?"Thème réussi !":"Il faut 5 bonnes réponses pour valider le thème. Courage !"}</p>`,"card big");
+    const bt=[B("🔄 Nouvelle série","btn main",run),B("📖 Revoir la leçon","btn main alt",lesson),B("Retour aux thèmes","btn main alt",()=>level(l))];c.append(...bt);box.append(c);window.scrollTo(0,0)})};
+  lesson();
+}
+// ===== Parcours (infini)
+function journey(walk){
+  nav(null,"journey");const st=S.stage;
+  app.append(H(`<b>Grade : ${GR[Math.min(5,Math.floor(st/3))]}</b> · étape ${st+1}<div class="bar"><i style="width:${Math.min(st,12)/12*100}%"></i></div><small class="tr">Touche l'étape où se trouve ton héros pour jouer. Tu peux rejouer les étapes déjà passées.</small>`,"card"));
+  if(st>=12)app.append(H(`🏆 <b>Parcours principal terminé !</b> Le chemin continue : des camps d'entraînement qui révisent tout le programme de la 6ème à la 3ème, sans fin.`,"gift"));
+  const road=H("","road");let cur=null;
+  for(let k=Math.max(0,st-8);k<=st+3;k++){
+    const s=info(k),row=H("","stop "+(k%2?"l":"r")),nw=H("","nw"),n=document.createElement("button");
+    n.className="node "+(k<st?"done":k==st?"cur":"lock");n.textContent=k<st?"✔":s.e;n.setAttribute("aria-label",s.n);
+    if(k<=st)n.onclick=()=>stop(k);
+    nw.append(n);if(k==st){nw.append(H(avatar(36),"hero"+(walk?" walk":"")));cur=row}
+    row.append(H(`${s.n}<small>${s.t}${k%3==2?" · ⭐ étape finale":""}${k==st?" · 👆 Touche ici !":""}</small>`,"lab"),nw);road.append(row)}
+  app.append(road);
+  if(cur)setTimeout(()=>cur.scrollIntoView({block:"center",behavior:"smooth"}),60);
+}
+function stop(k){
+  nav(()=>journey(),"journey");const s=info(k),boss=k%3==2,n=s.train?(boss?10:8):(boss?8:6),m=s.lv+1;
+  const box=H("");app.append(box);
+  const intro=()=>{box.innerHTML="";const c=H(`<div class="em">${s.e}</div><h3>${s.n}</h3><p>${n} exercices · ${s.t}<br>Il faut ${n-2} bonnes réponses pour continuer le parcours.</p>`,"card big");c.append(B("C'est parti ! 🚀","btn main",play));box.append(c)};
+  const play=()=>{const list=[];for(let j=0;j<n;j++){const [l,i]=s.train?ALL[((k-12)*n+j)%ALL.length]:[s.lv,R(D[s.lv].length)];list.push(sh(gen(l,i))[0])}
+    series(box,list,ok=>{const pass=ok>=n-2,first=pass&&k==S.stage,p=ok*10*m+(first?30:0);S.pts+=p;if(first)S.stage++;save();upd();
+      const gifts=first?ITEMS.filter(i=>i[4]==S.stage):[];
+      box.innerHTML="";const c=H(`<div class="em">${pass?"🎉":"💪"}</div><h3>${ok} / ${n}</h3><p>+${p} 🎵<br>${pass?(first?"Ton héros continue sa route !":"Étape réussie !"):"Presque ! Il faut "+(n-2)+" bonnes réponses. Réessaie !"}</p>${gifts.length?`<div class="gift">🎁 Nouveau bonus : ${gifts.map(g=>g[2]=="aura"?"🎨 "+g[3]:g[1]+" "+g[3]).join(", ")} !</div>`:""}`,"card big");
+      c.append(B(pass?"Continuer le parcours ➜":"🔄 Réessayer","btn main",()=>pass?journey(first):stop(k)));
+      if(gifts.length)c.append(B("🎒 Habiller mon héros","btn main alt",heroPage));
+      if(!pass)c.append(B("Retour au parcours","btn main alt",()=>journey()));box.append(c)})};
+  intro();
+}
+// ===== Frise chronologique
+function hist(){
+  nav(null,"history");app.append(h2("📜 Frise de l'histoire de la musique"));
+  let f="all";const bar=H("","chips"),wrap=H("","tl"),inner=H("","tli"),det=H("");wrap.append(inner);
+  const ar=H("","arrows");ar.append(B("◀","btn",()=>wrap.scrollBy({left:-320,behavior:"smooth"})),B("▶","btn",()=>wrap.scrollBy({left:320,behavior:"smooth"})));
+  app.append(bar,ar,wrap,det,H(`<small class="tr">Les dates sont approximatives : un style apparaît progressivement. Les artistes avec 🪪 ont une fiche d'identité (à débloquer dans la boutique).</small>`));
+  const draw=()=>{
+    bar.innerHTML="";[["all","Tout"],...Object.entries(FAM).map(([k,v])=>[k,v[0]])].forEach(([k,n])=>{bar.append(B(n,"chip"+(f==k?"":" off"),()=>{f=k;det.innerHTML="";draw()}))});
+    inner.innerHTML="";
+    HIST.filter(h=>f=="all"||h[4]==f).forEach(h=>{const t=H(`<span class="dt">${h[2]}</span><i></i><div class="tc"><div>${h[0]}</div><b>${h[1]}</b></div>`,"ti");t.style.setProperty("--c",FAM[h[4]][1]);
+      t.onclick=()=>{inner.querySelectorAll(".ti").forEach(x=>x.classList.remove("on"));t.classList.add("on");det.innerHTML="";
+        const c=H(`<h3>${h[0]} ${h[1]}</h3><p><b>${h[2]}</b> · ${FAM[h[4]][0]}</p><p>${h[5]}</p><b>🎧 Artistes majeurs</b>`,"card"),ch=H("","chips");
+        h[6].split(";").forEach(a=>{const ix=ART.findIndex(x=>x[0]==a),own=ix>=0&&S.art[a];
+          ch.append(B(a+(ix<0?"":own?" 🪪":" 🔒"),"chip"+(ix>=0&&!own?" off":""),()=>{if(ix<0)return;if(own)fiche(ix,hist);else toast("🪪 Fiche d'identité à débloquer dans la boutique ("+AP+" 🎵)")}))});
+        c.append(ch);det.append(c);c.scrollIntoView({behavior:"smooth",block:"nearest"})};
+      inner.append(t)});
+  };
+  draw();
+}
+// ===== Instruments
+function instr(){
+  nav(null,"instr");app.append(h2("🎹 Espace instruments"));
+  [["🎹","Piano","Joue sur le clavier, change de timbre, apprends des mélodies",piano],["🥁","Batterie et rythme","Pads, séquenceur de rythmes et métronome",drums]].forEach(([e,t,d,f],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${t}</b><small>${d}</small></span>`,165,i,2,()=>f())));
+  app.append(H(`<small class="tr">Les sons sont fabriqués directement par ton appareil. Pense à mettre le volume !</small>`));
+}
+function piano(){
+  nav(instr,"instr");app.append(h2("🎹 Piano"));
+  let timb="piano",names=false,mel=null,mi=0,err=0;
+  const NK=["do","do♯","ré","ré♯","mi","fa","fa♯","sol","sol♯","la","la♯","si"];
+  const ctl=H("","chips"),kb=H("","piano"),info2=H("","tr"),act={},keys={};
+  const draw=()=>{ctl.innerHTML="";["piano","orgue","synthé","flûte"].forEach(t=>ctl.append(B(t,"chip"+(timb==t?"":" off"),()=>{timb=t;draw()})));ctl.append(B(names?"🔤 Noms : oui":"🔤 Noms : non","chip off",()=>{names=!names;draw();labels()}))};
+  const labels=()=>{Object.values(keys).forEach(k=>{if(k.cl.contains("wk"))k.el.textContent=names?NK[k.m%12]:""})};
+  app.append(ctl,kb,info2);
+  let wi=0;
+  for(let m=60;m<84;m++){
+    const blk=[1,3,6,8,10].includes(m%12),el=document.createElement("div");el.className=blk?"bk":"wk";
+    if(blk)el.style.left=`calc(${wi*100/14}% - 2.15%)`;else wi++;
+    keys[m]={el,m,cl:el.classList};kb.append(el);
+    const on=pid=>{if(act[pid])return;act[pid]=voice(m,timb);el.classList.add("on");hit(m)},off=pid=>{if(act[pid]){act[pid].stop();delete act[pid]}el.classList.remove("on")};
+    el.onpointerdown=e=>{e.preventDefault();on("p"+e.pointerId)};el.onpointerup=el.onpointerleave=el.onpointercancel=e=>off("p"+e.pointerId);
+    keys[m].on=on;keys[m].off=off;
+  }
+  const CODES=["KeyA","KeyW","KeyS","KeyE","KeyD","KeyF","KeyT","KeyG","KeyY","KeyH","KeyU","KeyJ","KeyK","KeyO","KeyL","KeyP","Semicolon"];
+  const kd=e=>{const i=CODES.indexOf(e.code);if(i>=0&&!e.repeat&&keys[60+i])keys[60+i].on("k"+e.code)},ku=e=>{const i=CODES.indexOf(e.code);if(i>=0&&keys[60+i])keys[60+i].off("k"+e.code)};
+  try{addEventListener("keydown",kd);addEventListener("keyup",ku)}catch(e){}
+  CLEAN=()=>{try{removeEventListener("keydown",kd);removeEventListener("keyup",ku)}catch(e){}Object.values(act).forEach(v=>v.stop())};
+  const mark=()=>{Object.values(keys).forEach(k=>k.cl.remove("tg"));if(mel&&mi<mel.length)keys[mel[mi]].cl.add("tg")};
+  const hit=m=>{if(!mel)return;if(m==mel[mi]){mi++;if(mi>=mel.length){const p=err<=3?10:5;addPts(p);info2.textContent="🎉 Mélodie terminée ! "+err+" erreur(s) · +"+p+" 🎵";mel=null}else info2.textContent="Note "+(mi+1)+" / "+mel.length+" · erreurs : "+err;mark()}else{err++;info2.textContent="Oups ! Cherche la touche jaune. Erreurs : "+err}};
+  draw();
+  const tr=H(`<h3>🎯 Joue une mélodie</h3><small class="tr">Appuie sur les touches qui s'allument en jaune. Moins de 4 erreurs : +10 🎵.</small>`,"card");
+  MELO.forEach(([id,n,seq,pr])=>{const r=H("","chips");
+    if(pr==0||S.mel[id])r.append(B("▶ "+n,"chip",()=>{mel=seq;mi=0;err=0;info2.textContent="Note 1 / "+seq.length;mark()}),B("🔊 Écouter","chip off",()=>play(seq.map((m,i)=>[m,i*.45,.4]))));
+    else r.append(B("🔒 "+n+" · "+pr+" 🎵 (boutique)","chip off",()=>shop()));tr.append(r)});
+  app.append(tr,H(`<small class="tr">Sur ordinateur : joue avec la rangée du milieu du clavier (touches blanches) et celle du dessus (touches noires). Nouvelles mélodies à acheter dans la boutique.</small>`));
+}
+function drums(){
+  nav(instr,"instr");app.append(h2("🥁 Batterie et rythme"));
+  const PD=[["kick","Grosse caisse","#7c4dff"],["snare","Caisse claire","#ff5c8a"],["hat","Charleston","#ff9f43"],["open","Charleston ouvert","#2bb3a3"],["clap","Claquement","#ef476f"],["tom","Tom","#4b2a8f"]];
+  const pads=H("","pads");PD.forEach(([k,n,c])=>{const b=B(n,"pad",()=>{try{drum(k)}catch(e){toast("🔇 Son indisponible")}});b.style.background=c;b.onpointerdown=e=>{e.preventDefault();try{drum(k)}catch(x){}};b.onclick=null;pads.append(b)});
+  app.append(pads);
+  const TR=[["kick","Grosse caisse"],["snare","Caisse claire"],["hat","Charleston"],["clap","Claquement"]],grid=TR.map(()=>Array(8).fill(0));
+  const card=H(`<h3>🎛️ Compose ton rythme</h3><small class="tr">8 temps. Touche les cases pour construire ton rythme, puis appuie sur Lecture.</small>`,"card"),sq=H("","sq"),cells=[];
+  TR.forEach(([k,n],r)=>{sq.append(H(`<b>${n}</b>`));for(let c=0;c<8;c++){const b=document.createElement("button");b.className="sc";b.onclick=()=>{grid[r][c]^=1;b.classList.toggle("on",!!grid[r][c]);if(grid[r][c])try{drum(k)}catch(e){}};cells.push(b);sq.append(b)}});
+  let bpm=100,step=0,run=false;
+  const bl=H(`<b>Tempo : <span id="bpm">100</span> BPM</b>`),sl=document.createElement("input");sl.type="range";sl.min=60;sl.max=180;sl.value=100;sl.style.width="100%";sl.oninput=()=>{bpm=+sl.value;$("#bpm").textContent=bpm;if(run){stopSeq();startSeq()}};
+  const tick=()=>{cells.forEach((b,i)=>b.classList.toggle("cur",i%8==step));TR.forEach(([k],r)=>{if(grid[r][step])try{drum(k)}catch(e){}});step=(step+1)%8};
+  const startSeq=()=>{run=true;step=0;tick();TM=setInterval(tick,30000/bpm)},stopSeq=()=>{run=false;clearInterval(TM);cells.forEach(b=>b.classList.remove("cur"))};
+  const pb=B("▶ Lecture","btn main",()=>{if(run){stopSeq();pb.textContent="▶ Lecture"}else{startSeq();pb.textContent="⏹ Stop"}});
+  const rock=B("Rythme rock","btn main alt",()=>{const P=[[1,0,0,0,1,0,0,0],[0,0,1,0,0,0,1,0],[1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0]];P.forEach((row,r)=>row.forEach((v,c)=>{grid[r][c]=v;cells[r*8+c].classList.toggle("on",!!v)}))});
+  const clr=B("Effacer","btn main alt",()=>{grid.forEach((row,r)=>row.forEach((_,c)=>{grid[r][c]=0;cells[r*8+c].classList.remove("on")}))});
+  card.append(sq,bl,sl,pb,rock,clr);app.append(card);
+  // métronome
+  let mrun=false,beat=0,mt=null;const mb=H(`<h3>⏱️ Métronome</h3><small class="tr">Un clic régulier pour garder la pulsation. Le premier temps est plus aigu.</small>`,"card"),ms=document.createElement("input");ms.type="range";ms.min=40;ms.max=200;ms.value=80;ms.style.width="100%";
+  const ml=H(`<b>Tempo : <span id="mbpm">80</span> BPM</b>`),bt=H("","chips");let per=4;
+  [2,3,4].forEach(p=>bt.append(B(p+" temps","chip"+(p==per?"":" off"),e=>{per=p;[...bt.children].forEach(x=>x.classList.add("off"));e.target.classList.remove("off")})));
+  const click=()=>{try{const c=ac(),o=c.createOscillator(),g=c.createGain();o.frequency.value=beat%per==0?1500:1000;g.gain.setValueAtTime(.3,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.06);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.07)}catch(e){}beat++};
+  const mst=()=>{clearInterval(mt);mrun=false},msg=B("▶ Démarrer","btn main",()=>{if(mrun){mst();msg.textContent="▶ Démarrer"}else{mrun=true;beat=0;click();mt=setInterval(click,60000/+ms.value);msg.textContent="⏹ Arrêter"}});
+  ms.oninput=()=>{$("#mbpm").textContent=ms.value;if(mrun){clearInterval(mt);mt=setInterval(click,60000/+ms.value)}};
+  mb.append(ml,ms,bt,msg);app.append(mb);
+  CLEAN=()=>{clearInterval(TM);clearInterval(mt)};
+}
+// ===== Jeux
+let gl=-1;
+const vocab=()=>(gl<0?D.flat():D[gl]).flatMap(a=>a[4].split(";").map(x=>{const [t,d]=x.split("=");return{t,d,p:plain(t),cat:a[1]}}));
+const uniqV=(n,maxD)=>{const seen=new Set(),P=[];sh(vocab()).forEach(v=>{if(P.length<n&&!seen.has(v.p)&&!seen.has(v.d)&&v.t.length<=16&&v.d.length<=maxD){seen.add(v.p);seen.add(v.d);P.push(v)}});return P};
+function games(){
+  nav(null,"games");app.append(h2("🎮 Petits jeux"));
+  const c=H(`<b>Niveau des mots</b>`,"card"),sel=document.createElement("select");
+  sel.innerHTML=`<option value="-1">🎲 Tous les niveaux</option>`+LV.map((l,k)=>`<option value="${k}">${l}</option>`).join("");sel.value=gl;sel.onchange=()=>{gl=+sel.value};c.append(sel);app.append(c);
+  const G=[["🔤","Le pendu","Devine le mot de musique",pendu],["🔍","Mots mêlés","Retrouve les mots cachés dans la grille",wsearch],["✏️","Mots croisés","Remplis la grille avec les définitions",xword],["🏷️","Glisse les étiquettes","Place chaque terme en face de sa définition",etiq],["🃏","Memory","Retrouve les paires terme / définition",memory],["⚡","Défi chrono","45 secondes de questions",chrono],["🎼","Lecture de notes","Nomme les notes sur la portée",()=>quick("notes")],["👂","Entraîne ton oreille","Aigu ou grave ? Majeur ou mineur ?",()=>quick("ear")],["📜","Remets la frise en ordre","Classe les styles du plus ancien au plus récent",ordre]];
+  G.forEach(([e,t,d,f],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${t}</b><small>${d}</small></span>`,28,i,G.length,()=>f())));
+}
+const hintBtn=(label,cost,text)=>{const w=H("");w.append(B("💡 "+label+" ("+cost+" 🎵)","btn main alt",()=>{if(S.pts<cost){toast("Il te manque "+(cost-S.pts)+" 🎵. Continue les exercices !");return}S.pts-=cost;save();upd();const b=w.querySelector("button");if(b)b.remove();w.append(H("💡 "+text,"gift"))}));return w};
+function pendu(){
+  nav(games,"games");
+  const P=vocab().filter(v=>v.p.length>=4&&v.p.length<=12),v=P[R(P.length)],w=v.p,found=new Set(),M=7;let bad=0,over=false;
+  const box=H(""),hang=H(""),wd=H(""),kb=H("","kb"),msg=H("","msg"),h1=hintBtn("Indice : la catégorie",5,"Catégorie : "+v.cat),h3=hintBtn("Indice : la définition",15,v.d);
+  app.append(box);box.append(H(`<b>Le pendu</b><small class="tr">Trouve le mot de musique. Les indices s'achètent avec tes notes.</small>`),h1,h3,hang,wd,kb,msg);
+  const parts=['<line x1="10" y1="110" x2="70" y2="110"/>','<line x1="30" y1="110" x2="30" y2="10"/>','<line x1="30" y1="10" x2="85" y2="10"/><line x1="85" y1="10" x2="85" y2="24"/>','<circle cx="85" cy="32" r="8"/>','<line x1="85" y1="40" x2="85" y2="75"/>','<line x1="68" y1="55" x2="102" y2="55"/>','<line x1="85" y1="75" x2="72" y2="98"/><line x1="85" y1="75" x2="98" y2="98"/>'];
+  const draw=()=>{hang.innerHTML=`<svg viewBox="0 0 120 120" width="150" height="150" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" style="display:block;margin:auto">${parts.slice(0,bad).join("")}</svg>`;
+    wd.innerHTML=`<div style="text-align:center;font-size:2rem;letter-spacing:.3em;font-weight:900">${[...w].map(l=>found.has(l)||over?l.toUpperCase():"_").join(" ")}</div><p class="tr" style="text-align:center">${M-bad} erreur(s) possible(s)</p>`};
+  const end=win=>{msg.className="msg "+(win?"ok":"ko");msg.textContent=win?"🎉 Bravo ! « "+v.t+" » · +10 🎵":"💀 Perdu ! Le mot était : « "+v.t+" »";h1.remove();h3.remove();box.append(H("💡 "+v.d,"tr"),B("Mot suivant ➜","btn main",pendu))};
+  "abcdefghijklmnopqrstuvwxyz".split("").forEach(l=>{const b=B(l.toUpperCase(),"opt kbk",()=>{if(over||b.disabled)return;b.disabled=true;
+    if(w.includes(l)){found.add(l);b.classList.add("ok")}else{bad++;b.classList.add("ko")}
+    if([...w].every(x=>found.has(x))){over=true;addPts(10);end(true)}else if(bad>=M){over=true;end(false)}draw()});kb.append(b)});
+  draw();
+}
+function wsearch(){
+  nav(games,"games");
+  const N=10,seen=new Set(),W=sh(vocab().filter(v=>v.p.length>=4&&v.p.length<=9)).filter(v=>!seen.has(v.p)&&seen.add(v.p)).slice(0,6),g=Array(N*N).fill(""),pl=[];
+  const DIRS=[[0,1],[1,0],[1,1],[-1,1]];
+  W.forEach(v=>{for(let t=0;t<300;t++){const [dr,dc]=DIRS[R(4)],r=R(N),c=R(N),er=r+dr*(v.p.length-1),ec=c+dc*(v.p.length-1);if(er<0||er>=N||ec<0||ec>=N)continue;
+    let ok=true;for(let k=0;k<v.p.length;k++){const x=g[(r+dr*k)*N+c+dc*k];if(x&&x!=v.p[k]){ok=false;break}}
+    if(ok){for(let k=0;k<v.p.length;k++)g[(r+dr*k)*N+c+dc*k]=v.p[k];pl.push(v);break}}});
+  for(let i=0;i<N*N;i++)if(!g[i])g[i]="abcdefghijklmnopqrstuvwxyz"[R(26)];
+  const found=new Set(),box=H(""),grid=H("","ws"),wl=H("","wl"),msg=H("","msg"),dbox=H("","card"),cs=[];let st=-1;
+  dbox.style.display="none";dbox.append(H("<h3>📖 Les définitions des mots trouvés</h3>"));
+  app.append(box);box.append(H(`<b>Mots mêlés</b><small class="tr">Touche la 1re lettre d'un mot, puis sa dernière lettre. Les mots vont en ligne, en colonne ou en diagonale. Quand tu trouves un mot, sa définition apparaît !</small>`),wl,grid,msg,dbox);
+  pl.forEach(v=>wl.append(H(v.p.toUpperCase(),"")));const wls=[...wl.children];
+  g.forEach((l,i)=>{const b=B(l.toUpperCase(),"wc",()=>{
+    if(st<0){st=i;b.classList.add("s");return}
+    const r1=Math.floor(st/N),c1=st%N,r2=Math.floor(i/N),c2=i%N,dr=r2-r1,dc=c2-c1;cs[st].classList.remove("s");st=-1;
+    if(!(dr==0||dc==0||Math.abs(dr)==Math.abs(dc))||(dr==0&&dc==0))return;
+    const n=Math.max(Math.abs(dr),Math.abs(dc)),sr=Math.sign(dr),sc=Math.sign(dc),idx=[];let s="";for(let k=0;k<=n;k++){const j=(r1+sr*k)*N+c1+sc*k;idx.push(j);s+=g[j]}
+    const hit=pl.findIndex(v=>!found.has(v.p)&&(v.p==s||v.p==[...s].reverse().join("")));
+    if(hit>=0){found.add(pl[hit].p);idx.forEach(j=>cs[j].classList.add("f"));wls[hit].classList.add("f");addPts(5);msg.className="msg ok";msg.textContent="✅ « "+pl[hit].t+" » trouvé ! +5 🎵";
+      dbox.style.display="";dbox.append(H(`<b>${pl[hit].t}</b> : ${pl[hit].d}`));
+      if(found.size==pl.length){addPts(10);msg.textContent="🎉 Tous les mots trouvés ! +10 🎵 de bonus";box.append(B("Nouvelle grille ➜","btn main",wsearch))}}
+    else{msg.className="msg ko";msg.textContent="Ce n'est pas un des mots de la liste."}});cs.push(b);grid.append(b)});
+}
+// Mots croisés : génération par placement de mots croisés
+function xgen(ws){
+  let best=[];
+  for(let tr=0;tr<40;tr++){
+    const L=sh(ws).sort((a,b)=>b.p.length-a.p.length+(Math.random()-.5)*3),G=new Map(),DR=new Map(),placed=[];
+    const g=(r,c)=>G.get(r+","+c);
+    const ok=(w,r,c,h)=>{const dr=h?0:1,dc=h?1:0;if(g(r-dr,c-dc)||g(r+dr*w.length,c+dc*w.length))return false;let cross=0;
+      for(let k=0;k<w.length;k++){const rr=r+dr*k,cc=c+dc*k,x=g(rr,cc);
+        if(x){if(x!=w[k]||(DR.get(rr+","+cc)||"").includes(h?"h":"v"))return false;cross++}
+        else if(g(rr+dc,cc+dr)||g(rr-dc,cc-dr))return false}
+      return placed.length==0||cross>0};
+    const put=(o,r,c,h)=>{const dr=h?0:1,dc=h?1:0;for(let k=0;k<o.p.length;k++){const key=(r+dr*k)+","+(c+dc*k);G.set(key,o.p[k]);DR.set(key,(DR.get(key)||"")+(h?"h":"v"))}placed.push({...o,r,c,h})};
+    L.forEach(o=>{
+      if(!placed.length){put(o,0,0,true);return}
+      const cand=[];placed.forEach(q=>{for(let i=0;i<q.p.length;i++)for(let j=0;j<o.p.length;j++)if(q.p[i]==o.p[j]){const h=!q.h;cand.push([q.h?q.r-j:q.r+i,q.h?q.c+i:q.c-j,h])}});
+      for(const [r,c,h] of sh(cand))if(ok(o.p,r,c,h)){put(o,r,c,h);return}});
+    if(placed.length>best.length)best=placed;if(best.length==ws.length)break;
+  }
+  return best;
+}
+function xword(){
+  nav(games,"games");
+  const seen=new Set(),ws=sh(vocab().filter(v=>v.p.length>=4&&v.p.length<=10)).filter(v=>!seen.has(v.p)&&seen.add(v.p)).slice(0,9);
+  const pl=xgen(ws),mr=Math.min(...pl.map(o=>o.r)),mc=Math.min(...pl.map(o=>o.c));pl.forEach(o=>{o.r-=mr;o.c-=mc});
+  const rows=Math.max(...pl.map(o=>o.r+(o.h?1:o.p.length))),cols=Math.max(...pl.map(o=>o.c+(o.h?o.p.length:1))),cs=Math.max(22,Math.min(38,Math.floor(320/cols)));
+  const cell={},dirs={};pl.forEach(o=>{for(let k=0;k<o.p.length;k++){const r=o.r+(o.h?0:k),c=o.c+(o.h?k:0),key=r+","+c;cell[key]=o.p[k];dirs[key]=(dirs[key]||"")+(o.h?"h":"v")}});
+  const starts=[...pl].sort((a,b)=>a.r-b.r||a.c-b.c);let num=0;const numAt={};starts.forEach(o=>{const key=o.r+","+o.c;if(!numAt[key])numAt[key]=++num;o.n=numAt[key]});
+  const box=H(""),grid=H("","xw"),msg=H("","msg"),inputs={};grid.style.gridTemplateColumns=`repeat(${cols},${cs}px)`;grid.style.setProperty("--cs",cs+"px");
+  app.append(box);box.append(H(`<b>Mots croisés</b><small class="tr">Remplis la grille avec les mots de musique définis ci-dessous.</small>`),grid);
+  let pref="h";
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const key=r+","+c,d=H("","xc"+(cell[key]?"":" b"));
+    if(cell[key]){if(numAt[key])d.append(Object.assign(document.createElement("small"),{textContent:numAt[key]}));
+      const i=document.createElement("input");i.maxLength=1;i.autocomplete="off";i.autocapitalize="characters";i.spellcheck=false;i.setAttribute("aria-label","case");inputs[key]=i;
+      i.onfocus=()=>{if(dirs[key].length==1)pref=dirs[key]};
+      i.oninput=()=>{i.value=i.value.slice(-1);const nx=inputs[(r+(pref=="v"?1:0))+","+(c+(pref=="h"?1:0))];if(i.value&&nx)nx.focus()};d.append(i)}
+    grid.append(d)}
+  const cl=H("","card"),ac2=pl.filter(o=>o.h).sort((a,b)=>a.n-b.n),dn=pl.filter(o=>!o.h).sort((a,b)=>a.n-b.n);
+  const li=o=>`<li><b>${o.n}.</b> ${o.d} <small>(${o.p.length} lettres)</small></li>`;
+  cl.innerHTML=`<h3>➡️ Horizontalement</h3><ul class="cl" style="padding-left:18px">${ac2.map(li).join("")}</ul><h3>⬇️ Verticalement</h3><ul class="cl" style="padding-left:18px">${dn.map(li).join("")}</ul>`;
+  let won=false;
+  const bchk=B("✅ Vérifier","btn main",()=>{if(won)return;let okc=0,tot=0;Object.entries(inputs).forEach(([k,i])=>{tot++;const par=i.parentNode;par.classList.remove("ok","ko");if(i.value){if(plain(i.value)==cell[k]){par.classList.add("ok");okc++}else par.classList.add("ko")}});
+    if(okc==tot){won=true;addPts(20);msg.className="msg ok";msg.textContent="🎉 Grille réussie ! +20 🎵";box.append(B("Nouvelle grille ➜","btn main",xword))}else{msg.className="msg ko";msg.textContent=okc+" / "+tot+" lettres justes."}});
+  const brev=B("🔎 Révéler une lettre (10 🎵)","btn main alt",()=>{if(won)return;const miss=Object.entries(inputs).filter(([k,i])=>plain(i.value)!=cell[k]);if(!miss.length)return;if(S.pts<10){toast("Il te manque "+(10-S.pts)+" 🎵.");return}S.pts-=10;save();upd();const [k,i]=miss[R(miss.length)];i.value=cell[k].toUpperCase();i.parentNode.classList.add("ok")});
+  box.append(bchk,brev,msg,cl);
+}
+function etiq(){
+  nav(games,"games");
+  const P=uniqV(6,44),box=H(""),rows=H(""),pool=H("","chips"),msg=H("","msg"),slots=[];let sel=null,won=false;
+  app.append(box);box.append(H(`<b>Glisse chaque terme en face de sa définition</b><small class="tr">Ou touche un terme, puis touche la case. Touche un terme placé pour le reprendre.</small>`),rows,pool,msg);
+  const put=(c,s)=>{if(s.firstChild&&s.firstChild!=c)pool.append(s.firstChild);s.append(c)};
+  P.forEach(v=>{const s=H("","slot"),r=H(`<b>${v.d}</b>`,"dz");s.dataset.a=v.t;slots.push(s);r.append(s);rows.append(r);s.onclick=()=>{if(sel&&!s.classList.contains("ok")){put(sel,s);sel.classList.remove("sel");sel=null}}});
+  const drag=c=>{c.onpointerdown=e=>{if(c.style.pointerEvents=="none")return;e.preventDefault();const sx=e.clientX,sy=e.clientY;let mv=false,gh=null;
+    const m=ev=>{if(!mv){if(Math.hypot(ev.clientX-sx,ev.clientY-sy)<8)return;mv=true;gh=c.cloneNode(true);gh.style.cssText="position:fixed;z-index:99;pointer-events:none;box-shadow:0 8px 20px rgba(0,0,0,.3)";document.body.append(gh);c.style.opacity=.3}gh.style.left=ev.clientX-30+"px";gh.style.top=ev.clientY-22+"px"};
+    const u=ev=>{removeEventListener("pointermove",m);removeEventListener("pointerup",u);removeEventListener("pointercancel",u);
+      if(mv){gh.remove();c.style.opacity=1;const t=document.elementFromPoint(ev.clientX,ev.clientY),s=t&&t.closest(".slot");if(s&&!s.classList.contains("ok"))put(c,s);else if(t&&t.closest(".chips")==pool)pool.append(c)}
+      else if(c.parentNode.classList.contains("slot"))pool.append(c);
+      else{if(sel)sel.classList.remove("sel");sel=sel==c?null:c;if(sel)c.classList.add("sel")}};
+    addEventListener("pointermove",m);addEventListener("pointerup",u);addEventListener("pointercancel",u)}};
+  sh(P.map(v=>v.t)).forEach(t=>{const c=document.createElement("button");c.className="chip";c.textContent=t;drag(c);pool.append(c)});
+  box.append(B("✅ Vérifier","btn main",()=>{if(won)return;let n=0;
+    slots.forEach(s=>{const c=s.firstChild;if(!c)return;if(c.textContent==s.dataset.a){s.classList.add("ok");c.style.pointerEvents="none";n++}else{s.classList.add("ko");pool.append(c);setTimeout(()=>s.classList.remove("ko"),900)}});
+    msg.className="msg "+(n==P.length?"ok":"ko");
+    if(n==P.length){won=true;addPts(15);msg.textContent="🎉 Tout est bon ! +15 🎵";box.append(B("Rejouer ➜","btn main",etiq))}else msg.textContent=n+" / "+P.length+" bien placés. Corrige les cases rouges !"}));
+}
+function memory(){
+  nav(games,"games");
+  const P=uniqV(6,34),cards=sh(P.flatMap((v,i)=>[{i,t:v.t,l:"t"},{i,t:v.d,l:"d"}])),box=H(""),g=H("","mem");let open=[],moves=0,found=0,lock=false;
+  app.append(box);box.append(H(`<b>Memory : associe chaque terme à sa définition</b>`),g);
+  cards.forEach(c=>{const b=document.createElement("button");b.className="mc";b.textContent="❓";g.append(b);
+    b.onclick=()=>{if(lock||b.classList.contains("up")||b.classList.contains("done"))return;b.classList.add("up");b.textContent=c.t;open.push([b,c]);
+      if(open.length==2){moves++;const [[b1,c1],[b2,c2]]=open;open=[];
+        if(c1.i==c2.i&&c1.l!=c2.l){b1.classList.add("done");b2.classList.add("done");found++;
+          if(found==P.length){const p=Math.max(5,30-2*moves);addPts(p);box.append(H(`<div class="em">🎉</div><h3>Bravo ! ${moves} coups</h3><p>+${p} 🎵</p>`,"card big"),B("Rejouer ➜","btn main",memory))}}
+        else{lock=true;setTimeout(()=>{[b1,b2].forEach(x=>{x.classList.remove("up");x.textContent="❓"});lock=false},1100)}}}});
+}
+function chrono(){
+  nav(games,"games");
+  const box=H(""),top=H("","card"),q=H("");let score=0,t=45;app.append(box);box.append(top,q);
+  const pick=()=>{const ls=gl<0?ALL:ALL.filter(x=>x[0]==gl),[l,i]=ls[R(ls.length)];const qs=gen(l,i).filter(e=>e.t=="q"&&!e.snd&&!e.pre);return qs[R(qs.length)]};
+  const hud=()=>{top.innerHTML=`<b>⚡ ${t} s</b> · Score : ${score}<div class="bar"><i style="width:${t/45*100}%"></i></div>`};
+  const next=()=>{q.innerHTML="";const e=pick(),card=H(`<div class="q"><b>${e.q}</b></div>`,"card");e.o.forEach((o,i)=>card.append(B(o,"opt",()=>{if(t>0){if(i==e.a)score++;hud();next()}})));q.append(card)};
+  hud();next();
+  TM=setInterval(()=>{t--;hud();if(t<=0){clearInterval(TM);const p=score*2;addPts(p);box.innerHTML="";box.append(H(`<div class="em">⚡</div><h3>${score} bonnes réponses</h3><p>+${p} 🎵</p>`,"card big"),B("Rejouer ➜","btn main",chrono),B("Retour aux jeux","btn main alt",games))}},1000);
+}
+function quick(kind){
+  nav(games,"games");const box=H("");app.append(box);
+  const n=kind=="notes"?10:8,list=[];for(let j=0;j<n;j++)list.push(kind=="notes"?AUD.s():AUD[["h","i","m"][R(3)]]());
+  series(box,list,(ok,n)=>{const p=ok*3;addPts(p);box.innerHTML="";const c=H(`<div class="em">${ok==n?"🏆":"🎉"}</div><h3>${ok} / ${n}</h3><p>+${p} 🎵</p>`,"card big");c.append(B("Rejouer ➜","btn main",()=>quick(kind)),B("Retour aux jeux","btn main alt",games));box.append(c)});
+}
+function ordre(){
+  nav(games,"games");
+  const P=sh(HIST).slice(0,5),ans=[...P].sort((a,b)=>a[3]-b[3]),box=H(""),zone=H("","chips zone"),pool=H("","chips"),msg=H("","msg");let won=false;
+  app.append(box);box.append(H(`<b>Du plus ancien au plus récent</b><small class="tr">Touche les styles dans l'ordre chronologique. Touche un style placé pour le retirer.</small>`),zone,pool,msg);
+  P.forEach(h=>{const c=B(h[0]+" "+h[1],"chip",()=>{if(!won)(c.parentNode==pool?zone:pool).append(c)});c.dataset.k=h[1];pool.append(c)});
+  box.append(B("✅ Vérifier","btn main",()=>{if(won||zone.children.length<P.length)return;const ok=[...zone.children].every((c,i)=>c.dataset.k==ans[i][1]);
+    if(ok){won=true;addPts(10);msg.className="msg ok";msg.textContent="🎉 Bravo ! +10 🎵";box.append(B("Rejouer ➜","btn main",ordre))}
+    else{msg.className="msg ko";msg.textContent="Ce n'est pas encore le bon ordre. Indice : "+ans.map(h=>h[2]).join(" → ")}}));
+}
+// ===== Boutique, fiches d'artistes et héros
+const PR=i=>i[4]*60;
+function buy(p,n,fn){
+  if(S.pts<p){toast("Il te manque "+(p-S.pts)+" 🎵 pour « "+n+" ». Continue les exercices !");return}
+  if(!confirm("Acheter « "+n+" » pour "+p+" 🎵 ?"))return;
+  S.pts-=p;fn();save();upd();shop();
+}
+function shop(){
+  nav(null,"shop");
+  app.append(H(`<div class="em">🛍️</div><h3>La boutique</h3><p>Tu as <b>${S.pts} 🎵</b>.<br>Gagne des notes en faisant des exercices et en jouant, puis échange-les ici !</p>`,"card big"));
+  const row=H("","grid");row.append(B("🎒 Mon héros","btn",heroPage),B("🪪 Mes fiches ("+Object.keys(S.art).length+"/"+ART.length+")","btn",()=>collection()));app.append(row);
+  app.append(h2("🎒 Jokers"));
+  JK.forEach(([k,e,n,d,p],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${n}</b><small>${d}</small><small>Tu en as : ${S.jk[k]||0} · Prix : ${p} 🎵</small></span>`,5,i,3,()=>buy(p,n,()=>{S.jk[k]=(S.jk[k]||0)+1}))));
+  app.append(h2("🎹 Nouvelles mélodies pour le piano"));
+  const ml=MELO.filter(m=>m[3]>0);
+  ml.forEach((m,i)=>{const own=S.mel[m[0]];app.append(cbtn(`<span class="t">${own?"✔":"🎼"}</span><span><b>${m[1]}</b><small>${own?"Débloquée : à jouer dans l'espace Piano":"Prix : "+m[3]+" 🎵"}</small></span>`,5,i,ml.length,own?()=>piano():()=>buy(m[3],m[1],()=>{S.mel[m[0]]=1})))});
+  app.append(h2("🪪 Fiches d'identité d'artistes"),H(`<small class="tr">Nom, prénom, naissance et mort, nationalité, style et œuvres principales. ${AP} 🎵 par fiche.</small>`));
+  const g=H("","items");
+  ART.forEach((a,i)=>{const own=S.art[a[0]],b=document.createElement("button");b.className="it"+(own?" on":"");b.innerHTML=`${a[8]}<small>${a[0]}<br>${own?"✔ ouvrir":AP+" 🎵"}</small>`;b.onclick=own?()=>fiche(i,shop):()=>buy(AP,"la fiche de "+a[0],()=>{S.art[a[0]]=1});g.append(b)});
+  app.append(g,h2("🎩 Bonus pour ton héros"));
+  const lk=ITEMS.filter(i=>i[4]>S.stage&&!S.own[i[0]]);
+  if(!lk.length){app.append(H("Tu as débloqué tous les bonus ! 🎉","card"));return}
+  const g2=H("","items");
+  lk.forEach(i=>{const b=document.createElement("button");b.className="it";b.innerHTML=(i[2]=="aura"?`<i style="background:${i[1]}"></i>`:avatar(40,i))+`<small>${i[3]}<br>${PR(i)} 🎵</small>`;b.onclick=()=>buy(PR(i),i[3],()=>{S.own[i[0]]=1;S.eq[i[2]]=i[0]});g2.append(b)});
+  app.append(H(`<small class="tr">Ces bonus se débloquent aussi gratuitement en avançant sur le parcours. Touche-en un pour l'acheter tout de suite.</small>`),g2);
+}
+function fiche(i,back){
+  const a=ART[i];nav(back||(()=>collection()),"shop");
+  app.append(H(`<div class="idh">🪪 CARTE D'IDENTITÉ MUSICALE</div><div class="idb"><div class="idp">${a[8]}</div><div class="idf"><p><small>Nom</small><b>${a[2]}</b></p><p><small>Prénom</small><b>${a[1]}</b></p><p><small>Naissance</small><b>${a[3]}</b></p><p><small>Mort</small><b>${a[4]||"Vivant(e)"}</b></p></div></div>
+<div class="idw"><p><small>Nationalité</small><b>${a[5]}</b></p><p><small>Style musical</small><b>${a[6]}</b></p><p><small>Œuvres principales</small></p><ul>${a[7].split(" · ").map(x=>"<li>"+x+"</li>").join("")}</ul>${a[9]?`<p class="tr">${a[9]}</p>`:""}</div>`,"idc"));
+}
+function collection(){
+  nav(shop,"shop");const own=ART.map((a,i)=>[a,i]).filter(([a])=>S.art[a[0]]);
+  app.append(h2("🪪 Mes fiches d'artistes ("+own.length+"/"+ART.length+")"));
+  if(!own.length)app.append(H("Tu n'as pas encore de fiche. Débloque-en dans la boutique, ou touche un artiste dans la frise !","card"));
+  own.forEach(([a,i],k)=>app.append(cbtn(`<span class="t">${a[8]}</span><span><b>${a[0]}</b><small>${a[6]} · ${a[3]}${a[4]?"–"+a[4]:""}</small></span>`,5,k,own.length,()=>fiche(i,collection))));
+  app.append(B("🛍️ Aller à la boutique","btn main",shop));
+}
+function heroPage(){
+  const y=window.scrollY;nav(shop,"shop");
+  app.append(H(`<div style="display:grid;place-items:center;margin:14px 0 8px">${avatar(84)}</div><h3>Ton héros</h3><p class="tr">Chaque étape réussie sur le parcours débloque un bonus. Touche un objet pour le porter, touche-le encore pour l'enlever.</p>`,"card big"));
+  const av=HF.map((_,i)=>i).filter(i=>i==0||HERO_OK[i]);
+  if(av.length>1){const c=H("<h3>🧑‍🎤 Choisis ton personnage</h3>","card"),g=H("","items");
+    av.forEach(i=>{const on=(S.hero||0)==i,b=document.createElement("button");b.className="it"+(on?" on":"");b.innerHTML=avatar(56,null,i,true)+`<small>Personnage ${i+1}</small>`;b.onclick=()=>{S.hero=i;S.hc=1;save();heroPage()};g.append(b)});c.append(g);app.append(c)}
+  SLOTS.forEach(([s,t])=>{
+    const c=H(`<h3>${t}</h3>`,"card"),g=H("","items");
+    ITEMS.filter(i=>i[2]==s).forEach(i=>{const lock=i[4]>S.stage&&!S.own[i[0]],on=S.eq[s]==i[0]&&!lock,b=document.createElement("button");
+      b.className="it"+(on?" on":"")+(lock?" lock":"");
+      b.innerHTML=(lock?"🔒":s=="aura"?`<i style="background:${i[1]}"></i>`:avatar(40,i))+`<small>${lock?"Étape "+i[4]+" ou 🛍️":i[3]}</small>`;
+      b.onclick=lock?()=>shop():()=>{S.eq[s]=on?null:i[0];save();heroPage()};g.append(b)});
+    c.append(g);app.append(c)});
+  window.scrollTo(0,y);
+}
+// ===== Mentions légales
+function legal(){
+  nav(()=>home(),"home");
+  app.append(H(`<h3>Mentions légales</h3>
+<p><b>Éditeur et propriétaire :</b> HENRY Clément.</p>
+<p><b>Propriété intellectuelle :</b> l'application « Music’All » (nom, code, textes, exercices, illustrations et organisation du contenu) est la propriété exclusive de HENRY Clément. Toute reproduction, représentation, modification, adaptation ou diffusion, totale ou partielle, sans autorisation écrite préalable de l'auteur est interdite.</p>
+<p><b>Données personnelles :</b> l'application ne demande aucune donnée personnelle, ne collecte rien, n'utilise ni cookie ni publicité. Les notes, la progression et les bonus du héros sont enregistrés uniquement sur l'appareil de l'utilisateur ; ils disparaissent si les données du navigateur sont effacées.</p>
+<p><b>Sons :</b> tous les sons (piano, batterie, exercices d'écoute) sont synthétisés par le navigateur de l'utilisateur ; l'application n'utilise aucun enregistrement protégé.</p>
+<p><b>Contenu pédagogique :</b> les thèmes s'appuient sur les programmes d'éducation musicale du collège.</p>
+${LEGAL_CONTACT?`<p><b>Contact :</b> ${LEGAL_CONTACT}</p>`:""}
+<p class="tr">© 2026 HENRY Clément – Tous droits réservés.</p>`,"card"));
+}
+$("#lg").onclick=legal;$("#score").onclick=()=>shop();
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>({home:()=>home(),journey:()=>journey(),history:()=>hist(),games:()=>games(),instr:()=>instr()})[b.dataset.t]());
+const applyView=()=>{try{const d=S.view=="desk"||(S.view!="mob"&&window.matchMedia("(min-width:900px)").matches);document.body.classList.toggle("desk",d);document.querySelectorAll("#vw a").forEach(a=>a.classList.toggle("on",a.dataset.v==(S.view||"auto")))}catch(e){}};
+document.querySelectorAll("#vw a").forEach(a=>a.onclick=()=>{S.view=a.dataset.v;save();applyView()});
+try{addEventListener("resize",applyView)}catch(e){}
+applyView();
+let pend=2,booted=false;const boot=()=>{if(!booted){booted=true;home()}},chk=()=>{if(--pend==0)boot()};
+if(typeof Image=="undefined")boot();else{[1,2].forEach(i=>{const im=new Image();im.onload=()=>{HERO_OK[i]=1;chk()};im.onerror=chk;im.src=HF[i]});setTimeout(boot,1500)}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
