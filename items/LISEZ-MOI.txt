@@ -1,0 +1,14 @@
+PERSONNAGES (jusqu'à 3 au choix) : hero.png, hero2.png, hero3.png
+-> à côté de index.html, PNG transparents 512 x 512 px, même cadrage et même pose pour les 3.
+Un personnage n'est proposé aux élèves que si son fichier existe.
+
+ACCESSOIRES (dossier items/) : PNG transparents 512 x 512 px, dessinés directement à leur place sur le personnage.
+Chapeaux : h1 Casquette | h2 Casque audio | h3 Haut-de-forme | h4 Chapeau de cow-boy | h5 Couronne
+Visage : f1 Lunettes de soleil | f2 Déguisement | f3 Barbe
+Instruments : i1 Micro | i2 Guitare | i3 Batterie | i4 Saxophone | i5 Violon | i6 Clavier | i7 Trompette
+Compagnons : p1 Oiseau chanteur | p2 Chat | p3 Chien | p4 Perroquet | p5 Licorne
+Couleurs de fond : 5 couleurs, aucun fichier à fournir.
+Nom des fichiers : h1.png, f1.png, i1.png, p1.png ... (exactement ces noms).
+
+OPTION : si un personnage a une silhouette différente, créer items/hero2/ (ou items/hero3/) avec les mêmes noms de fichiers.
+Un fichier absent est remplacé par celui de items/, puis par un emoji.
