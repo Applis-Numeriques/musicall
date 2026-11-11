@@ -185,6 +185,7 @@ body.desk #tabs i{display:inline}body.desk #tabs s{display:none}body.desk #tabs 
 .lv{text-shadow:0 1px 2px rgba(0,0,0,.3)}
 .cb{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 .cb small{color:rgba(255,255,255,.92)}.cb .t{background:rgba(255,255,255,.28)}
+.av .sh{position:absolute;left:50%;transform:translateX(-50%);bottom:-.22em;font-size:.45em;line-height:1}
 .av .ly{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .idc{background:linear-gradient(135deg,#fff,#fff0f6);border-radius:22px;border:3px solid #ffb3d1;color:var(--ink);box-shadow:var(--sh);overflow:hidden;margin:12px 0}
 .idh{background:var(--rb);color:#fff;padding:10px 14px;font-weight:900;letter-spacing:1px;font-size:.8rem}
@@ -320,12 +321,12 @@ const STOPS=[["🎼","Conservatoire"],["🎹","Salzbourg"],["🎻","Vienne"],["�
 const TE=["🎶","🎙️","📻","🎚️","🎛️","🎪","🎡","🎭","🎟️","🎠"];
 const GR=["Apprenti","Choriste","Musicien","Soliste","Virtuose","Maestro"];
 // Bonus : [id, emoji ou couleur, catégorie, nom, étape qui le débloque]
-const ITEMS=[["h1","🧢","hat","Casquette",1],["h2","🎧","hat","Casque audio",3],["h3","🎩","hat","Haut-de-forme",5],["h4","🤠","hat","Chapeau de cow-boy",8],["h5","👑","hat","Couronne",12],
-["f1","🕶️","face","Lunettes de soleil",2],["f2","🥸","face","Déguisement",6],["f3","🧔","face","Barbe",9],
-["i1","🎤","hand","Micro",2],["i2","🎸","hand","Guitare",4],["i3","🥁","hand","Batterie",6],["i4","🎷","hand","Saxophone",8],["i5","🎻","hand","Violon",10],["i6","🎹","hand","Clavier",13],["i7","🎺","hand","Trompette",15],
-["p1","🐦","pet","Oiseau chanteur",3],["p2","🐱","pet","Chat",5],["p3","🐶","pet","Chien",7],["p4","🦜","pet","Perroquet",11],["p5","🦄","pet","Licorne",14],
+const ITEMS=[["t1","🧢","hat","Casquette",1],["t2","👑","hat","Couronne",11],["t3","🎩","hat","Haut-de-forme",5],["t4","🏴‍☠️","hat","Chapeau de pirate",8],
+["d1","🥸","face","Moustache",2],["d2","⚡","face","Éclair Bowie",4],["d3","🔴","face","Nez rouge",6],["d4","👨‍🎤","face","F. Mercury",9],["d5","🎭","face","Maquillage Kiss",12],
+["i1","🎺","hand","Trompette",7],["i2","🎤","hand","Micro",1],["i3","🎸","hand","Guitare",3],["i4","🥁","hand","Batterie",10],["i5","🧤","hand","Gant de rockeur",13],
+["c1","👟","shoe","Baskets",2],["c2","👞","shoe","Souliers",6],["c3","🤡","shoe","Chaussures de clown",9],
 ["a1","#e6dcff","aura","Lavande",1],["a2","#ffd6e7","aura","Rose",4],["a3","#ffe7a3","aura","Soleil",7],["a4","#cdeeed","aura","Menthe",10],["a5","#d5e8ff","aura","Ciel",13]];
-const SLOTS=[["hat","🎩 Chapeaux"],["face","😎 Visage"],["hand","🎸 Instruments"],["pet","🐾 Compagnons"],["aura","🎨 Couleurs de fond"]];
+const SLOTS=[["hat","🎩 Chapeaux"],["face","🎭 Déguisements"],["hand","🎸 Instruments"],["shoe","👟 Chaussures"],["aura","🎨 Couleurs de fond"]];
 const JK=[["f","🎯","50/50","Enlève des mauvaises réponses d'un QCM",30],["h","💡","Indice","Donne la première lettre d'une réponse écrite",20],["r","🔄","Seconde chance","Permet de retenter une question ratée",40]];
 const LEGAL_CONTACT="";
 const ALL=D.flatMap((a,l)=>a.map((_,i)=>[l,i]));
@@ -437,10 +438,10 @@ function series(box,list,fin){
 const HF=["hero.png","hero2.png","hero3.png"],HERO_OK=[1];
 function fb(e){if(e.dataset.alt){const a=e.dataset.alt;e.dataset.alt="";e.src=a}else e.outerHTML=e.dataset.fb}
 const worn=s=>ITEMS.find(i=>i[2]==s&&i[0]==S.eq[s]&&(i[4]<=S.stage||S.own[i[0]]));
-const CL={hat:"hat",face:"fc",hand:"hd",pet:"pt"};
+const CL={hat:"hat",face:"fc",hand:"hd",shoe:"sh"};
 function avatar(px,only,hi,bare){
   hi=hi??((S.hero||0)==0||HERO_OK[S.hero]?(S.hero||0):0);
-  const au=only&&only[2]=="aura"?only:(bare||only?null:worn("aura")),sl=bare?[]:only?(only[2]=="aura"?[]:[only]):["pet","hand","face","hat"].map(worn).filter(Boolean);
+  const au=only&&only[2]=="aura"?only:(bare||only?null:worn("aura")),sl=bare?[]:only?(only[2]=="aura"?[]:[only]):["shoe","face","hat","hand"].map(worn).filter(Boolean);
   const dir=hi>0?`items/hero${hi+1}/`:"items/";
   const ly=sl.map(i=>`<img class="ly" src="${dir}${i[0]}.png" data-alt="${hi>0?"items/"+i[0]+".png":""}" data-fb="<span class=${CL[i[2]]}>${i[1]}</span>" alt="" onerror="fb(this)">`).join("");
   return `<div class="av" style="font-size:${px}px;${au?"background:"+au[1]:""}"><img class="b" src="${HF[hi]}" data-fb="<span class=b>🧑‍🎤</span>" alt="" onerror="fb(this)">${ly}</div>`;
