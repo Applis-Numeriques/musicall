@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<meta name="theme-color" content="#4b2a8f">
+<meta name="theme-color" content="#f7b7c5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Music’All">
@@ -148,48 +148,82 @@ body.desk .mem{grid-template-columns:repeat(4,1fr)}
 body.desk .piano{height:240px}
 body.desk .btn:hover,body.desk .opt:hover,body.desk .it:hover{transform:translateY(-2px)}
 body.desk #toast{left:132px}
-/* ===== Thème violet (v2) */
-:root{--bg:#3b1d86;--card:#fff;--ink:#1e1544;--mut:#6f6896;--pri:#4b2a8f;--sun:#ffc043;--sec:#7c4dff;--pink:#ff5c8a;--ok:#2bb673;--ko:#ef476f;--line:#e5dcff;--sh:0 8px 24px rgba(20,8,60,.35);--rb:#e63f86}
-body{background:linear-gradient(165deg,#6a3fd6 0%,#4b2a9f 45%,#2f1670 100%) fixed;color:#fff}
-header{background:color-mix(in srgb,#4b2a9f 74%,transparent);padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px}
-#ttl{flex:1;text-align:center;line-height:1.05;cursor:pointer}
-#logo{margin:0;font-size:clamp(2.1rem,9.5vw,3rem);letter-spacing:-.5px;background:linear-gradient(90deg,#fff 35%,#ffc2dd);-webkit-background-clip:text;background-clip:text;color:transparent;flex:none}
-#sub{font-size:.76rem;font-weight:700;color:#d9ccff;margin-top:3px;letter-spacing:.3px}
+/* ===== Thème rose pâle (v3) */
+@font-face{font-family:"MATitle";font-style:italic;font-weight:900;font-display:swap;src:url(data:font/woff2;base64,d09GMgABAAAAAAOwAAwAAAAABsQAAANhAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGyAcMAZgAHQKhDiDPAE2AiQDKAsWAAQgBYNAByAbYQUgLgbshvqiKYbRCePC8p2fc6DQxkN0b76Z3buOny6V0jFgpWMoVLV0gQAdRzgEnYIR+AbUaRNoUwMxC/jVg+Dntf0/YF+78Pvz/xtg6HL6b2MJ/QaQObMuCteynjorKuS3MBrbttACChMLQLO5Nh7IXNEoxDv8tL7A0Cw3pO28Eg6YKrQAEIUNYSjdNlfajii4OaKEwVGza+mgjIFGvpIFk38c+QDSQoaoqHJ2aDLEj3twkleOYfgvOlKdJlbT1EZyKyAgN8mXAIuoSBQ0KAINqjPQsEBRLctUSs2oTqv2RcdJbHym9ssp+62y1GJzzfknQhBD+zdghCngFwAVEFIkSCxamRRTVzMqNdSB2ssh+GqCQ9SaSgkRj9MrIcSCqT5HkpsKxU8ePGBPuccllhPjJz0WYmgTe0o4++5dYvw+adj9xW3S8BlI+RaGTlZdLrUgr/0U7t3fBvbshWh3Q146HHe+ZHSq3PMghjebu1aKh2IvFVIMXc1OCcE/2rFTzBbMxdAxdW+sXLkelrAe9Y77PNf5Mx7WfI2t+TR4BmNnPvtbupxVnUVqnu078yxVvll+PEyVqnqup7So2PR6E7zv5SPTczkNQ72o/6/1dVYOJbPcB2z9kr/41W/tbWga6ahxr8AGxaoAb3GOV1D06kBvYXZa0Yaoo5+/RVD8jbx5/v9wgN4SnFEWbe1wj/nB2XIG26LlyYoSz4SsuKiUqoawwoqW2ESx/Tn7g86W9SbmLRMrjz0SM6L4cxWdOBitjn5uxmHII5Kr+LJqt4rEvGcxQe50d093H9fOmGDsP/N0k99sAAI16Jl7N2rk5in/mFE+Anys3S4F+LaLu/h/4LTBfmojyHoSBD9iOqgBYNZrxKmdiPmH8ZcY4LrQJq93AMhzmEUWMO+cW6DmIXhED/hIGJrCxAu6kObRcQWKRM8piqgs8AYsuTCxmktj71yx6yJXrYQZ1zGMuPW6liID2Ro16dbCSM+gjYcoEQI8cIqoNqgA9jcxatB6Z1s0qqGlJuVlatfGoFELJAhoBto0FbJJwoXTM4Ly26mEUWtUL7wMdBqtu4FGi26BHDc+8Pjvm6WOklqtQm2U6hipFeLIUy6ZB2nEwwz4+4kRJkKEGCqJZIcII7GhhsfDKLSnXVECAAA=) format("woff2")}
+:root{--bg:#f7b7c5;--card:#fff;--ink:#2b1230;--mut:#7a6072;--pri:#8a1553;--sun:#ffc043;--sec:#0d7c8a;--pink:#ff5c8a;--ok:#2bb673;--ko:#ef476f;--line:#f8dbe8;--sh:0 8px 22px rgba(150,40,80,.2);--rb:#ea5a0c;--on:#4a0b2e}
+body{background:linear-gradient(165deg,#fcd5dd 0%,#f7b7c5 50%,#f4a6b8 100%) fixed;color:var(--on)}
+header{background:color-mix(in srgb,#f9c3cf 85%,transparent);padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px}
+#ttl{flex:1;text-align:center;line-height:1.05;cursor:pointer;min-width:0}
+#logo{margin:0;font-family:"MATitle",ui-rounded,"Nunito","Segoe UI",system-ui,sans-serif;font-style:italic;font-weight:900;font-size:clamp(1.9rem,9vw,3rem);letter-spacing:0;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#f0398a;-webkit-text-fill-color:#f0398a;text-shadow:0 3px 0 #fff;flex:none}
+#sub{font-size:.76rem;font-weight:800;color:var(--on);margin-top:3px;letter-spacing:.3px}
+h2{color:var(--on)}
 .card{color:var(--ink)}.gift{color:#3b2a00}.ti .tc{color:var(--ink)}
-.tr{color:#d9ccff}.card .tr,.gift .tr{color:var(--mut)}
-.msg.ok{color:#7dffb8}.msg.ko{color:#ff9db5}.card .msg.ok{color:var(--ok)}.card .msg.ko{color:var(--ko)}
-.wl span{color:var(--ink)}.lab small{color:#e2d8ff}.say{color:#ffd1e6}
-.ti .dt{color:#fff}.ti i{border-color:#4b2a9f}
-footer{color:#d9ccff}footer a{color:#fff}#vw a{color:#d9ccff}#vw a.on{color:#fff}
+.tr{color:var(--on)}.card .tr,.gift .tr{color:var(--mut)}
+.msg.ok{color:#0a5a34}.msg.ko{color:#8c0730}.card .msg.ok{color:var(--ok)}.card .msg.ko{color:var(--ko)}
+.wl span{color:var(--ink)}.lab small{color:#6b1241}.say{color:var(--on)}
+.ti .dt{color:var(--on)}.ti i{border-color:#f7b7c5}
+footer{color:var(--on)}footer a{color:var(--on)}#vw a{color:var(--on)}#vw a.on{color:var(--on);opacity:1;font-weight:800}
 #toast{color:#fff}
-.hero-card{background:linear-gradient(135deg,#ff8fc0,#e63f86)}
+.hero-card{background:linear-gradient(135deg,#ff9a3d,#ea5a0c)}
 .main{background:var(--rb)}
 .alt{background:#fff;color:var(--rb);box-shadow:inset 0 0 0 2px var(--rb),var(--sh)}
 .chip{background:var(--rb)}.chip.off{background:#fff;color:var(--ink)}
 .lesson{border-top-color:var(--rb)}.retain li::before{color:var(--rb)}
 .bar i{background:linear-gradient(90deg,var(--sun),var(--rb))}
-.node.cur{background:var(--rb)}.node.done{background:color-mix(in srgb,var(--rb) 45%,white)}
+.road::before{background:repeating-linear-gradient(180deg,#fff9 0 10px,transparent 10px 24px),#fde6ec}
+.node{background:#fff1f5}.node.cur{background:var(--rb)}.node.done{background:color-mix(in srgb,var(--rb) 45%,white)}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(234,90,12,.3)}}
 .it.on{border-color:var(--rb)}
 .mc{background:linear-gradient(135deg,var(--rb),color-mix(in srgb,var(--rb) 55%,white))}
-.wc.f,.sc.on{background:var(--rb)}
+.wc.f,.sc.on{background:var(--rb)}.wk.on{background:#ffd0e3}
+#tabs{gap:2px;padding-left:4px;padding-right:4px}
+#tabs button{min-width:0;font-size:1.3rem;padding:5px 0}
+#tabs button span{font-size:.6rem;white-space:nowrap}
+#tabs s{text-decoration:none}#tabs i{font-style:normal;display:none}
+body.desk #tabs i{display:inline}body.desk #tabs s{display:none}body.desk #tabs button span{font-size:.7rem}
 #tabs button.on{color:var(--rb);background:color-mix(in srgb,var(--rb) 14%,transparent)}
+.lv{text-shadow:0 1px 2px rgba(0,0,0,.3)}
 .cb{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 .cb small{color:rgba(255,255,255,.92)}.cb .t{background:rgba(255,255,255,.28)}
 .av .ly{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.idc{background:linear-gradient(135deg,#fff,#f3ecff);border-radius:22px;border:3px solid #c9b6ff;color:var(--ink);box-shadow:var(--sh);overflow:hidden;margin:12px 0}
+.idc{background:linear-gradient(135deg,#fff,#fff0f6);border-radius:22px;border:3px solid #ffb3d1;color:var(--ink);box-shadow:var(--sh);overflow:hidden;margin:12px 0}
 .idh{background:var(--rb);color:#fff;padding:10px 14px;font-weight:900;letter-spacing:1px;font-size:.8rem}
 .idb{display:flex;gap:14px;padding:14px 14px 0}
 .idp{font-size:3.6rem;width:96px;height:118px;border-radius:14px;background:var(--line);display:grid;place-items:center;flex:none}
 .idf p,.idw p{margin:4px 0}.idf small,.idw small{display:block;color:var(--mut);font-size:.68rem;text-transform:uppercase;font-weight:800}
 .idf b{font-size:1.05rem}.idw{padding:6px 14px 14px}.idw ul{margin:4px 0;padding-left:20px}
+/* artistes */
+.arts{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}
+.arts .it small b{display:block;color:var(--ink);font-size:.76rem;line-height:1.15;margin-bottom:2px}
+.it.lk{background:#fff5f9}.it.lk small b{color:var(--mut)}
+.fam{margin:16px 0 8px;font-weight:800}
+.fam::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c);margin-right:7px;border:2px solid #fff;vertical-align:-1px}
+/* coloriages */
+.colo{padding:8px}.colo svg{display:block;width:100%;max-width:460px;margin:auto;touch-action:manipulation;border-radius:16px}
+.cz{fill:#fff;stroke:#5b5568;stroke-width:1.6;stroke-linejoin:round;cursor:pointer}
+.cz.no{fill:#ffd5dc}.cz.ok{cursor:default}
+.cn{font:700 12px system-ui,sans-serif;fill:#5b5568;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.cd{pointer-events:none;fill:none;stroke:#3f3f46;stroke-width:1.4;stroke-linecap:round}
+.pal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.pc{border:3px solid transparent;background:var(--card);border-radius:16px;padding:6px 6px 4px;cursor:pointer;font:inherit;min-width:64px;box-shadow:var(--sh)}
+.pc.on{border-color:var(--ink);transform:translateY(-4px)}
+.pc i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;margin:0 auto;font-style:normal;font-weight:900;color:#1b1b1b;border:2px solid rgba(0,0,0,.18);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff}
+.pc small{display:block;font-size:.66rem;font-weight:800;color:var(--ink);margin-top:2px}
+/* identification et bilan */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px}
+.stats div{background:var(--line);border-radius:14px;padding:10px;text-align:center}
+.stats b{display:block;font-size:1.2rem}.stats small{color:var(--mut);font-weight:700;font-size:.72rem;line-height:1.2;display:block}
+.bl{padding:7px 0;border-top:1px solid var(--line);font-weight:700;font-size:.92rem}.bl small{display:block;color:var(--mut);font-weight:700;padding-left:26px}
+.code{font:.8rem ui-monospace,Menlo,Consolas,monospace;width:100%;border-radius:12px;border:2px solid var(--line);padding:10px;word-break:break-all;resize:none;background:#fff;color:var(--ink);margin:6px 0}
 </style>
 </head>
 <body>
 <header><button id="back" aria-label="Retour">‹</button><div id="ttl"><h1 id="logo">Music’All</h1><div id="sub">tout sur la musique au collège</div></div><div id="score">🎵 0</div></header>
 <main id="app"></main>
 <footer>© 2026 HENRY Clément – Tous droits réservés.<br>Application propriété de HENRY Clément · <a id="lg">Mentions légales</a><div id="vw">Affichage : <a data-v="auto">Auto</a> · <a data-v="desk">🖥️ Ordinateur</a> · <a data-v="mob">📱 Mobile</a></div></footer>
-<nav id="tabs"><button data-t="home">🏠<span>Accueil</span></button><button data-t="journey">🗺️<span>Parcours</span></button><button data-t="history">📜<span>Frise</span></button><button data-t="games">🎮<span>Jeux</span></button><button data-t="instr">🎹<span>Instruments</span></button><button data-t="shop">🛍️<span>Boutique</span></button></nav>
+<nav id="tabs"><button data-t="home">🏠<span>Accueil</span></button><button data-t="journey">🗺️<span>Parcours</span></button><button data-t="history">📜<span>Frise</span></button><button data-t="art">🧑‍🎤<span>Artistes</span></button><button data-t="games">🎮<span>Jeux</span></button><button data-t="instr">🎹<span>Instru<i>ments</i><s>s</s></span></button><button data-t="shop">🛍️<span>Boutique</span></button></nav>
 <script>
+const TEAL=[["#35bcc4","#1d9ba7"],["#16909c","#0e7684"],["#0c6978","#075462"],["#064854","#03323c"]];
 const LV=["6ème","5ème","4ème","3ème"],CO=[["#7c4dff","#4b2a8f"],["#ff5c8a","#d6336c"],["#ff9f43","#f76707"],["#2bb3a3","#0b7285"]];
 // Thème = [emoji, titre, leçon, à retenir (|), définitions "terme=définition;…", QCM [q,"a|b|c",index,explication], Vrai/Faux [énoncé,1|0,explication], Trous [phrase,réponse(s),explication], exercices sonores "h,s,m,i"]
 const D=[[
@@ -244,9 +278,12 @@ const HIST=[
 ].sort((a,b)=>a[3]-b[3]);
 const FAM={C:["Classique","#7c4dff"],J:["Jazz & blues","#ff9f43"],R:["Rock","#ef476f"],P:["Chanson, pop & reggae","#ff5c8a"],H:["Rap & électro","#2bb3a3"],S:["Slam & poésie","#38bdf8"]};
 // Mélodies du piano : [id, nom, notes MIDI, prix en 🎵 (0 = gratuite)]
-const MELO=[["ode","Ode à la joie (Beethoven)",[64,64,65,67,67,65,64,62,60,60,62,64,64,62,62],0],["fj","Frère Jacques",[60,62,64,60,60,62,64,60,64,65,67,64,65,67],0],["cl","Au clair de la lune",[60,60,60,62,64,62,60,64,62,62,60],0],
+const MELO=[["ode","Ode à la joie (Beethoven)",[64,64,65,67,67,65,64,62,60,60,62,64,64,62,62],0],["fj","Frère Jacques",[60,62,64,60,60,62,64,60,64,65,67,64,65,67],0],["cl","Au clair de la lune",[60,60,60,62,64,62,60,64,62,62,60],0],["ma","La Marseillaise (début)",[62,62,62,67,67,69,69,74,71,67,67,71,67,64,72,69,66,67],0],
 ["ah","Ah ! vous dirai-je, maman",[60,60,67,67,69,69,67,65,65,64,64,62,62,60],60],["jb","Jingle Bells (refrain)",[64,64,64,64,64,64,64,67,60,62,64],60],["dn","Douce nuit",[67,69,67,64,67,69,67,64,74,74,71,72,72,67],80],
-["s5","Symphonie n°5 (Beethoven)",[67,67,67,63,65,65,65,62],80],["mg","Menuet en sol (Bach)",[74,67,69,71,72,74,67,67],100],["fe","Pour Élise (Beethoven)",[76,75,76,75,76,71,74,72,69,60,64,69,71,64,68,71,72],120]];
+["s5","Symphonie n°5 (Beethoven)",[67,67,67,63,65,65,65,62],80],["mg","Menuet en sol (Bach)",[74,67,69,71,72,74,67,67],100],["fe","Pour Élise (Beethoven)",[76,75,76,75,76,71,74,72,69,60,64,69,71,64,68,71,72],120],
+["pa","Sur le pont d'Avignon",[65,65,65,67,67,67,69,70,72,65,64,65,67,60,65,65,65,67,67,67,69,70,72,65,67,64,65],60],["ja","Joyeux anniversaire",[60,60,62,60,65,64,60,60,62,60,67,65,60,60,72,69,65,64,62,70,70,69,65,67,65],60],["al","Alouette, gentille alouette",[67,69,71,71,69,67,69,71,67,62,67,69,71,71,69,67,69,71,67],60],
+["cf","À la claire fontaine",[67,67,71,71,69,71,69,67,67,71,71,69,71,71,71,69,67,71,74,71,74,74,71,67,71,69],80],["cc","French cancan (Offenbach)",[60,60,62,65,64,62,67,67,69,64,65,62,60,60,62,65,64,62,60,67,62,64,60],80],["pr","Le Printemps (Vivaldi)",[64,68,68,68,66,64,71,71,69,68,68,68,66,64,71,71,69,68,69,71,69,68,66],100],
+["pm","Une petite musique de nuit (Mozart)",[67,62,67,62,67,62,67,71,74,72,69,72,69,72,69,66,69,62],100],["cn","Canon (Pachelbel)",[78,76,74,73,71,69,71,73,74,73,71,69,67,66,67,64],100],["lc","Le Lac des cygnes (Tchaïkovski)",[78,71,73,74,76,78,74,78,74,78,71,74,71,67,74,71],120]];
 // Fiches d'identité : [clé (nom dans la frise), prénom(s), nom, naissance, mort, nationalité, style, œuvres, emoji, note]
 const AP=40;
 const ART=[["J.-S. Bach","Johann Sebastian","Bach",1685,1750,"allemand","Baroque","Le Clavier bien tempéré · Les Concertos brandebourgeois · La Passion selon saint Matthieu · Messe en si mineur","🎻",""],
@@ -301,16 +338,18 @@ const H=(h,c)=>{const d=document.createElement("div");if(c)d.className=c;d.inner
 const B=(t,c,f)=>{const b=document.createElement("button");b.className=c;b.textContent=t;b.onclick=f;return b};
 const h2=t=>Object.assign(document.createElement("h2"),{textContent:t});
 const cam=(h,i,n,lo,hi)=>{lo=lo||38;hi=hi||64;const l=n>1?hi-(hi-lo)*i/(n-1):(hi+lo)/2;return[`hsl(${h} 88% ${l}%)`,`hsl(${h} 90% ${Math.max(l-9,18)}%)`]};
-const cbtn=(html,h,i,n,f)=>{const b=H(html,"btn axe cb"),[c1,c2]=cam(h,i,n,40,62);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=f;return b};
+const cbtn=(html,h,i,n,f,lo,hi)=>{const b=H(html,"btn axe cb"),[c1,c2]=cam(h,i,n,lo||40,hi||62);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=f;return b};
 const toast=m=>{let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.append(t)}t.textContent=m;t.style.opacity=1;clearTimeout(t._h);t._h=setTimeout(()=>{t.style.opacity=0},5000)};
 let S={pts:0,stage:0,done:{},best:{},eq:{},own:{},jk:{}};
-try{Object.assign(S,JSON.parse(localStorage.getItem("musicall1")||"{}"))}catch(e){}
-S.eq=S.eq||{};S.own=S.own||{};S.jk=S.jk||{};S.art=S.art||{};S.mel=S.mel||{};
-const save=()=>{try{localStorage.setItem("musicall1",JSON.stringify(S))}catch(e){}};
+let UID="";try{UID=localStorage.getItem("musicall1:id")||""}catch(e){}
+if(!/^eleve\d\d$/.test(UID))UID="";const SKEY=UID?"musicall1:"+UID:"musicall1";
+try{Object.assign(S,JSON.parse(localStorage.getItem(SKEY)||"{}"))}catch(e){}
+S.eq=S.eq||{};S.own=S.own||{};S.jk=S.jk||{};S.art=S.art||{};S.mel=S.mel||{};S.seen=S.seen||{};S.col=S.col||{};S.cz=S.cz||{};if(S.tot==null)S.tot=S.pts;
+const save=()=>{try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}};
 const upd=()=>{$("#score").textContent="🎵 "+S.pts};
-const addPts=n=>{S.pts+=n;save();upd()};
+const addPts=n=>{S.pts+=n;if(n>0)S.tot+=n;save();upd()};
 var TM=null,CLEAN=null;let backFn=null;
-const RBM={home:"par",journey:"par",history:"his",games:"jeu",instr:"ins",shop:"bou"},RBC={par:"#e63f86",cls:"#2f7be0",his:"#e09b00",jeu:"#f07a0a",ins:"#12a387",bou:"#e0443a"};
+const RBM={home:"par",journey:"par",history:"his",art:"art",games:"jeu",instr:"ins",shop:"bou"},RBC={par:"#ea5a0c",cls:"#0d7c8a",his:"#c98600",art:"#3f51d9",jeu:"#7447e0",ins:"#0f9a7e",bou:"#a3154f"};
 const nav=(b,t,rk)=>{clearInterval(TM);if(CLEAN){CLEAN();CLEAN=null}backFn=b;$("#back").style.visibility=b?"visible":"hidden";app.innerHTML="";window.scrollTo(0,0);upd();document.body.style.setProperty("--rb",RBC[rk||RBM[t]||"par"]);document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x.dataset.t==t))};
 $("#back").onclick=()=>backFn&&backFn();$("#ttl").onclick=()=>home();
 // ===== Son (synthétisé par le navigateur : aucun enregistrement)
@@ -342,13 +381,13 @@ const NN=["do","ré","mi","fa","sol","la","si"];
 function staff(d){
   const y=80-d*5,led=d<=-2?'<line x1="100" x2="132" y1="90" y2="90"/>':"";
   const stem=d<4?`<line x1="121.5" x2="121.5" y1="${y}" y2="${y-28}"/>`:`<line x1="108.5" x2="108.5" y1="${y}" y2="${y+28}"/>`;
-  return `<svg viewBox="0 0 220 120" width="260" style="display:block;margin:6px auto" stroke="currentColor" stroke-width="1.5" fill="none">${[40,50,60,70,80].map(v=>`<line x1="10" x2="210" y1="${v}" y2="${v}"/>`).join("")}${led}<text x="16" y="77" font-size="32" font-family="Georgia,serif" font-style="italic" font-weight="bold" fill="currentColor" stroke="none">G</text><ellipse cx="115" cy="${y}" rx="7.5" ry="5.2" fill="currentColor" transform="rotate(-20 115 ${y})"/>${stem}</svg>`;
+  return `<svg viewBox="0 0 220 120" width="260" style="display:block;margin:6px auto" stroke="currentColor" stroke-width="1.5" fill="none">${[40,50,60,70,80].map(v=>`<line x1="10" x2="210" y1="${v}" y2="${v}"/>`).join("")}${led}<g transform="translate(14 22) scale(.78)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 68C14 68 11 63 13 58C16 50 28 52 28 64C28 76 8 76 6 60C4 50 9 43 16 34C24 24 28 14 25 8C22 3 16 12 17 22L22 86C23 96 14 98 11 92"/><circle cx="12.5" cy="91" r="3" fill="currentColor" stroke="none"/></g><ellipse cx="115" cy="${y}" rx="7.5" ry="5.2" fill="currentColor" transform="rotate(-20 115 ${y})"/>${stem}</svg>`;
 }
 const AUD={
   h:()=>{const m1=55+R(25),same=R(4)==0,m2=same?m1:m1+(R(2)?1:-1)*(3+R(8));return{t:"q",q:"Écoute les deux sons : le second est…",o:["plus aigu","plus grave","identique"],a:same?2:m2>m1?0:1,snd:[[m1,0,.7],[m2,.9,.7]],ex:"Plus un son est aigu, plus sa fréquence est élevée."}},
   i:()=>{const m1=55+R(20),up=R(2),m2=m1+(up?1:-1)*(2+R(6));return{t:"q",q:"Écoute cette mélodie de deux notes : elle est…",o:["montante","descendante"],a:up?0:1,snd:[[m1,0,.7],[m2,.9,.7]],ex:"Montante : la 2e note est plus haute que la 1re."}},
   m:()=>{const r=48+R(12),maj=R(2);return{t:"q",q:"Écoute cet accord : il est plutôt…",o:["majeur (joyeux)","mineur (triste)"],a:maj?0:1,snd:[[r,0,1.6],[r+(maj?4:3),0,1.6],[r+7,0,1.6]],ex:"Majeur : souvent joyeux. Mineur : souvent plus triste ou sombre."}},
-  s:()=>{const d=R(12)-2,n=NN[(((d+2)%7)+7)%7],o=sh([n,...sh(NN.filter(x=>x!=n)).slice(0,2)]);return{t:"q",q:"Quelle est cette note ? (clé de sol : le G est sur la ligne du sol)",pre:staff(d),o,a:o.indexOf(n),ex:"1re ligne = mi, puis fa, sol, la, si, do, ré…"}}
+  s:()=>{const d=R(12)-2,n=NN[(((d+2)%7)+7)%7],o=sh([n,...sh(NN.filter(x=>x!=n)).slice(0,2)]);return{t:"q",q:"Quelle est cette note ? (la clé de sol s'enroule autour de la ligne du sol)",pre:staff(d),o,a:o.indexOf(n),ex:"1re ligne = mi, puis fa, sol, la, si, do, ré…"}}
 };
 // ===== Génération aléatoire d'exercices pour un thème
 function gen(l,i){
@@ -387,7 +426,7 @@ function ask(c,e,cb){
 function series(box,list,fin){
   let i=0,ok=0;box.classList.add("ex");
   const next=()=>{
-    if(i>=list.length)return fin(ok,list.length);
+    if(i>=list.length){S.nx=(S.nx||0)+1;save();return fin(ok,list.length)}
     box.innerHTML="";window.scrollTo(0,0);
     box.append(H(`<small>Question ${i+1} / ${list.length}</small><div class="bar"><i style="width:${i/list.length*100}%"></i></div>`));
     const c=H("","card");box.append(c);
@@ -409,20 +448,20 @@ function avatar(px,only,hi,bare){
 // ===== Accueil
 function home(){
   nav(null,"home");
-  app.append(H(`${avatar(40)}<div><h3>Salut ! Prêt(e) à faire de la musique ?</h3><p>Étape ${S.stage+1} du parcours · ${Object.keys(S.done).length} thèmes réussis</p></div>`,"hero-card"));
-  app.append(B("🗺️ Continuer le parcours","btn main",()=>journey()));
+  app.append(H(`${avatar(40)}<div><h3>Salut${UID?" "+UID:""} ! Prêt(e) à faire de la musique ?</h3><p>Étape ${S.stage+1} du parcours · ${Object.keys(S.done).length} thèmes réussis</p></div>`,"hero-card"));
+  app.append(B("🗺️ Continuer le parcours","btn main",()=>journey()),B(UID?"👤 "+UID+" · 📊 Mon bilan":"👤 Identification","btn main alt",UID?bilan:ident));
   if((HERO_OK[1]||HERO_OK[2])&&!S.hc){const c=H("<b>🧑‍🎤 Choisis ton personnage !</b>","card");c.append(B("Voir les personnages","btn main alt",heroPage));app.append(c)}
   app.append(h2("📚 Réviser par classe"));
   const g=H("","grid");
-  LV.forEach((l,k)=>{const n=Object.keys(S.done).filter(x=>x.startsWith(k+"-")).length,b=H(`${l}<small>${n} / ${D[k].length} thèmes réussis</small>`,"btn lv"),[c1,c2]=cam(215,k,4,38,62);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=()=>level(k);g.append(b)});
+  LV.forEach((l,k)=>{const n=Object.keys(S.done).filter(x=>x.startsWith(k+"-")).length,b=H(`${l}<small>${n} / ${D[k].length} thèmes réussis</small>`,"btn lv"),[c1,c2]=TEAL[k];b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.onclick=()=>level(k);g.append(b)});
   app.append(g,h2("✨ Découvrir et jouer"));
   const g2=H("","grid");
-  [["📜","Frise de l'histoire","Styles, dates et artistes",hist,45],["🎹","Instruments","Piano, batterie, rythmes",instr,165],["🎮","Petits jeux","Pendu, mots croisés, memory…",games,28],["🛍️","Boutique","Mélodies, fiches, bonus",shop,5]].forEach(([e,n,d,f,h])=>{const b=H(`${e} ${n}<small>${d}</small>`,"btn lv"),[c1,c2]=cam(h,1,3,40,60);b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.style.fontSize="1.2rem";b.onclick=()=>f();g2.append(b)});
+  [["📜","Frise de l'histoire","Styles, dates et artistes",hist,"#e9a400","#c47f00"],["🧑‍🎤","Artistes","${ALLA.length} cartes d'identité",artists,"#5a70f0","#3443c0"],["🎹","Instruments","Piano, batterie, rythmes",instr,"#16b08c","#0b8468"],["🎮","Petits jeux","Pendu, mots croisés, memory…",games,"#9166f2","#6a3fd0"],["🎨","Coloriages","${COLO.length} coloriages magiques",coloList,"",""],["🛍️","Boutique","Mélodies, fiches, bonus",shop,"#b3185a","#7d0d3d"]].forEach(([e,n,d,f,c1,c2])=>{const b=H(`${e} ${n}<small>${d.replace("${ALLA.length}",ALLA.length).replace("${COLO.length}",COLO.length)}</small>`,"btn lv");if(c1){b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2)}else b.style.background="linear-gradient(120deg,#f2545b,#f59e0b 35%,#22a876 68%,#3b82f6)";b.style.fontSize="1.2rem";b.onclick=()=>f();g2.append(b)});
   app.append(g2);
 }
 function level(l){
   nav(home,"home","cls");app.append(h2(LV[l]+" · Choisis un thème"));
-  D[l].forEach((a,i)=>{const id=l+"-"+i;app.append(cbtn(`<span class="t">${a[0]}</span><span><b>${a[1]}</b><small>Thème ${i+1}${S.best[id]!=null?" · 🎵 "+S.best[id]+"/8":""}${S.done[id]?" · ✔ réussi":""}</small></span>`,215,i,5,()=>theme(l,i)))});
+  D[l].forEach((a,i)=>{const id=l+"-"+i;app.append(cbtn(`<span class="t">${a[0]}</span><span><b>${a[1]}</b><small>Thème ${i+1}${S.best[id]!=null?" · 🎵 "+S.best[id]+"/8":""}${S.done[id]?" · ✔ réussi":""}</small></span>`,187,i,5,()=>theme(l,i),17,36))});
 }
 function theme(l,i){
   const a=D[l][i],id=l+"-"+i;nav(()=>level(l),"home","cls");
@@ -456,7 +495,7 @@ function stop(k){
   const box=H("");app.append(box);
   const intro=()=>{box.innerHTML="";const c=H(`<div class="em">${s.e}</div><h3>${s.n}</h3><p>${n} exercices · ${s.t}<br>Il faut ${n-2} bonnes réponses pour continuer le parcours.</p>`,"card big");c.append(B("C'est parti ! 🚀","btn main",play));box.append(c)};
   const play=()=>{const list=[];for(let j=0;j<n;j++){const [l,i]=s.train?ALL[((k-12)*n+j)%ALL.length]:[s.lv,R(D[s.lv].length)];list.push(sh(gen(l,i))[0])}
-    series(box,list,ok=>{const pass=ok>=n-2,first=pass&&k==S.stage,p=ok*10*m+(first?30:0);S.pts+=p;if(first)S.stage++;save();upd();
+    series(box,list,ok=>{const pass=ok>=n-2,first=pass&&k==S.stage,p=ok*10*m+(first?30:0);S.pts+=p;S.tot+=p;if(first)S.stage++;save();upd();
       const gifts=first?ITEMS.filter(i=>i[4]==S.stage):[];
       box.innerHTML="";const c=H(`<div class="em">${pass?"🎉":"💪"}</div><h3>${ok} / ${n}</h3><p>+${p} 🎵<br>${pass?(first?"Ton héros continue sa route !":"Étape réussie !"):"Presque ! Il faut "+(n-2)+" bonnes réponses. Réessaie !"}</p>${gifts.length?`<div class="gift">🎁 Nouveau bonus : ${gifts.map(g=>g[2]=="aura"?"🎨 "+g[3]:g[1]+" "+g[3]).join(", ")} !</div>`:""}`,"card big");
       c.append(B(pass?"Continuer le parcours ➜":"🔄 Réessayer","btn main",()=>pass?journey(first):stop(k)));
@@ -554,8 +593,8 @@ function games(){
   nav(null,"games");app.append(h2("🎮 Petits jeux"));
   const c=H(`<b>Niveau des mots</b>`,"card"),sel=document.createElement("select");
   sel.innerHTML=`<option value="-1">🎲 Tous les niveaux</option>`+LV.map((l,k)=>`<option value="${k}">${l}</option>`).join("");sel.value=gl;sel.onchange=()=>{gl=+sel.value};c.append(sel);app.append(c);
-  const G=[["🔤","Le pendu","Devine le mot de musique",pendu],["🔍","Mots mêlés","Retrouve les mots cachés dans la grille",wsearch],["✏️","Mots croisés","Remplis la grille avec les définitions",xword],["🏷️","Glisse les étiquettes","Place chaque terme en face de sa définition",etiq],["🃏","Memory","Retrouve les paires terme / définition",memory],["⚡","Défi chrono","45 secondes de questions",chrono],["🎼","Lecture de notes","Nomme les notes sur la portée",()=>quick("notes")],["👂","Entraîne ton oreille","Aigu ou grave ? Majeur ou mineur ?",()=>quick("ear")],["📜","Remets la frise en ordre","Classe les styles du plus ancien au plus récent",ordre]];
-  G.forEach(([e,t,d,f],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${t}</b><small>${d}</small></span>`,28,i,G.length,()=>f())));
+  const G=[["🎨","Coloriages magiques","Colorie les instruments en suivant les numéros",coloList],["🔤","Le pendu","Devine le mot de musique",pendu],["🔍","Mots mêlés","Retrouve les mots cachés dans la grille",wsearch],["✏️","Mots croisés","Remplis la grille avec les définitions",xword],["🏷️","Glisse les étiquettes","Place chaque terme en face de sa définition",etiq],["🃏","Memory","Retrouve les paires terme / définition",memory],["⚡","Défi chrono","45 secondes de questions",chrono],["🎼","Lecture de notes","Nomme les notes sur la portée",()=>quick("notes")],["👂","Entraîne ton oreille","Aigu ou grave ? Majeur ou mineur ?",()=>quick("ear")],["📜","Remets la frise en ordre","Classe les styles du plus ancien au plus récent",ordre]];
+  G.forEach(([e,t,d,f],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${t}</b><small>${d}</small></span>`,268,i,G.length,()=>f(),38,62)));
 }
 const hintBtn=(label,cost,text)=>{const w=H("");w.append(B("💡 "+label+" ("+cost+" 🎵)","btn main alt",()=>{if(S.pts<cost){toast("Il te manque "+(cost-S.pts)+" 🎵. Continue les exercices !");return}S.pts-=cost;save();upd();const b=w.querySelector("button");if(b)b.remove();w.append(H("💡 "+text,"gift"))}));return w};
 function pendu(){
@@ -695,20 +734,20 @@ function ordre(){
 }
 // ===== Boutique, fiches d'artistes et héros
 const PR=i=>i[4]*60;
-function buy(p,n,fn){
+function buy(p,n,fn,then){
   if(S.pts<p){toast("Il te manque "+(p-S.pts)+" 🎵 pour « "+n+" ». Continue les exercices !");return}
   if(!confirm("Acheter « "+n+" » pour "+p+" 🎵 ?"))return;
-  S.pts-=p;fn();save();upd();shop();
+  S.pts-=p;fn();save();upd();(then||shop)();
 }
 function shop(){
   nav(null,"shop");
   app.append(H(`<div class="em">🛍️</div><h3>La boutique</h3><p>Tu as <b>${S.pts} 🎵</b>.<br>Gagne des notes en faisant des exercices et en jouant, puis échange-les ici !</p>`,"card big"));
-  const row=H("","grid");row.append(B("🎒 Mon héros","btn",heroPage),B("🪪 Mes fiches ("+Object.keys(S.art).length+"/"+ART.length+")","btn",()=>collection()));app.append(row);
+  const row=H("","grid");row.append(B("🎒 Mon héros","btn",heroPage),B("🧑‍🎤 Les artistes","btn",()=>artists()));app.append(row);
   app.append(h2("🎒 Jokers"));
-  JK.forEach(([k,e,n,d,p],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${n}</b><small>${d}</small><small>Tu en as : ${S.jk[k]||0} · Prix : ${p} 🎵</small></span>`,5,i,3,()=>buy(p,n,()=>{S.jk[k]=(S.jk[k]||0)+1}))));
+  JK.forEach(([k,e,n,d,p],i)=>app.append(cbtn(`<span class="t">${e}</span><span><b>${n}</b><small>${d}</small><small>Tu en as : ${S.jk[k]||0} · Prix : ${p} 🎵</small></span>`,338,i,3,()=>buy(p,n,()=>{S.jk[k]=(S.jk[k]||0)+1}),24,40)));
   app.append(h2("🎹 Nouvelles mélodies pour le piano"));
   const ml=MELO.filter(m=>m[3]>0);
-  ml.forEach((m,i)=>{const own=S.mel[m[0]];app.append(cbtn(`<span class="t">${own?"✔":"🎼"}</span><span><b>${m[1]}</b><small>${own?"Débloquée : à jouer dans l'espace Piano":"Prix : "+m[3]+" 🎵"}</small></span>`,5,i,ml.length,own?()=>piano():()=>buy(m[3],m[1],()=>{S.mel[m[0]]=1})))});
+  ml.forEach((m,i)=>{const own=S.mel[m[0]];app.append(cbtn(`<span class="t">${own?"✔":"🎼"}</span><span><b>${m[1]}</b><small>${own?"Débloquée : à jouer dans l'espace Piano":"Prix : "+m[3]+" 🎵"}</small></span>`,338,i,ml.length,own?()=>piano():()=>buy(m[3],m[1],()=>{S.mel[m[0]]=1}),20,42))});
   app.append(h2("🪪 Fiches d'identité d'artistes"),H(`<small class="tr">Nom, prénom, naissance et mort, nationalité, style et œuvres principales. ${AP} 🎵 par fiche.</small>`));
   const g=H("","items");
   ART.forEach((a,i)=>{const own=S.art[a[0]],b=document.createElement("button");b.className="it"+(own?" on":"");b.innerHTML=`${a[8]}<small>${a[0]}<br>${own?"✔ ouvrir":AP+" 🎵"}</small>`;b.onclick=own?()=>fiche(i,shop):()=>buy(AP,"la fiche de "+a[0],()=>{S.art[a[0]]=1});g.append(b)});
@@ -720,16 +759,10 @@ function shop(){
   app.append(H(`<small class="tr">Ces bonus se débloquent aussi gratuitement en avançant sur le parcours. Touche-en un pour l'acheter tout de suite.</small>`),g2);
 }
 function fiche(i,back){
-  const a=typeof i=="number"?ART[i]:i,g=a[10];nav(back||(()=>collection()),"shop");
+  const a=typeof i=="number"?ART[i]:i,g=a[10];back=back||artists;nav(back,back===hist?"history":back===shop?"shop":"art");if(!S.seen[a[0]]){S.seen[a[0]]=1;save()}
   app.append(H(`<div class="idh">🪪 CARTE D'IDENTITÉ MUSICALE</div><div class="idb"><div class="idp">${a[8]}</div><div class="idf"><p><small>${g?"Groupe":"Nom"}</small><b>${a[2]}</b></p>${a[1]?`<p><small>Prénom</small><b>${a[1]}</b></p>`:""}<p><small>${g?"Création":"Naissance"}</small><b>${a[3]}</b></p><p><small>${g?"Fin":"Mort"}</small><b>${a[4]||(g?"Toujours actif":"Vivant(e)")}</b></p></div></div>
 <div class="idw"><p><small>Nationalité</small><b>${a[5]}</b></p><p><small>Style musical</small><b>${a[6]}</b></p><p><small>Œuvres principales</small></p><ul>${a[7].split(" · ").map(x=>"<li>"+x+"</li>").join("")}</ul>${a[9]?`<p class="tr">${a[9]}</p>`:""}</div>`,"idc"));
-}
-function collection(){
-  nav(shop,"shop");const own=ART.map((a,i)=>[a,i]).filter(([a])=>S.art[a[0]]);
-  app.append(h2("🪪 Mes fiches d'artistes ("+own.length+"/"+ART.length+")"));
-  if(!own.length)app.append(H("Tu n'as pas encore de fiche. Débloque-en dans la boutique, ou touche un artiste dans la frise !","card"));
-  own.forEach(([a,i],k)=>app.append(cbtn(`<span class="t">${a[8]}</span><span><b>${a[0]}</b><small>${a[6]} · ${a[3]}${a[4]?"–"+a[4]:""}</small></span>`,5,k,own.length,()=>fiche(i,collection))));
-  app.append(B("🛍️ Aller à la boutique","btn main",shop));
+  if(back!==artists)app.append(B("🧑‍🎤 Voir tous les artistes","btn main alt",artists));
 }
 function heroPage(){
   const y=window.scrollY;nav(shop,"shop");
@@ -746,20 +779,153 @@ function heroPage(){
     c.append(g);app.append(c)});
   window.scrollTo(0,y);
 }
+// ===== Rubrique Artistes : toutes les fiches (recherche, styles, compteur de fiches lues)
+const AFAM={};HIST.forEach(h=>h[6].split(";").forEach(n=>{AFAM[n]=h[4]}));
+const famOf=a=>AFAM[a[0]]||(/jazz|blues/i.test(a[6])?"J":/rock|metal|punk/i.test(a[6])?"R":/rap|hip|lectro/i.test(a[6])?"H":/slam/i.test(a[6])?"S":/pop|chanson|soul|reggae|funk|disco/i.test(a[6])?"P":"C");
+const ALLA=[...ART.map(a=>({a,pay:1})),...ARTF.map(a=>({a,pay:0}))].map(x=>({...x,k:x.a[0],n:x.a[0].replace(" (fondateur)",""),f:famOf(x.a),s:plain(x.a.slice(0,8).join(" "))}));
+let aq="",af="all",ao="az",ay=0;
+function artists(){
+  nav(null,"art");app.append(h2("🧑‍🎤 Les artistes"));
+  const ns=ALLA.filter(x=>S.seen[x.k]).length;
+  app.append(H(`<b>📖 Fiches lues : ${ns} / ${ALLA.length}</b><div class="bar"><i style="width:${ns/ALLA.length*100}%"></i></div><small class="tr">Touche un artiste pour ouvrir sa carte d'identité musicale. Les fiches 🔒 se débloquent avec ${AP} 🎵.</small>`,"card"));
+  const inp=document.createElement("input");inp.type="text";inp.placeholder="🔎 Chercher un artiste, un style, une œuvre…";inp.value=aq;inp.autocomplete="off";inp.spellcheck=false;
+  const bar=H("","chips"),ord=H("","seg"),box=H("");app.append(inp,bar,ord,box);
+  const tile=x=>{const a=x.a,lock=x.pay&&!S.art[x.k],b=document.createElement("button");b.className="it"+(S.seen[x.k]?" on":"")+(lock?" lk":"");
+    b.innerHTML=`${a[8]}<small><b>${x.n}</b>${a[3]}${a[4]?" – "+a[4]:""}<br>${lock?"🔒 "+AP+" 🎵":S.seen[x.k]?"✔ lue":"à découvrir"}</small>`;
+    b.onclick=()=>{ay=window.scrollY;if(lock)buy(AP,"la fiche de "+x.n,()=>{S.art[x.k]=1},artists);else fiche(a,artists)};return b};
+  const list=()=>{box.innerHTML="";const q=plain(aq),L=ALLA.filter(x=>(af=="all"||x.f==af)&&(!q||x.s.includes(q)));
+    L.sort(ao=="az"?(x,y)=>plain(x.a[2]).localeCompare(plain(y.a[2])):(x,y)=>x.a[3]-y.a[3]);
+    box.append(H(L.length+" artiste"+(L.length>1?"s":""),"tr"));
+    if(!L.length){box.append(H("Aucun artiste ne correspond à ta recherche.","card"));return}
+    if(ao=="st")Object.entries(FAM).forEach(([k,v])=>{const G=L.filter(x=>x.f==k);if(!G.length)return;const t=H(`${v[0]} · ${G.length}`,"fam");t.style.setProperty("--c",v[1]);const g=H("","items arts");G.forEach(x=>g.append(tile(x)));box.append(t,g)});
+    else{const g=H("","items arts");L.forEach(x=>g.append(tile(x)));box.append(g)}};
+  const draw=()=>{bar.innerHTML="";[["all","Tout"],...Object.entries(FAM).map(([k,v])=>[k,v[0]])].forEach(([k,n])=>bar.append(B(n,"chip"+(af==k?"":" off"),()=>{af=k;draw();list()})));
+    ord.innerHTML="";[["az","A → Z"],["dt","Par date"],["st","Par style"]].forEach(([k,n])=>ord.append(B(n,ao==k?"on":"",()=>{ao=k;draw();list()})))};
+  inp.oninput=()=>{aq=inp.value;list()};draw();list();
+  if(ay){window.scrollTo(0,ay);ay=0}
+}
+// ===== Coloriages magiques : [id, emoji, nom, couleurs (lettres de CC, n°1 = 1re lettre), zones [n°, formes, x et y du numéro], décor]
+const CC={r:["rouge","#ef4444"],o:["orange","#fb923c"],j:["jaune","#fde047"],v:["vert","#4ade80"],b:["bleu","#3b82f6"],c:["bleu clair","#93d8fb"],p:["violet","#a855f7"],k:["rose","#f9a8d4"],m:["marron","#a8672a"],g:["gris","#b6bcc6"],n:["noir","#3f3f46"],t:["turquoise","#2dd4bf"],s:["beige","#fbe3b5"]};
+const rays=(n,nums,r,off)=>Array.from({length:n},(_,i)=>{const a0=(off||0)+i*2*Math.PI/n,a1=a0+2*Math.PI/n,am=(a0+a1)/2,P=a=>Math.round(150+500*Math.cos(a))+","+Math.round(150+500*Math.sin(a));return[nums[i%nums.length],`g 150,150 ${P(a0)} ${P(a1)}`,Math.round(150+r*Math.cos(am)),Math.round(150+r*Math.sin(am))]});
+const COLO=[
+["gui","🎸","La guitare","omjncv",[...rays(8,[5,6],128),
+ [1,"p M150,100 C180,100 192,122 187,146 C184,160 194,166 203,182 C220,214 200,268 150,268 C100,268 80,214 97,182 C106,166 116,160 113,146 C108,122 120,100 150,100 Z",150,251],
+ [3,"c 150 170 26",170,170],[4,"c 150 170 14",150,170],[2,"r 122 222 56 14 4",150,229],[4,"r 128 8 44 28 6",150,21],[2,"r 138 34 24 76",150,64]],
+ `<path d="M138 48h24M138 80h24M138 94h24M143 188V222M147.7 188V222M152.3 188V222M157 188V222"/><circle cx="124" cy="15" r="3.5"/><circle cx="124" cy="28" r="3.5"/><circle cx="176" cy="15" r="3.5"/><circle cx="176" cy="28" r="3.5"/>`],
+["tro","🎺","La trompette","jogrbc",[...rays(6,[5,6],132),
+ [1,"r 30 120 200 16 8",62,128],[1,"r 62 136 150 62 31",137,190],[6,"r 78 152 118 30 15",137,167],
+ [4,"r 104 96 18 54 4",113,110],[4,"r 131 96 18 54 4",140,110],[4,"r 158 96 18 54 4",167,110],
+ [3,"c 113 84 11",113,84],[3,"c 140 84 11",140,84],[3,"c 167 84 11",167,84],
+ [3,"g 8,116 30,122 30,134 8,140",18,128],[2,"p M226,120 C255,118 275,105 290,80 L290,176 C275,151 255,138 226,136 Z",264,128]],""],
+["pia","🎹","Le piano","rojvbpkn",[[6,"r 0 0 300 300",101,30],[3,"s 52 30 24",52,32],[2,"s 150 30 24",150,32],[1,"s 248 30 24",248,32],[8,"r 12 62 276 216 12",150,96],
+ ...[0,1,2,3,4,5,6].map(i=>[i+1,`r ${24+36*i} 130 36 138`,42+36*i,244]),...[1,2,4,5,6].map(k=>[8,`r ${13+36*k} 130 22 84 3`,24+36*k,172])],""],
+["tam","🥁","Le tambour","rjsmbvt",[...rays(8,[6,7],134,Math.PI/8),
+ [1,"p M68,112 L68,212 A82,26 0 0 0 232,212 L232,112 Z",125,200],
+ [2,"g 80,156 120,161 100,208",100,172],[2,"g 130,162 170,162 150,214",150,178],[2,"g 180,161 220,156 200,208",200,172],
+ [5,"p M64,208 A86,28 0 0 0 236,208 L236,226 A86,28 0 0 1 64,226 Z",150,245],[5,"p M64,108 A86,28 0 0 0 236,108 L236,126 A86,28 0 0 1 64,126 Z",150,145],
+ [3,"e 150 108 86 28",150,124],
+ [4,"g 90.9,22.4 99.1,13.6 194.1,103.6 185.9,112.4;c 190 108 10",190,108],[4,"g 209.1,22.4 200.9,13.6 105.9,103.6 114.1,112.4;c 110 108 10",110,108]],""],
+["vio","🎻","Le violon","omnjkp",[...rays(8,[5,6],128),
+ [1,"p M150,86 C178,86 190,104 188,122 C187,134 178,138 178,148 C178,158 192,164 198,184 C208,224 188,270 150,270 C112,270 92,224 102,184 C108,164 122,158 122,148 C122,138 113,134 112,122 C110,104 122,86 150,86 Z",118,228],
+ [2,"g 141,205 159,205 164,256 136,256",150,236],[2,"c 150 16 13",150,16],[3,"g 142,26 158,26 162,160 138,160",150,100],
+ [4,"r 236 12 10 250 4;r 230 232 22 30 4",241,247]],
+ `<path d="M128 150c-6 6-6 18 0 26M172 150c6 6 6 18 0 26M134 190h32"/>`],
+["not","🎵","Les notes","pkbjot",[...rays(9,[4,5,6],134),
+ [3,"p M116,82 L248,56 L248,198 L236,198 L236,94.4 L128,115.6 L128,224 L116,224 Z",182,87],[1,"e 92 224 36 26 -20",92,224],[2,"e 212 198 36 26 -20",212,198]],""],
+["mic","🎤","Le micro","gjbrnkp",[...rays(8,[6,7],130),
+ [1,"p M95,88 A55,55 0 0 1 205,88 Z",150,62],[5,"p M95,88 A55,55 0 0 0 205,88 Z",150,111],[3,"g 114,150 186,150 172,290 128,290",150,250],
+ [2,"r 100 136 100 20 6",150,146],[4,"r 141 176 18 36 6",150,194],[2,"s 48 58 24",48,60],[2,"s 252 58 24",252,60]],
+ `<path d="M112 50h76M98 74h104M97 100h106M109 124h82"/>`],
+["cas","🎧","Le casque audio","brgjovt",[...rays(8,[6,7],140),
+ [1,"p M52,165 A98,98 0 0 1 248,165 L224,165 A74,74 0 0 0 76,165 Z",150,79],
+ [2,"r 34 158 56 96 20",55,206],[2,"r 210 158 56 96 20",245,206],[3,"r 78 170 24 72 10",90,206],[3,"r 198 170 24 72 10",210,206],
+ [4,"c 150 215 38",150,189],[5,"c 150 215 14",150,215]],""]];
+const shp=s=>s.split(";").map(x=>{x=x.trim();const t=x[0],v=x.slice(1).trim(),q=v.split(/\s+/);
+  if(t=="c")return`<circle cx="${q[0]}" cy="${q[1]}" r="${q[2]}"/>`;
+  if(t=="e")return`<ellipse cx="${q[0]}" cy="${q[1]}" rx="${q[2]}" ry="${q[3]}"${q[4]?` transform="rotate(${q[4]} ${q[0]} ${q[1]})"`:""}/>`;
+  if(t=="r")return`<rect x="${q[0]}" y="${q[1]}" width="${q[2]}" height="${q[3]}" rx="${q[4]||0}"/>`;
+  if(t=="g")return`<polygon points="${v}"/>`;
+  if(t=="s"){const[cx,cy,r]=q.map(Number);return`<polygon points="${Array.from({length:10},(_,i)=>{const a=-Math.PI/2+i*Math.PI/5,d=i%2?r*.45:r;return(cx+d*Math.cos(a)).toFixed(1)+","+(cy+d*Math.sin(a)).toFixed(1)}).join(" ")}"/>`}
+  return`<path d="${v}"/>`}).join("");
+function coloList(){
+  nav(games,"games");app.append(h2("🎨 Coloriages magiques"),H(`<small class="tr">Chaque numéro correspond à une couleur. Colorie toutes les zones pour faire apparaître le dessin : +15 🎵 la première fois que tu termines un coloriage !</small>`));
+  const g=H("","grid");
+  COLO.forEach((c,i)=>{const n=(S.cz[c[0]]||[]).length,b=H(`${c[1]} ${c[2]}<small>${S.col[c[0]]&&n==c[4].length?"✔ terminé":n?n+" / "+c[4].length+" zones":c[4].length+" zones à colorier"}</small>`,"btn lv"),[c1,c2]=cam(268,i%4,4,42,60);
+    b.style.setProperty("--c",c1);b.style.setProperty("--c2",c2);b.style.fontSize="1.15rem";b.onclick=()=>colo(i);g.append(b)});
+  app.append(g);
+}
+function colo(ix){
+  const c=COLO[ix],id=c[0],pal=[...c[3]].map(k=>CC[k]),Z=c[4];nav(coloList,"games");
+  let cur=0;const fill=new Set(S.cz[id]||[]);
+  app.append(h2(c[1]+" "+c[2]));
+  const card=H(`<svg viewBox="0 0 300 300" role="img" aria-label="Coloriage : ${c[2]}">${Z.map((z,i)=>`<g class="cz" data-i="${i}">${shp(z[1])}</g>`).join("")}<g class="cd">${c[5]}</g>${Z.map(z=>`<text class="cn" x="${z[2]}" y="${z[3]}">${z[0]}</text>`).join("")}</svg>`,"card colo"),pl=H("","pal"),msg=H("","msg");
+  const gs=[...card.querySelectorAll(".cz")],ts=[...card.querySelectorAll(".cn")];
+  const paint=i=>{gs[i].style.fill=pal[Z[i][0]-1][1];gs[i].classList.add("ok");ts[i].style.display="none"};
+  const left=n=>Z.filter((z,i)=>z[0]==n+1&&!fill.has(i)).length;
+  const drawPal=()=>{pl.innerHTML="";pal.forEach((p,n)=>{const b=document.createElement("button");b.className="pc"+(n==cur?" on":"");b.innerHTML=`<i style="background:${p[1]}">${left(n)?n+1:"✔"}</i><small>${p[0]}</small>`;b.onclick=()=>{cur=n;drawPal()};pl.append(b)})};
+  const fin=first=>{msg.className="msg ok";msg.textContent="🎉 Coloriage terminé !"+(first?" +15 🎵":"")};
+  gs.forEach((g,i)=>{if(fill.has(i))paint(i);g.onclick=()=>{if(fill.has(i))return;
+    if(Z[i][0]!=cur+1){msg.className="msg ko";msg.textContent="Cette zone porte le numéro "+Z[i][0]+" : choisis la couleur « "+pal[Z[i][0]-1][0]+" ».";g.classList.add("no");setTimeout(()=>g.classList.remove("no"),400);return}
+    fill.add(i);S.cz[id]=[...fill];save();paint(i);msg.textContent="";
+    if(!left(cur)){const nx=pal.findIndex((_,n)=>left(n));if(nx>=0)cur=nx}drawPal();
+    if(fill.size==Z.length){const first=!S.col[id];S.col[id]=1;save();if(first)addPts(15);fin(first)}}});
+  drawPal();if(fill.size==Z.length)fin(false);
+  app.append(card,H(`<small class="tr">Choisis une couleur, puis touche les zones qui portent son numéro.</small>`),pl,msg,B("🔄 Recommencer ce coloriage","btn main alt",()=>{if(confirm("Effacer ce coloriage et recommencer ?")){delete S.cz[id];save();colo(ix)}}));
+}
+// ===== Identification (pseudo donné par le professeur) et bilan
+const PSEUDO=/^eleve(0[1-9]|[1-4][0-9]|50)$/;
+const CK=s=>{let h=5381;for(const ch of s+"|MusicAll")h=((h*33)^ch.charCodeAt(0))>>>0;return h.toString(36)};
+const today=()=>{const d=new Date(),z=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())};
+const TID=ALL.map(([l,i])=>l+"-"+i);
+function bilanCode(){
+  const p=[UID,today(),S.stage,S.pts,S.tot||0,S.min||0,S.nx||0,Object.keys(S.seen).length,Object.keys(S.col).length,Object.keys(S.mel).length,TID.map(k=>S.best[k]!=null?S.best[k]:"-").join(""),TID.map(k=>S.done[k]?1:0).join("")].join("|");
+  return"MA1."+btoa(p).replace(/=+$/,"")+"."+CK(p);
+}
+function ident(){
+  nav(home,"home");app.append(h2("👤 Identification"));
+  if(UID){const c=H(`<div class="em">👤</div><h3>${UID}</h3><p>Ta progression est enregistrée sous ce pseudo sur cet appareil.</p>`,"card big");
+    c.append(B("📊 Voir mon bilan","btn main",bilan),B("🚪 Changer d'élève","btn main alt",()=>{if(confirm("Quitter le pseudo "+UID+" ? Sa progression reste enregistrée sur cet appareil."))try{localStorage.removeItem("musicall1:id");location.reload()}catch(e){}}));app.append(c);return}
+  const c=H(`<div class="em">👤</div><h3>Qui es-tu ?</h3><p>Écris le pseudo donné par ton professeur (exemple : <b>eleve07</b>). Il sert à retrouver ta progression et à préparer ton bilan.</p>`,"card big"),i=document.createElement("input"),msg=H("","msg");
+  i.type="text";i.placeholder="eleve…";i.autocapitalize="off";i.autocomplete="off";i.spellcheck=false;i.maxLength=12;
+  const go=()=>{const p=plain(i.value);if(!PSEUDO.test(p)){msg.className="msg ko";msg.textContent="Ce pseudo n'existe pas. Vérifie-le ou demande-le à ton professeur.";return}
+    try{const k="musicall1:"+p;
+      if(!localStorage.getItem(k)&&(S.pts||S.stage||Object.keys(S.done).length)&&confirm("Il y a déjà une progression sur cet appareil.\n\nOK : c'est la mienne, je la garde pour "+p+".\nAnnuler : je commence à zéro.")){localStorage.setItem(k,JSON.stringify(S));localStorage.removeItem("musicall1")}
+      localStorage.setItem("musicall1:id",p);location.reload()}catch(e){msg.className="msg ko";msg.textContent="Impossible d'enregistrer sur cet appareil."}};
+  i.onkeydown=k=>{if(k.key=="Enter")go()};c.append(i,B("Valider","btn main",go),msg);
+  app.append(c,H(`<small class="tr">Sans pseudo, tu peux quand même utiliser toute l'application.</small>`));
+}
+function bilan(){
+  nav(UID?ident:home,"home");app.append(h2("📊 Mon bilan"));
+  const nd=l=>D[l].filter((_,i)=>S.done[l+"-"+i]).length,tot=LV.reduce((s,_,l)=>s+nd(l),0),hm=m=>m<60?m+" min":Math.floor(m/60)+" h "+String(m%60).padStart(2,"0");
+  app.append(H(`<h3>👤 ${UID||"Élève non identifié"}</h3><small class="tr">Bilan du ${today().split("-").reverse().join("/")}</small>
+<div class="stats"><div><b>${S.stage+1}</b><small>étape du parcours (${GR[Math.min(5,Math.floor(S.stage/3))]})</small></div><div><b>${tot} / ${ALL.length}</b><small>thèmes réussis</small></div><div><b>${S.tot||0} 🎵</b><small>gagnées en tout</small></div><div><b>${hm(S.min||0)}</b><small>sur l'application</small></div><div><b>${S.nx||0}</b><small>séries d'exercices terminées</small></div><div><b>${Object.keys(S.seen).length}</b><small>fiches d'artistes lues</small></div><div><b>${Object.keys(S.col).length} / ${COLO.length}</b><small>coloriages terminés</small></div></div>`,"card"));
+  LV.forEach((n,l)=>{const c=H(`<h3>${n} · ${nd(l)} / ${D[l].length} thèmes réussis</h3><div class="bar"><i style="width:${nd(l)/D[l].length*100}%"></i></div>`,"card");
+    D[l].forEach((a,i)=>{const id=l+"-"+i;c.append(H(`${S.done[id]?"✅":S.best[id]!=null?"🟠":"⚪"} ${a[1]}<small>${S.best[id]!=null?"meilleur score : "+S.best[id]+" / 8":"pas encore essayé"}</small>`,"bl"))});app.append(c)});
+  if(!UID){const c=H("<h3>👤 Identifie-toi</h3><p>Pour envoyer ton bilan à ton professeur, indique d'abord ton pseudo.</p>","card");c.append(B("👤 Identification","btn main",ident));app.append(c);return}
+  const code=bilanCode(),c=H(`<h3>📤 Envoyer mon bilan</h3><p>Ce code contient ton bilan d'aujourd'hui. Copie-le et envoie-le à ton professeur, comme il te l'a demandé.</p>`,"card"),ta=document.createElement("textarea"),msg=H("","msg");
+  ta.readOnly=true;ta.value=code;ta.rows=4;ta.className="code";ta.onfocus=()=>ta.select();
+  const ok=()=>{msg.className="msg ok";msg.textContent="✅ Code copié !"},old=()=>{ta.select();try{document.execCommand("copy");ok()}catch(e){}};
+  c.append(ta,B("📋 Copier mon code","btn main",()=>{try{navigator.clipboard.writeText(code).then(ok,old)}catch(e){old()}}));
+  if(navigator.share)c.append(B("📤 Partager","btn main alt",()=>{navigator.share({title:"Bilan Music’All "+UID,text:"Bilan Music’All de "+UID+" :\n"+code}).catch(()=>{})}));
+  c.append(B("💾 Télécharger le fichier","btn main alt",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([code+"\n"],{type:"text/plain"}));a.download="bilan-"+UID+"-"+today()+".txt";document.body.append(a);a.click();a.remove()}),msg);
+  app.append(c);
+}
+try{setInterval(()=>{if(!document.hidden){S.min=(S.min||0)+1;save()}},60000)}catch(e){}
 // ===== Mentions légales
 function legal(){
   nav(()=>home(),"home");
   app.append(H(`<h3>Mentions légales</h3>
 <p><b>Éditeur et propriétaire :</b> HENRY Clément.</p>
 <p><b>Propriété intellectuelle :</b> l'application « Music’All » (nom, code, textes, exercices, illustrations et organisation du contenu) est la propriété exclusive de HENRY Clément. Toute reproduction, représentation, modification, adaptation ou diffusion, totale ou partielle, sans autorisation écrite préalable de l'auteur est interdite.</p>
-<p><b>Données personnelles :</b> l'application ne demande aucune donnée personnelle, ne collecte rien, n'utilise ni cookie ni publicité. Les notes, la progression et les bonus du héros sont enregistrés uniquement sur l'appareil de l'utilisateur ; ils disparaissent si les données du navigateur sont effacées.</p>
+<p><b>Données personnelles :</b> l'application ne demande aucune donnée personnelle, ne collecte rien, n'utilise ni cookie ni publicité. L'identification est facultative et se fait avec un pseudonyme fourni par le professeur (eleve01, eleve02…), jamais avec un nom. Les notes, la progression et les bonus du héros sont enregistrés uniquement sur l'appareil de l'utilisateur ; ils disparaissent si les données du navigateur sont effacées. Rien n'est envoyé automatiquement : le bilan n'est transmis que si l'élève le copie ou le partage lui-même.</p>
+<p><b>Police du titre :</b> Poppins (Indian Type Foundry), licence SIL Open Font License.</p>
 <p><b>Sons :</b> tous les sons (piano, batterie, exercices d'écoute) sont synthétisés par le navigateur de l'utilisateur ; l'application n'utilise aucun enregistrement protégé.</p>
 <p><b>Contenu pédagogique :</b> les thèmes s'appuient sur les programmes d'éducation musicale du collège.</p>
 ${LEGAL_CONTACT?`<p><b>Contact :</b> ${LEGAL_CONTACT}</p>`:""}
 <p class="tr">© 2026 HENRY Clément – Tous droits réservés.</p>`,"card"));
 }
 $("#lg").onclick=legal;$("#score").onclick=()=>shop();
-document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>({home:()=>home(),journey:()=>journey(),history:()=>hist(),games:()=>games(),instr:()=>instr(),shop:()=>shop()})[b.dataset.t]());
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>({home:()=>home(),journey:()=>journey(),history:()=>hist(),games:()=>games(),instr:()=>instr(),art:()=>artists(),shop:()=>shop()})[b.dataset.t]());
 const applyView=()=>{try{const d=S.view=="desk"||(S.view!="mob"&&window.matchMedia("(min-width:900px)").matches);document.body.classList.toggle("desk",d);document.querySelectorAll("#vw a").forEach(a=>a.classList.toggle("on",a.dataset.v==(S.view||"auto")))}catch(e){}};
 document.querySelectorAll("#vw a").forEach(a=>a.onclick=()=>{S.view=a.dataset.v;save();applyView()});
 try{addEventListener("resize",applyView)}catch(e){}

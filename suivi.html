@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Music’All – Suivi des élèves</title>
+<style>
+:root{--ink:#2b1230;--mut:#7a6072;--line:#f3d3e2;--rb:#0d7c8a;--pk:#ff63a2}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-rounded,"Nunito","Segoe UI",system-ui,sans-serif;color:var(--ink);background:#fff6fa;line-height:1.45}
+header{background:linear-gradient(135deg,#ff86b8,#f2478d);color:#fff;padding:18px 22px}
+header h1{margin:0;font-size:1.5rem}header p{margin:4px 0 0;font-weight:700;opacity:.95}
+main{max-width:1250px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(120,10,70,.12)}
+h2{margin:0 0 8px;font-size:1.1rem}
+textarea{width:100%;min-height:96px;font:.82rem ui-monospace,Menlo,Consolas,monospace;border:2px solid var(--line);border-radius:12px;padding:10px}
+button,.fb{font:inherit;font-weight:800;border:0;border-radius:12px;padding:10px 14px;background:var(--rb);color:#fff;cursor:pointer;margin:6px 6px 0 0;display:inline-block}
+button.alt,.fb{background:#fff;color:var(--rb);box-shadow:inset 0 0 0 2px var(--rb)}
+button.dng{background:#fff;color:#b3123f;box-shadow:inset 0 0 0 2px #b3123f}
+#msg{font-weight:800;margin-top:8px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+th{background:#ffe6f0;position:sticky;top:0}
+td:nth-child(1),td:nth-child(2),th:nth-child(1),th:nth-child(2){text-align:left}
+tr.no td{color:#b9a9b3}
+tr.has{cursor:pointer}tr.has:hover td{background:#fff3f8}
+td input{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 6px;width:150px}
+.det td{background:#fffafc;text-align:left;white-space:normal}
+.th{display:inline-block;margin:2px 10px 2px 0;font-size:.82rem}
+.ok{color:#0a7a45;font-weight:800}.mid{color:#b96a00;font-weight:800}
+small{color:var(--mut)}
+@media print{header,.np{display:none}body{background:#fff}.card{box-shadow:none;padding:0}td input{border:0}th{position:static}}
+</style>
+</head>
+<body>
+<header><h1>Music’All – Suivi des élèves</h1><p>Page réservée au professeur : collez ici les codes de bilan envoyés par les élèves.</p></header>
+<main>
+<div class="card np">
+<h2>1. Ajouter des bilans</h2>
+<small>Collez un ou plusieurs codes (ils commencent par « MA1. »), même au milieu d'un message. Vous pouvez aussi importer les fichiers « bilan-eleveXX.txt ». Pour chaque élève, seul le bilan le plus récent est conservé.</small>
+<textarea id="in" placeholder="MA1.…"></textarea>
+<button id="add">➕ Ajouter les bilans</button><label class="fb">📂 Importer des fichiers<input id="files" type="file" accept=".txt,text/plain" multiple hidden></label>
+<div id="msg"></div>
+</div>
+<div class="card">
+<h2>2. Tableau de la classe</h2>
+<small class="np">Cliquez sur une ligne pour voir le détail par thème. La colonne « Nom » est facultative : elle n'est enregistrée que dans ce navigateur, sur votre appareil.</small>
+<div class="np"><button id="csv">⬇️ Exporter en CSV (tableur)</button><button class="alt" id="prt">🖨️ Imprimer</button><button class="dng" id="clr">🗑️ Effacer les bilans</button></div>
+<div class="tw"><table id="tb"></table></div>
+</div>
+<div class="card np"><small>Les données restent sur cet appareil (stockage local du navigateur) : rien n'est envoyé sur Internet. « Temps » = minutes passées avec l'application ouverte. « Séries » = séries d'exercices terminées (thèmes, parcours, lecture de notes, oreille). « 🎵 gagnées » = total gagné, y compris ce qui a été dépensé en boutique.</small></div>
+</main>
+<script>
+const TH=[["Le son et ses paramètres", "Pulsation, rythme et mesure", "Lire la musique : notes et portée", "La voix et le chant", "Les familles d'instruments"], ["Nuances, tempo et caractère", "L'orchestre et les formations", "Mélodie, accompagnement et harmonie", "Musiques du monde et traditions", "Du Moyen Âge au baroque"], ["Classicisme et romantisme", "Les formes musicales", "Musique et texte : chanson, opéra, comédie musicale", "Le jazz et le blues", "Musique à programme et musique de film"], ["La musique du XXe siècle", "Rock, pop, rap, électro : les musiques actuelles", "Musique et technologie", "Musique, société et engagement", "Les métiers de la musique et la scène"]],LV=["6e","5e","4e","3e"],N=50,KEY="musicall-suivi";
+const CK=s=>{let h=5381;for(const ch of s+"|MusicAll")h=((h*33)^ch.charCodeAt(0))>>>0;return h.toString(36)};
+const ids=Array.from({length:N},(_,i)=>"eleve"+String(i+1).padStart(2,"0"));
+let DB={b:{},n:{}};try{Object.assign(DB,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}};
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function parse(p){const f=p.split("|");if(f.length!=12||!/^eleve\d\d$/.test(f[0])||!/^\d{4}-\d\d-\d\d$/.test(f[1])||f[10].length!=20||f[11].length!=20)return null;
+  return{id:f[0],date:f[1],stage:+f[2],pts:+f[3],tot:+f[4],min:+f[5],nx:+f[6],fiches:+f[7],col:+f[8],mel:+f[9],best:f[10],done:f[11]}}
+function addText(t){let ok=0,bad=0,old=0;const re=/MA1\.([A-Za-z0-9+\/]+)\.([a-z0-9]+)/g;let m;
+  while((m=re.exec(t))){let p="";try{p=atob(m[1])}catch(e){}const r=p&&CK(p)==m[2]?parse(p):null;
+    if(!r||!ids.includes(r.id)){bad++;continue}
+    const cur=DB.b[r.id]&&parse(DB.b[r.id]);if(cur&&cur.date>r.date){old++;continue}DB.b[r.id]=p;ok++}
+  save();draw();
+  $("#msg").textContent=(ok?"✅ "+ok+" bilan(s) ajouté(s). ":"")+(old?"ℹ️ "+old+" bilan(s) plus ancien(s) ignoré(s). ":"")+(bad?"⚠️ "+bad+" code(s) illisible(s) ou incomplet(s). ":"")+(!ok&&!old&&!bad?"Aucun code trouvé dans ce texte.":"")}
+const fr=d=>d.split("-").reverse().join("/"),hm=m=>m<60?m+" min":Math.floor(m/60)+" h "+String(m%60).padStart(2,"0");
+const cnt=(r,l)=>[...r.done.slice(l*5,l*5+5)].filter(c=>c=="1").length;
+function draw(){
+  let h="<tr><th>Pseudo</th><th>Nom (facultatif)</th><th>Bilan du</th><th>Étape</th><th>Thèmes /20</th>"+LV.map(l=>"<th>"+l+" /5</th>").join("")+"<th>🎵 gagnées</th><th>Temps</th><th>Séries</th><th>Fiches lues</th><th>Coloriages</th></tr>";
+  ids.forEach(id=>{const r=DB.b[id]&&parse(DB.b[id]),nm=`<td><input data-id="${id}" value="${esc(DB.n[id]||"")}" aria-label="Nom de ${id}"></td>`;
+    if(!r){h+=`<tr class="no"><td>${id}</td>${nm}<td colspan="${8+LV.length}">pas encore de bilan</td></tr>`;return}
+    const tot=[...r.done].filter(c=>c=="1").length;
+    h+=`<tr class="has" data-r="${id}"><td><b>${id}</b></td>${nm}<td>${fr(r.date)}</td><td>${r.stage+1}</td><td><b>${tot}</b></td>${LV.map((_,l)=>"<td>"+cnt(r,l)+"</td>").join("")}<td>${r.tot}</td><td>${hm(r.min)}</td><td>${r.nx}</td><td>${r.fiches}</td><td>${r.col}</td></tr>`;
+    h+=`<tr class="det" data-d="${id}" hidden><td colspan="${10+LV.length}">${LV.map((l,k)=>`<div><b>${l}</b> · `+TH[k].map((t,i)=>{const b=r.best[k*5+i],d=r.done[k*5+i]=="1";return`<span class="th">${d?"✅":b=="-"?"⚪":"🟠"} ${esc(t)} ${b=="-"?"":`<span class="${d?"ok":"mid"}">${b}/8</span>`}</span>`}).join("")+"</div>").join("")}<small>✅ thème réussi (5 bonnes réponses sur 8) · 🟠 essayé · ⚪ pas encore essayé · meilleur score sur 8</small></td></tr>`});
+  $("#tb").innerHTML=h;
+  document.querySelectorAll("td input").forEach(i=>{i.onclick=e=>e.stopPropagation();i.onchange=()=>{DB.n[i.dataset.id]=i.value.trim();save()}});
+  document.querySelectorAll("tr.has").forEach(t=>t.onclick=()=>{const d=document.querySelector(`tr[data-d="${t.dataset.r}"]`);d.hidden=!d.hidden});
+}
+$("#add").onclick=()=>{addText($("#in").value);$("#in").value=""};
+$("#files").onchange=async e=>{let t="";for(const f of e.target.files)t+=await f.text()+"\n";addText(t);e.target.value=""};
+$("#prt").onclick=()=>print();
+$("#clr").onclick=()=>{if(confirm("Effacer tous les bilans enregistrés sur cet appareil ? (Les noms sont conservés.)")){DB.b={};save();draw();$("#msg").textContent=""}};
+$("#csv").onclick=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[["Pseudo","Nom","Bilan du","Etape","Themes reussis /20",...LV.map(l=>l+" /5"),"Notes gagnees","Minutes","Series","Fiches lues","Coloriages",...TH.flatMap((a,k)=>a.map(t=>LV[k]+" - "+t+" (meilleur score /8)"))]];
+  ids.forEach(id=>{const r=DB.b[id]&&parse(DB.b[id]);if(!r){rows.push([id,DB.n[id]||""]);return}
+    rows.push([id,DB.n[id]||"",fr(r.date),r.stage+1,[...r.done].filter(c=>c=="1").length,...LV.map((_,l)=>cnt(r,l)),r.tot,r.min,r.nx,r.fiches,r.col,...[...r.best].map(c=>c=="-"?"":c)])});
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+rows.map(r=>r.map(q).join(";")).join("\r\n")],{type:"text/csv;charset=utf-8"}));a.download="suivi-musicall.csv";document.body.append(a);a.click();a.remove()};
+draw();
+</script>
+</body>
+</html>
